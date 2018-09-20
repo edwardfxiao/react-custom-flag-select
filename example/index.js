@@ -13,6 +13,7 @@ import ReactCustomFlagSelect from '../src/js/ReactCustomFlagSelect/index.js';
 const markdownExample = `
 \`\`\`javascript
 import ReactCustomFlagSelect from 'react-custom-flag-select';
+import "react-custom-flag-select/lib/react-custom-flag-select.min.css";
 import { Textbox } from 'react-inputs-validation';
 import 'react-inputs-validation/lib/react-inputs-validation.min.css';
 
