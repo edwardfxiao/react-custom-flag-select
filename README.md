@@ -1,5 +1,8 @@
 # react-custom-flag-select
 
+A react custom flag (country code) select.
+# <img src="http://oc54ddm6x.bkt.clouddn.com/1851537437510_.pic.jpg" />
+
 # Docs Link
 [ReactCustomFlagSelect](#ReactCustomFlagSelect)
 
