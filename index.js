@@ -1,0 +1,1 @@
+var ReactCustomFlagSelect = require('./lib/components/index.js');
