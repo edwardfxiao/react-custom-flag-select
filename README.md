@@ -6,6 +6,9 @@ A react custom flag (country code) select.
 # Online Demo
 <a href="https://edwardfhsiao.github.io/react-custom-flag-select/">Online demo example</a>
 
+# Codesandbox Examples
+* <a href="https://codesandbox.io/s/jvw9nvyzv">Playground</a>
+
 #### This project is inspired by <a href="https://github.com/ekwonye-richard/react-flags-select">ekwonye-richard/react-flags-select</a>
 #### Flag images: <a href="https://github.com/ekwonye-richard/react-flags-select/tree/master/flags">https://github.com/ekwonye-richard/react-flags-select/tree/master/flags</a>
 
