@@ -39,11 +39,11 @@ var config = (module.exports = {
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)\??.*$/,
-        use: [{ loader: 'url-loader?limit=8192&name=font/[name].[ext]' }]
+        use: [{ loader: 'url-loader?limit=18192&name=font/[name].[ext]' }]
       },
       {
         test: /\.(jpe?g|png|gif|svg)\??.*$/,
-        use: [{ loader: 'url-loader?limit=8192&name=img/[name].[ext]' }]
+        use: [{ loader: 'url-loader?limit=18192&name=img/[name].[ext]' }]
       },
       {
         test: /\.scss$/,
