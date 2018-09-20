@@ -45,6 +45,7 @@ A react custom flag (country code) select.
 
 ```js
 import ReactCustomFlagSelect from 'react-custom-flag-select';
+import "react-custom-flag-select/lib/react-custom-flag-select.min.css";
 
  <ReactCustomFlagSelect
    tabIndex={'1'} //Optional.[String or Number].Default: -1.
