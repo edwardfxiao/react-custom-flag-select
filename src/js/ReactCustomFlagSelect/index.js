@@ -5,7 +5,7 @@ import STYLES from './react-custom-flag-select.css';
 
 const ERROR = 'Please provide valid optionList. i.e optionList=[{id: "1", name: "United States", flag: "us.svg"}, {id: "86", name: "中国", flag: "cn.svg"}]';
 
-export default class ReactCustomFlagSelect extends React.Component {
+export default class ReactCustomFlagSelect extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -123,7 +123,7 @@ export default class ReactCustomFlagSelect extends React.Component {
       selectOptionListItemHtml
     } = this.props;
 
-    const { value, show, successMsg } = this.state;
+    const { value, show, successMsg, err } = this.state;
 
     const wrapperClass = cx(classNameWrapper, STYLES['select__wrapper'], successMsg && !err && STYLES['success'], disabled && STYLES['disabled']);
 
