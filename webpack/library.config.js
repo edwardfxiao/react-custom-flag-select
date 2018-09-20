@@ -31,7 +31,7 @@ if (env === 'build') {
 }
 
 const config = {
-  entry: PATH.ROOT_PATH + 'src/js/ReactCustomFlagSelect/index.js',
+  entry: PATH.ROOT_PATH + 'src/js/ReactCustomFlagSelect/ReactCustomFlagSelect.js',
   devtool: 'source-map',
   output: {
     path: PATH.ROOT_PATH + '/lib',

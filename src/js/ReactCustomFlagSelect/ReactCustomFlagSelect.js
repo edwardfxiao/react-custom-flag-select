@@ -5,7 +5,7 @@ import STYLES from './react-custom-flag-select.css';
 
 const ERROR = 'Please provide valid optionList. i.e optionList=[{id: "1", name: "United States", flag: "us.svg"}, {id: "86", name: "中国", flag: "cn.svg"}]';
 
-export default class ReactCustomFlagSelect extends Component {
+class ReactCustomFlagSelect extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -275,3 +275,5 @@ ReactCustomFlagSelect.propTypes = {
   customStyleDropdownIcon: PropTypes.object,
   customStyleOptionListItem: PropTypes.object
 };
+
+export default ReactCustomFlagSelect
