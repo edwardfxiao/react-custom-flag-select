@@ -6,6 +6,7 @@ A react custom flag (country code) select.
 # Docs Link
 [ReactCustomFlagSelect](#ReactCustomFlagSelect)
 
+## This project is inspired by <a href="https://github.com/ekwonye-richard/react-flags-selec">ekwonye-richard/react-flags-select</a> and you could find Flags here <a href="https://github.com/ekwonye-richard/react-flags-select/tree/master/flags">https://github.com/ekwonye-richard/react-flags-select/tree/master/flags</a>
 ### <a name="ReactCustomFlagSelect"></a>ReactCustomFlagSelect
 
 |Props                             |       |Type    |Description                                  |Default     |
