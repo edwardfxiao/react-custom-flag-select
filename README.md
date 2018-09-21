@@ -31,7 +31,7 @@ In case the **country code** or the **area code** or even the **flags** might be
 |type                              |  Opt  |  Str   |                                             |  "text"    |
 |value                             |  Opt  |  Str   |                                             |  ""        |
 |disabled                          |  Opt  |  Bool  |                                             |  false     |
-|**optionList**                    |**Req**|**Array**|**[{id: "1", name: "United States", flag: "us.svg"}, {id: "86", name: "中国", flag: "cn.svg"}]**              |**[]**          |
+|**optionList**                    |**Req**|**Array**|**[{id: "1", name: "United States", displayText: "US(1)", flag: "us.svg"}, {id: "86", name: "中国", displayText: "中国(86)", flag: "cn.svg"}]**              |**[]**          |
 |classNameSelect                   |  Opt  |  Str   |                                             |  ""        |
 |classNameWrapper                  |  Opt  |  Str   |                                             |  ""        |
 |classNameContainer                |  Opt  |  Str   |                                             |  ""        |
@@ -52,6 +52,11 @@ In case the **country code** or the **area code** or even the **flags** might be
 ```js
 import ReactCustomFlagSelect from 'react-custom-flag-select';
 import "react-custom-flag-select/lib/react-custom-flag-select.min.css";
+
+const FLAG_SELECTOR_OPTION_LIST = [
+  { id: '1', name: 'US', displayText: 'US(1)', locale: 'en-US', flag: require('../src/image/flags/us.svg') },
+  { id: '86', name: '中国', displayText: '中国(86)', locale: 'zh-CN', flag: require('../src/image/flags/cn.svg') }
+];
 
  <ReactCustomFlagSelect
    tabIndex={'1'} //Optional.[String or Number].Default: -1.
