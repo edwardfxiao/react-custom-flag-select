@@ -53,10 +53,29 @@ In case the **country code** or the **area code** or even the **flags** might be
 import ReactCustomFlagSelect from 'react-custom-flag-select';
 import "react-custom-flag-select/lib/react-custom-flag-select.min.css";
 
+const find = (arr, obj) => {
+  const res = [];
+  arr.filter(o => {
+    let match = false;
+    Object.keys(obj).map(i => {
+      if (obj[i] == o[i]) {
+        match = true;
+      }
+    });
+    if (match) {
+      res.push(o);
+    }
+  });
+  return res;
+};
+
 const FLAG_SELECTOR_OPTION_LIST = [
   { id: '1', name: 'US', displayText: 'US(1)', locale: 'en-US', flag: require('../src/image/flags/us.svg') },
   { id: '86', name: '中国', displayText: '中国(86)', locale: 'zh-CN', flag: require('../src/image/flags/cn.svg') }
 ];
+
+const { areaCode, phone, validate } = this.state;
+const currentItem = find(FLAG_SELECTOR_OPTION_LIST, { id: areaCode })[0];
 
  <ReactCustomFlagSelect
    tabIndex={'1'} //Optional.[String or Number].Default: -1.
