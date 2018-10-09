@@ -10,7 +10,9 @@ class ReactCustomFlagSelect extends Component {
     super(props);
     this.state = {
       value: props.value,
-      show: false
+      show: false,
+      isTyping: false,
+      keycodeList: []
     };
     if (!props.optionList.length) {
       console.error(ERROR);
@@ -37,6 +39,14 @@ class ReactCustomFlagSelect extends Component {
     } else {
       document.attachEvent('onmousedown', this.pageClick);
       document.attachEvent('touchstart', this.pageClick);
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.show != this.state.show) {
+      if (this.state.show) {
+        this.resetCurrentFocus();
+      }
     }
   }
 
@@ -86,6 +96,150 @@ class ReactCustomFlagSelect extends Component {
     }
   }
 
+  getIndex(list, val) {
+    let key = -1;
+    for (let i = 0; i < list.length; i++) {
+      if (list[i].id == val) {
+        key = i;
+        break;
+      }
+    }
+    return key;
+  }
+
+  resetCurrentFocus() {
+    const { value } = this.state;
+    const { optionList } = this.props;
+    this.currentFocus = this.getIndex(optionList, value);
+    this.scroll();
+  }
+
+  onKeyPress(e) {
+    this.setState({ isTyping: true });
+    e.preventDefault();
+    const { show, value } = this.state;
+    if (!show) {
+      return;
+    }
+    const x = this.itemsWrapper.getElementsByTagName('div');
+    const { optionList } = this.props;
+    this.currentFocus = this.currentFocus ? this.currentFocus : this.getIndex(optionList, value);
+    let direction = null;
+    const { keyCode } = e;
+    const keyCodeEsc = 27;
+    const keyCodeDown = 40;
+    const keyCodeUp = 38;
+    const keyCodeEnter = 13;
+    const selectKeyList = [keyCodeEsc, keyCodeDown, keyCodeUp, keyCodeEnter];
+    if (selectKeyList.indexOf(keyCode) != -1) {
+      if (keyCode == keyCodeEsc) {
+        this.setState({ show: false });
+        this.resetCurrentFocus();
+        return;
+      }
+      if (keyCode == keyCodeDown) {
+        direction = 'down';
+        this.currentFocus++;
+        if (this.currentFocus > optionList.length - 1) {
+          this.currentFocus = optionList.length - 1;
+        }
+        this.addActive();
+      } else if (keyCode == keyCodeUp) {
+        direction = 'up';
+        this.currentFocus--;
+        if (this.currentFocus < 0) {
+          this.currentFocus = 0;
+        }
+        this.addActive();
+      } else if (keyCode == keyCodeEnter) {
+        e.preventDefault();
+        if (this.currentFocus > -1) {
+          if (x) x[this.currentFocus].click();
+        }
+      }
+    } else {
+      const { keycodeList } = this.state;
+      if (!(keyCode >= 48 || keyCode <= 57 || keyCode >= 65 || keyCode <= 90 || keyCode >= 96 || keyCode <= 105)) {
+        return;
+      }
+      this.setTimeoutTyping();
+      const newkeyCodeList = [...keycodeList, keyCode];
+      const str = String.fromCharCode(...newkeyCodeList).toLowerCase();
+      let index = -1;
+      optionList.filter((i, k) => {
+        const { name } = i;
+        if (name.toLowerCase().startsWith(str)) {
+          if (index == -1) {
+            index = k;
+          }
+        }
+      });
+      if (index != -1) {
+        this.currentFocus = index;
+        this.addActive();
+      }
+      this.setState({ keycodeList: newkeyCodeList });
+    }
+    this.scroll(direction);
+  }
+
+  setTimeoutTyping() {
+    if (this.typingTimeout) {
+      clearTimeout(this.typingTimeout);
+    }
+    this.typingTimeout = setTimeout(() => {
+      this.setState({ keycodeList: [] });
+    }, 250);
+  }
+
+  scroll(direction) {
+    const containerHeight = this.itemsWrapper.offsetHeight;
+    const containerScrollTop = this.itemsWrapper.scrollTop;
+    const itemHeight = this.itemsWrapper.getElementsByTagName('div')[this.currentFocus].offsetHeight;
+    if (direction) {
+      if (direction == 'down') {
+        const bound = containerScrollTop + containerHeight;
+        const heightItems = this.currentFocus * itemHeight;
+        const heightContainer = bound - itemHeight;
+        if (heightItems >= heightContainer) {
+          const offset = Math.abs(heightItems - heightContainer - itemHeight);
+          if (offset >= 0 && !this.corrected) {
+            this.itemsWrapper.scrollTop = containerScrollTop + itemHeight - offset;
+            this.corrected = true;
+          } else {
+            this.itemsWrapper.scrollTop = containerScrollTop + itemHeight;
+          }
+        }
+      }
+      if (direction == 'up') {
+        this.corrected = false;
+        if (this.currentFocus * itemHeight <= containerScrollTop) {
+          this.itemsWrapper.scrollTop = this.currentFocus * itemHeight;
+        }
+      }
+    } else {
+      this.corrected = false;
+      this.itemsWrapper.scrollTop = this.currentFocus * itemHeight;
+    }
+  }
+
+  addActive() {
+    const x = this.itemsWrapper.getElementsByTagName('div');
+    if (!x) return false;
+    this.removeActive();
+    if (this.currentFocus >= x.length) this.currentFocus = 0;
+    if (this.currentFocus < 0) this.currentFocus = x.length - 1;
+    const item = x[this.currentFocus];
+    item.classList.add(STYLES['select__hover-active']);
+  }
+
+  removeActive() {
+    const x = this.itemsWrapper.getElementsByTagName('div');
+    for (var i = 0; i < x.length; i++) {
+      x[i].classList.remove(STYLES['select__hover-active']);
+    }
+  }
+
   pageClick(e) {
     if (this.wrapper.contains(e.target)) {
       return;
@@ -123,7 +277,7 @@ class ReactCustomFlagSelect extends Component {
       selectOptionListItemHtml
     } = this.props;
 
-    const { value, show, successMsg, err } = this.state;
+    const { value, show, successMsg, err, isTyping } = this.state;
 
     const wrapperClass = cx(classNameWrapper, STYLES['select__wrapper'], successMsg && !err && STYLES['success'], disabled && STYLES['disabled']);
 
@@ -141,7 +295,13 @@ class ReactCustomFlagSelect extends Component {
       disabled && STYLES['disabled']
     );
 
-    const selectOptionListItemClass = cx(classNameOptionListItem, STYLES['select__options-item'], successMsg && !err && STYLES['success'], disabled && STYLES['disabled']);
+    const selectOptionListItemClass = cx(
+      !isTyping && STYLES['select__options-item-show-cursor'],
+      classNameOptionListItem,
+      STYLES['select__options-item'],
+      successMsg && !err && STYLES['success'],
+      disabled && STYLES['disabled']
+    );
 
     const dropdownIconClass = cx(classNameDropdownIconOptionListItem, STYLES['select__dropdown-icon']);
 
@@ -159,6 +319,16 @@ class ReactCustomFlagSelect extends Component {
         optionListHtml = optionList.map((i, k) => {
           return (
             <div
+              onMouseOver={() => {
+                this.currentFocus = k;
+                this.addActive();
+              }}
+              onMouseMove={() => {
+                this.setState({ isTyping: false });
+              }}
+              onMouseOut={() => {
+                this.removeActive();
+              }}
               className={String(i.id) == String(value) ? `${selectOptionListItemClass} ${STYLES['active']}` : `${selectOptionListItemClass}`}
               key={k}
               style={customStyleOptionListItem}
@@ -276,4 +446,4 @@ ReactCustomFlagSelect.propTypes = {
   customStyleOptionListItem: PropTypes.object
 };
 
-export default ReactCustomFlagSelect
+export default ReactCustomFlagSelect;

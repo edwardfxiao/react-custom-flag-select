@@ -24,7 +24,15 @@
 .select__container {
   padding: 2%;
   position: relative;
-  border: 1px solid #e5e5e5;
+  border: 1px solid #d3d3d3;
+}
+
+.select__container.error {
+  border-color: #ff5a57;
+}
+
+.select__container.success {
+  border-color: #2fca6f;
 }
 
 .select__container.disabled {
@@ -33,38 +41,61 @@
 
 .select__options-item {
   background: #fff;
-  color: #4a4a4a;
   transition: background 0.4s, color 0.2s;
   padding: 10px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  cursor: none;
 }
 
-.select__options-item:hover {
+.select__options-item-show-cursor {
+  cursor: pointer;
+}
+
+.select__no-mouse {
+  cursor: none;
+}
+
+.select__hover-active {
   background: #ff5a57;
   color: #fff;
 }
 
-.select__options-item.active:hover {
-  color: #4a4a4a;
+.select__options-item.active {
+  background: #d3d3d3;
+  color: #fff;
 }
 
-.select__options-item.active {
-  background: #e5e5e5;
+.select__options-container-animate {
+  z-index: 1;
+  margin-top: 2%;
+  position: absolute;
+  background: #fff;
+  width: 100%;
+  opacity: 0;
+  left: 50%;
+  transform-origin: 0 0;
+  transition: transform 0.4s, opacity 0.2s;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08), 0 0 1px 0 rgba(0, 0, 0, 0.12);
+  z-index: -1;
+  transform: translate(-50%, 0) scale(1, 0);
+}
+
+.select__options-container-animate.show {
+  transform: translate(-50%, 0) scale(1, 1);
+  opacity: 1;
+  z-index: 3;
 }
 
 .select__options-container {
   border: 1px solid #bbbbbb;
   z-index: 1;
-  margin-top: 20%;
+  margin-top: 2%;
   position: absolute;
   background: #fff;
-  left: 0;
+  width: 100%;
+  left: 50%;
   display: none;
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08), 0 0 1px 0 rgba(0, 0, 0, 0.12);
-  min-width: 100px;
+  transform: translateX(-50%);
 }
 
 .select__options-container.show {
@@ -78,8 +109,8 @@
 }
 
 .select__dropdown-icon {
-  width: 10px;
-  height: 10px;
+  width: 20px;
+  height: 20px;
 }
 
 .select__dropdown-icon:before {
@@ -90,8 +121,8 @@
   border-style: solid;
   display: block;
   width: 0;
-  border-width: 5px 5px 0;
-  border-color: #b3b3b3 transparent;
+  border-width: 8px 8px 0;
+  border-color: #e3e3e3 transparent;
 }
 
 .select__dropdown-icon-container {
