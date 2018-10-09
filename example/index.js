@@ -8,7 +8,7 @@ import STYLES from '../src/css/example.css';
 import { Textbox } from 'react-inputs-validation';
 import validator from 'validator';
 import 'react-inputs-validation/lib/react-inputs-validation.min.css';
-import ReactCustomFlagSelect from '../src/js/ReactCustomFlagSelect/index.js';
+import ReactCustomFlagSelect from '../src/js/ReactCustomFlagSelect/ReactCustomFlagSelect.js';
 
 const markdownExample = `
 \`\`\`javascript

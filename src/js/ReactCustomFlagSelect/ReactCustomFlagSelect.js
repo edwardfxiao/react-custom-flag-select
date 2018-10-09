@@ -25,11 +25,13 @@ class ReactCustomFlagSelect extends Component {
         return;
       });
     }
+    this.optionItems = [];
     this.onChange = this.onChange.bind(this);
     this.onClick = this.onClick.bind(this);
     this.onBlur = this.onBlur.bind(this);
     this.onFocus = this.onFocus.bind(this);
     this.pageClick = this.pageClick.bind(this);
+    this.onKeyPress = this.onKeyPress.bind(this);
   }
 
   componentDidMount() {
@@ -40,6 +42,7 @@ class ReactCustomFlagSelect extends Component {
       document.attachEvent('onmousedown', this.pageClick);
       document.attachEvent('touchstart', this.pageClick);
     }
+    this.wrapper.addEventListener('keydown', this.onKeyPress);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -121,7 +124,7 @@ class ReactCustomFlagSelect extends Component {
     if (!show) {
       return;
     }
-    const x = this.itemsWrapper.getElementsByTagName('div');
+    const x = this.optionItems;
     const { optionList } = this.props;
     this.currentFocus = this.currentFocus ? this.currentFocus : this.getIndex(optionList, value);
     let direction = null;
@@ -167,10 +170,18 @@ class ReactCustomFlagSelect extends Component {
       const str = String.fromCharCode(...newkeyCodeList).toLowerCase();
       let index = -1;
       optionList.filter((i, k) => {
-        const { name } = i;
-        if (name.toLowerCase().startsWith(str)) {
-          if (index == -1) {
-            index = k;
+        const { name, displayText } = i;
+        if (displayText) {
+          if (displayText.toLowerCase().startsWith(str)) {
+            if (index == -1) {
+              index = k;
+            }
+          }
+        } else {
+          if (name.toLowerCase().startsWith(str)) {
+            if (index == -1) {
+              index = k;
+            }
           }
         }
       });
@@ -195,7 +206,7 @@ class ReactCustomFlagSelect extends Component {
   scroll(direction) {
     const containerHeight = this.itemsWrapper.offsetHeight;
     const containerScrollTop = this.itemsWrapper.scrollTop;
-    const itemHeight = this.itemsWrapper.getElementsByTagName('div')[this.currentFocus].offsetHeight;
+    const itemHeight = this.optionItems[this.currentFocus].offsetHeight;
     if (direction) {
       if (direction == 'down') {
         const bound = containerScrollTop + containerHeight;
@@ -224,7 +235,7 @@ class ReactCustomFlagSelect extends Component {
   }
 
   addActive() {
-    const x = this.itemsWrapper.getElementsByTagName('div');
+    const x = this.optionItems;
     if (!x) return false;
     this.removeActive();
     if (this.currentFocus >= x.length) this.currentFocus = 0;
@@ -234,7 +245,7 @@ class ReactCustomFlagSelect extends Component {
   }
 
   removeActive() {
-    const x = this.itemsWrapper.getElementsByTagName('div');
+    const x = this.optionItems;
     for (var i = 0; i < x.length; i++) {
       x[i].classList.remove(STYLES['select__hover-active']);
     }
@@ -319,6 +330,7 @@ class ReactCustomFlagSelect extends Component {
         optionListHtml = optionList.map((i, k) => {
           return (
             <div
+              ref={ref => (this.optionItems[k] = ref)}
               onMouseOver={() => {
                 this.currentFocus = k;
                 this.addActive();
@@ -386,7 +398,7 @@ class ReactCustomFlagSelect extends Component {
           <div className={selectClass} style={customStyleSelect}>
             {selectorHtml}
           </div>
-          <div className={selectOptionListContainerClass} style={customStyleOptionListContainer}>
+          <div ref={ref => (this.itemsWrapper = ref)} className={selectOptionListContainerClass} style={customStyleOptionListContainer}>
             {optionListHtml}
           </div>
         </div>
