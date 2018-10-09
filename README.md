@@ -9,8 +9,16 @@ A react custom flag (country code) select.
 # Codesandbox Examples
 * <a href="https://codesandbox.io/s/jvw9nvyzv">Playground</a>
 
+# Thanks
 #### This project is inspired by <a href="https://github.com/ekwonye-richard/react-flags-select">ekwonye-richard/react-flags-select</a>
 #### Flag images: <a href="https://github.com/ekwonye-richard/react-flags-select/tree/master/flags">https://github.com/ekwonye-richard/react-flags-select/tree/master/flags</a>
+
+# Why another flag select?
+**Area Code is Area Code, Phone Number is Phone Number, Flag is Flag. Easy for you to handle when they are separated.**
+
+This component supports fully customized html. It focuses on the data you provided and handles the **country code** or **area code** only. Not like <a href="https://github.com/mukeshsoni/react-telephone-input">react-telephone-input</a> validate whole value along with the phone number without separation from 'area code' and 'phone number', which sometimes could be really painful when you are trying to handle them in your own way. 
+
+In case the **country code** or the **area code** or even the **flags** might be wrong inside a library, why don't providing them yourself?
 
 # Docs Link
 [ReactCustomFlagSelect](#ReactCustomFlagSelect)
@@ -25,7 +33,7 @@ A react custom flag (country code) select.
 |type                              |  Opt  |  Str   |                                             |  "text"    |
 |value                             |  Opt  |  Str   |                                             |  ""        |
 |disabled                          |  Opt  |  Bool  |                                             |  false     |
-|**optionList**                    |**Req**|**Array**|**[{id: "1", name: "United States", flag: "us.svg"}, {id: "86", name: "中国", flag: "cn.svg"}]**              |**[]**          |
+|**optionList**                    |**Req**|**Array**|**[{id: "1", name: "United States", displayText: "US(1)", flag: "us.svg"}, {id: "86", name: "中国", displayText: "中国(86)", flag: "cn.svg"}]**              |**[]**          |
 |classNameSelect                   |  Opt  |  Str   |                                             |  ""        |
 |classNameWrapper                  |  Opt  |  Str   |                                             |  ""        |
 |classNameContainer                |  Opt  |  Str   |                                             |  ""        |
@@ -46,6 +54,30 @@ A react custom flag (country code) select.
 ```js
 import ReactCustomFlagSelect from 'react-custom-flag-select';
 import "react-custom-flag-select/lib/react-custom-flag-select.min.css";
+
+const find = (arr, obj) => {
+  const res = [];
+  arr.filter(o => {
+    let match = false;
+    Object.keys(obj).map(i => {
+      if (obj[i] == o[i]) {
+        match = true;
+      }
+    });
+    if (match) {
+      res.push(o);
+    }
+  });
+  return res;
+};
+
+const FLAG_SELECTOR_OPTION_LIST = [
+  { id: '1', name: 'US', displayText: 'US(1)', locale: 'en-US', flag: require('../src/image/flags/us.svg') },
+  { id: '86', name: '中国', displayText: '中国(86)', locale: 'zh-CN', flag: require('../src/image/flags/cn.svg') }
+];
+
+const { areaCode, phone, validate } = this.state;
+const currentItem = find(FLAG_SELECTOR_OPTION_LIST, { id: areaCode })[0];
 
  <ReactCustomFlagSelect
    tabIndex={'1'} //Optional.[String or Number].Default: -1.
