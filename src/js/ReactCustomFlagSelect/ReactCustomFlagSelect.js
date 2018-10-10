@@ -8,6 +8,13 @@ try {
 
 const ERROR = 'Please provide valid optionList. i.e optionList=[{id: "1", name: "United States", flag: "us.svg"}, {id: "86", name: "中国", flag: "cn.svg"}]';
 
+if (!String.prototype.startsWith) {
+  String.prototype.startsWith = function(searchString, position) {
+    position = position || 0;
+    return this.indexOf(searchString, position) === position;
+  };
+}
+
 class ReactCustomFlagSelect extends Component {
   constructor(props) {
     super(props);
@@ -38,13 +45,8 @@ class ReactCustomFlagSelect extends Component {
   }
 
   componentDidMount() {
-    if (document.addEventListener) {
-      window.addEventListener('mousedown', this.pageClick, false);
-      window.addEventListener('touchstart', this.pageClick, false);
-    } else {
-      document.attachEvent('onmousedown', this.pageClick);
-      document.attachEvent('touchstart', this.pageClick);
-    }
+    window.addEventListener('mousedown', this.pageClick);
+    window.addEventListener('touchstart', this.pageClick);
     this.wrapper.addEventListener('keydown', this.onKeyPress);
   }
 
@@ -57,13 +59,9 @@ class ReactCustomFlagSelect extends Component {
   }
 
   componentWillUnmount() {
-    if (document.removeEventListener) {
-      window.removeEventListener('mousedown', this.pageClick, false);
-      window.removeEventListener('touchstart', this.pageClick, false);
-    } else {
-      document.detachEvent('onmousedown', this.pageClick);
-      document.detachEvent('touchstart', this.pageClick);
-    }
+    window.removeEventListener('mousedown', this.pageClick);
+    window.removeEventListener('touchstart', this.pageClick);
+    this.wrapper.removeEventListener('keydown', this.onKeyPress);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -243,14 +241,13 @@ class ReactCustomFlagSelect extends Component {
     this.removeActive();
     if (this.currentFocus >= x.length) this.currentFocus = 0;
     if (this.currentFocus < 0) this.currentFocus = x.length - 1;
-    const item = x[this.currentFocus];
-    item.classList.add(STYLES['select__hover-active']);
+    x[this.currentFocus].className += ' ' + STYLES['select__hover-active'];
   }
 
   removeActive() {
     const x = this.optionItems;
     for (var i = 0; i < x.length; i++) {
-      x[i].classList.remove(STYLES['select__hover-active']);
+      x[i].className = x[i].className.replace(STYLES['select__hover-active'], '');
     }
   }
 
@@ -356,7 +353,7 @@ class ReactCustomFlagSelect extends Component {
     let flagHtml;
     if (item.flag) {
       flagHtml = (
-        <div style={{ width: '30%' }}>
+        <div className={STYLES['select__dropdown-flag']} style={{ width: '30%' }}>
           <img src={item.flag} style={{ width: '100%', height: '100%', verticalAlign: 'middle' }} />
         </div>
       );
@@ -365,7 +362,7 @@ class ReactCustomFlagSelect extends Component {
       selectorHtml = (
         <div className={STYLES['select__dropdown']}>
           {flagHtml}&nbsp;
-          <div className={STYLES['ellipsis']}>{item.id}&nbsp;</div>
+          <div className={`${STYLES['select__dropdown-name']} ${STYLES['ellipsis']}`}>{item.id}&nbsp;</div>
           <div className={dropdownIconClass} />
         </div>
       );

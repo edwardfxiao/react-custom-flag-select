@@ -1,3 +1,6 @@
+import 'core-js/es6/map';
+import 'core-js/es6/set';
+import 'raf/polyfill';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
@@ -13,6 +16,7 @@ import ReactCustomFlagSelect from '../src/js/ReactCustomFlagSelect/ReactCustomFl
 const markdownExample = `
 \`\`\`javascript
 import ReactCustomFlagSelect from 'react-custom-flag-select';
+import "react-custom-flag-select/lib/react-custom-flag-select.min.css";
 import { Textbox } from 'react-inputs-validation';
 import 'react-inputs-validation/lib/react-inputs-validation.min.css';
 
@@ -72,7 +76,7 @@ class Index extends Component {
                   customStyleContainer={{ border: 'none', fontSize: '12px' }} //
                   customStyleSelect={{ width: '60px' }}
                   customStyleOptionListItem={{}} //
-                  customStyleOptionListContainer={{}} //
+                  customStyleOptionListContainer={{ maxHeight: '100px', overflow: 'auto', width: '120px', marginTop: '22%', left: '46px' }} //
                   customStyleDropdownIcon={{}} //
                   onChange={areaCode => {
                     this.setState({ areaCode: areaCode }, () => {
@@ -218,7 +222,7 @@ class Index extends Component {
                   customStyleContainer={{ border: 'none', fontSize: '12px' }} //Optional.[Object].Default: {}.
                   customStyleSelect={{ width: '60px' }} //Optional.[Object].Default: {}.
                   customStyleOptionListItem={{}} //Optional.[Object].Default: {}.
-                  customStyleOptionListContainer={{}} //Optional.[Object].Default: {}.
+                  customStyleOptionListContainer={{ maxHeight: '100px', overflow: 'auto', width: '120px', marginTop: '22%', left: '46px' }} //Optional.[Object].Default: {}.
                   customStyleDropdownIcon={{}} //Optional.[Object].Default: {}.
                   onChange={areaCode => {
                     this.setState({ areaCode: areaCode }, () => {
