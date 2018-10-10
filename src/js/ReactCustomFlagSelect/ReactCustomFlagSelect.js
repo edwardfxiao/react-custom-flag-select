@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import STYLES from './react-custom-flag-select.css';
+let STYLES = {};
+try {
+  STYLES = require('./react-custom-flag-select.css');
+} catch (ex) {}
 
 const ERROR = 'Please provide valid optionList. i.e optionList=[{id: "1", name: "United States", flag: "us.svg"}, {id: "86", name: "中国", flag: "cn.svg"}]';
 
