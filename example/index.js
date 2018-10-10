@@ -8,12 +8,11 @@ import STYLES from '../src/css/example.css';
 import { Textbox } from 'react-inputs-validation';
 import validator from 'validator';
 import 'react-inputs-validation/lib/react-inputs-validation.min.css';
-import ReactCustomFlagSelect from '../src/js/ReactCustomFlagSelect/index.js';
+import ReactCustomFlagSelect from '../src/js/ReactCustomFlagSelect/ReactCustomFlagSelect.js';
 
 const markdownExample = `
 \`\`\`javascript
 import ReactCustomFlagSelect from 'react-custom-flag-select';
-import "react-custom-flag-select/lib/react-custom-flag-select.min.css";
 import { Textbox } from 'react-inputs-validation';
 import 'react-inputs-validation/lib/react-inputs-validation.min.css';
 
