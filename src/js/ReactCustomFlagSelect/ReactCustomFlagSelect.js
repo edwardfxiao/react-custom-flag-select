@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import STYLES from './react-custom-flag-select.css';
+let STYLES = {};
+try {
+  STYLES = require('./react-custom-flag-select.css');
+} catch (ex) {}
 
 const ERROR = 'Please provide valid optionList. i.e optionList=[{id: "1", name: "United States", flag: "us.svg"}, {id: "86", name: "中国", flag: "cn.svg"}]';
 
@@ -126,7 +129,7 @@ class ReactCustomFlagSelect extends Component {
     }
     const x = this.optionItems;
     const { optionList } = this.props;
-    this.currentFocus = this.currentFocus ? this.currentFocus : this.getIndex(optionList, value);
+    this.currentFocus = typeof this.currentFocus != 'undefined' ? this.currentFocus : this.getIndex(optionList, value);
     let direction = null;
     const { keyCode } = e;
     const keyCodeEsc = 27;
@@ -288,31 +291,19 @@ class ReactCustomFlagSelect extends Component {
       selectOptionListItemHtml
     } = this.props;
 
-    const { value, show, successMsg, err, isTyping } = this.state;
+    const { value, show, isTyping } = this.state;
 
-    const wrapperClass = cx(classNameWrapper, STYLES['select__wrapper'], successMsg && !err && STYLES['success'], disabled && STYLES['disabled']);
+    const wrapperClass = cx(classNameWrapper, STYLES['select__wrapper'], disabled && STYLES['disabled']);
 
-    const containerClass = cx(classNameContainer, STYLES['select__container'], show && STYLES['show'], successMsg && !err && STYLES['success'], disabled && STYLES['disabled']);
+    const containerClass = cx(classNameContainer, STYLES['select__container'], show && STYLES['show'], disabled && STYLES['disabled']);
 
-    const inputClass = cx(STYLES['select__input'], successMsg && !err && STYLES['success'], disabled && STYLES['disabled']);
+    const inputClass = cx(STYLES['select__input'], disabled && STYLES['disabled']);
 
-    const selectClass = cx(classNameSelect, STYLES['ellipsis'], STYLES['select__dropdown-menu'], successMsg && !err && STYLES['success'], disabled && STYLES['disabled']);
+    const selectClass = cx(classNameSelect, STYLES['ellipsis'], STYLES['select__dropdown-menu'], disabled && STYLES['disabled']);
 
-    const selectOptionListContainerClass = cx(
-      classNameOptionListContainer,
-      STYLES['select__options-container'],
-      show && STYLES['show'],
-      successMsg && !err && STYLES['success'],
-      disabled && STYLES['disabled']
-    );
+    const selectOptionListContainerClass = cx(classNameOptionListContainer, STYLES['select__options-container'], show && STYLES['show'], disabled && STYLES['disabled']);
 
-    const selectOptionListItemClass = cx(
-      !isTyping && STYLES['select__options-item-show-cursor'],
-      classNameOptionListItem,
-      STYLES['select__options-item'],
-      successMsg && !err && STYLES['success'],
-      disabled && STYLES['disabled']
-    );
+    const selectOptionListItemClass = cx(!isTyping && STYLES['select__options-item-show-cursor'], classNameOptionListItem, STYLES['select__options-item'], disabled && STYLES['disabled']);
 
     const dropdownIconClass = cx(classNameDropdownIconOptionListItem, STYLES['select__dropdown-icon']);
 

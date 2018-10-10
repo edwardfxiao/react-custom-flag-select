@@ -1,6 +1,6 @@
 {
   "name": "react-custom-flag-select",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "a react custom flag select component",
   "main": "index.js",
   "repository": {
