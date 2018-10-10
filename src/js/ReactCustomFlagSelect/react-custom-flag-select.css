@@ -1,3 +1,9 @@
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .select__wrapper,
 .select__wrapper *:focus {
   outline: 0;
@@ -113,8 +119,21 @@
 }
 
 .select__dropdown-icon {
+  width: 2%\9;
+  display: inline-block\9;
+  vertical-align: middle\9;
   width: 20px;
   height: 20px;
+}
+
+.select__dropdown-flag {
+  display: inline-block\9;
+  vertical-align: middle\9;
+}
+.select__dropdown-name {
+  width: 68%\9;
+  display: inline-block\9;
+  vertical-align: middle\9;
 }
 
 .select__dropdown-icon:before {
