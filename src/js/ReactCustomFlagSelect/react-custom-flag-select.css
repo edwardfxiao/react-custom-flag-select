@@ -40,10 +40,14 @@
 }
 
 .select__options-item {
+  cursor: none;
   background: #fff;
+  color: #4a4a4a;
   transition: background 0.4s, color 0.2s;
   padding: 10px;
-  cursor: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .select__options-item-show-cursor {
