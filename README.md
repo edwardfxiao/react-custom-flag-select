@@ -20,6 +20,16 @@ This component supports fully customized html. It focuses on the data you provid
 
 In case the **country code** or the **area code** or even the **flags** might be wrong inside a library, why don't providing them yourself?
 
+# Installation
+```sh
+npm install react-custom-flag-select --save
+```
+# Donate
+<a href="https://www.paypal.me/XIAOMENGXIAO/0.99" target="_blank" alt="PayPal Donate">Thanks for donating me a donut!&nbsp;&nbsp;⁄(⁄ ⁄•⁄ω⁄•⁄ ⁄)⁄</a>
+
+# Browser support
+Tested on IE9+ and Chrome and Safari(10.0.3)
+
 # Docs Link
 [ReactCustomFlagSelect](#ReactCustomFlagSelect)
 
