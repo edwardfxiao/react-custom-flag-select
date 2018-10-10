@@ -31,7 +31,7 @@
     "build_prod": "npm run webpack_prod",
     "build_lib_js": "NODE_ENV=production ./node_modules/.bin/webpack --config ./webpack/library.config.js",
     "build_lib_js_min": "NODE_ENV=production ./node_modules/.bin/webpack --config ./webpack/library.config.js --env build",
-    "build_lib": "npm run test & npm run build_lib_js & npm run build_lib_js_min && rm -rf lib/components && npm run babel ",
+    "build_lib": "npm run build_lib_js & npm run build_lib_js_min && rm -rf lib/components && npm run babel ",
     "server_dev": "node_modules/.bin/webpack-dev-server --config ./webpack/development.config.js",
     "server_prod": "node_modules/.bin/webpack-dev-server --config ./webpack/production.config.js"
   },
