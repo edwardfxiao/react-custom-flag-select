@@ -18,7 +18,7 @@ A react custom flag (country code) select.
 
 This component supports fully customized html. It focuses on the data you provided and handles the **country code** or **area code** only. Not like <a href="https://github.com/mukeshsoni/react-telephone-input">react-telephone-input</a> validate whole value along with the phone number without separation from 'area code' and 'phone number', which sometimes could be really painful when you are trying to handle them in your own way. 
 
-In case the **country code** or the **area code** or even the **flags** might be wrong inside a library, why don't providing them yourself?
+In case the **country code** or the **area code** or even the **flags** might be wrong inside a library, why don't provide them yourself?
 
 # Installation
 ```sh
