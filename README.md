@@ -107,7 +107,7 @@ const currentItem = find(FLAG_SELECTOR_OPTION_LIST, { id: areaCode })[0];
    customStyleContainer={{ border: 'none', fontSize: '12px' }} //Optional.[Object].Default: {}.
    customStyleSelect={{ width: '60px' }} //Optional.[Object].Default: {}.
    customStyleOptionListItem={{}} //Optional.[Object].Default: {}.
-   customStyleOptionListContainer={{}} //Optional.[Object].Default: {}.
+   customStyleOptionListContainer={{ maxHeight: '100px', overflow: 'auto', width: '120px', marginTop: '22%', left: '46px' }} //Optional.[Object].Default: {}.
    customStyleDropdownIcon={{}} //Optional.[Object].Default: {}.
    onChange={areaCode => {
      this.setState({ areaCode: areaCode }, () => {
