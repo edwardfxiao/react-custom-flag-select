@@ -5,7 +5,7 @@ const PATH = require('./build_path');
 const env = require('yargs').argv.env; // use --env with webpack 2
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-let libraryName = 'react-inputs-validation';
+let libraryName = 'react-custom-flag-select';
 
 let plugins = [], outputFile;
 
@@ -31,7 +31,7 @@ if (env === 'build') {
 }
 
 const config = {
-  entry: PATH.ROOT_PATH + 'src/js/Inputs/index.js',
+  entry: PATH.ROOT_PATH + 'src/js/ReactCustomFlagSelect/ReactCustomFlagSelect.js',
   devtool: 'source-map',
   output: {
     path: PATH.ROOT_PATH + '/lib',

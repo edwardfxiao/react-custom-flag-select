@@ -1,10 +1,35 @@
 # react-custom-flag-select
+[![npm version](https://badge.fury.io/js/react-custom-flag-select.svg)](https://badge.fury.io/js/react-custom-flag-select) [![Build Status](https://travis-ci.org/edwardfhsiao/react-custom-flag-select.svg?branch=master)](https://travis-ci.org/edwardfhsiao/react-custom-flag-select) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com) [![react-custom-flag-select](http://img.shields.io/npm/dm/rreact-custom-flag-select.svg)](https://www.npmjs.com/package/react-custom-flag-select) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/edwardfhsiao/react-custom-flag-select/master/LICENSE)
 
 A react custom flag (country code) select.
 # <img src="http://oc54ddm6x.bkt.clouddn.com/1851537437510_.pic.jpg" />
 
+# Online Demo
+<a href="https://edwardfhsiao.github.io/react-custom-flag-select/">Online demo example</a>
+
+# Codesandbox Examples
+* <a href="https://codesandbox.io/s/jvw9nvyzv">Playground</a>
+
+# Thanks
 #### This project is inspired by <a href="https://github.com/ekwonye-richard/react-flags-select">ekwonye-richard/react-flags-select</a>
 #### Flag images: <a href="https://github.com/ekwonye-richard/react-flags-select/tree/master/flags">https://github.com/ekwonye-richard/react-flags-select/tree/master/flags</a>
+
+# Why another flag select?
+**Area Code is Area Code, Phone Number is Phone Number, Flag is Flag. Easy for you to handle when they are separated.**
+
+This component supports fully customized html. It focuses on the data you provided and handles the **country code** or **area code** only. Not like <a href="https://github.com/mukeshsoni/react-telephone-input">react-telephone-input</a> validate whole value along with the phone number without separation from 'area code' and 'phone number', which sometimes could be really painful when you are trying to handle them in your own way. 
+
+In case the **country code** or the **area code** or even the **flags** might be wrong inside a library, why don't provide them yourself?
+
+# Installation
+```sh
+npm install react-custom-flag-select --save
+```
+# Donate
+<a href="https://www.paypal.me/XIAOMENGXIAO/0.99" target="_blank" alt="PayPal Donate">Thanks for donating me a donut!&nbsp;&nbsp;⁄(⁄ ⁄•⁄ω⁄•⁄ ⁄)⁄</a>
+
+# Browser support
+Tested on IE9+ and Chrome and Safari(10.0.3)
 
 # Docs Link
 [ReactCustomFlagSelect](#ReactCustomFlagSelect)
@@ -19,7 +44,7 @@ A react custom flag (country code) select.
 |type                              |  Opt  |  Str   |                                             |  "text"    |
 |value                             |  Opt  |  Str   |                                             |  ""        |
 |disabled                          |  Opt  |  Bool  |                                             |  false     |
-|**optionList**                    |**Req**|**Array**|**[{id: "1", name: "United States", flag: "us.svg"}, {id: "86", name: "中国", flag: "cn.svg"}]**              |**[]**          |
+|**optionList**                    |**Req**|**Array**|**[{id: "1", name: "United States", displayText: "US(1)", flag: "us.svg"}, {id: "86", name: "中国", displayText: "中国(86)", flag: "cn.svg"}]**              |**[]**          |
 |classNameSelect                   |  Opt  |  Str   |                                             |  ""        |
 |classNameWrapper                  |  Opt  |  Str   |                                             |  ""        |
 |classNameContainer                |  Opt  |  Str   |                                             |  ""        |
@@ -39,6 +64,31 @@ A react custom flag (country code) select.
 
 ```js
 import ReactCustomFlagSelect from 'react-custom-flag-select';
+import "react-custom-flag-select/lib/react-custom-flag-select.min.css";
+
+const find = (arr, obj) => {
+  const res = [];
+  arr.filter(o => {
+    let match = false;
+    Object.keys(obj).map(i => {
+      if (obj[i] == o[i]) {
+        match = true;
+      }
+    });
+    if (match) {
+      res.push(o);
+    }
+  });
+  return res;
+};
+
+const FLAG_SELECTOR_OPTION_LIST = [
+  { id: '1', name: 'US', displayText: 'US(1)', locale: 'en-US', flag: require('../src/image/flags/us.svg') },
+  { id: '86', name: '中国', displayText: '中国(86)', locale: 'zh-CN', flag: require('../src/image/flags/cn.svg') }
+];
+
+const { areaCode, phone, validate } = this.state;
+const currentItem = find(FLAG_SELECTOR_OPTION_LIST, { id: areaCode })[0];
 
  <ReactCustomFlagSelect
    tabIndex={'1'} //Optional.[String or Number].Default: -1.
@@ -58,7 +108,7 @@ import ReactCustomFlagSelect from 'react-custom-flag-select';
    customStyleContainer={{ border: 'none', fontSize: '12px' }} //Optional.[Object].Default: {}.
    customStyleSelect={{ width: '60px' }} //Optional.[Object].Default: {}.
    customStyleOptionListItem={{}} //Optional.[Object].Default: {}.
-   customStyleOptionListContainer={{}} //Optional.[Object].Default: {}.
+   customStyleOptionListContainer={{ maxHeight: '100px', overflow: 'auto', width: '120px', marginTop: '22%', left: '46px' }} //Optional.[Object].Default: {}.
    customStyleDropdownIcon={{}} //Optional.[Object].Default: {}.
    onChange={areaCode => {
      this.setState({ areaCode: areaCode }, () => {
