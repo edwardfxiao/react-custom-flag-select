@@ -41,13 +41,12 @@ class ReactCustomFlagSelect extends Component {
     this.onBlur = this.onBlur.bind(this);
     this.onFocus = this.onFocus.bind(this);
     this.pageClick = this.pageClick.bind(this);
-    this.onKeyPress = this.onKeyPress.bind(this);
+    this.onKeyDown = this.onKeyDown.bind(this);
   }
 
   componentDidMount() {
     window.addEventListener('mousedown', this.pageClick);
     window.addEventListener('touchstart', this.pageClick);
-    this.wrapper.addEventListener('keydown', this.onKeyPress);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -61,7 +60,6 @@ class ReactCustomFlagSelect extends Component {
   componentWillUnmount() {
     window.removeEventListener('mousedown', this.pageClick);
     window.removeEventListener('touchstart', this.pageClick);
-    this.wrapper.removeEventListener('keydown', this.onKeyPress);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -118,9 +116,11 @@ class ReactCustomFlagSelect extends Component {
     this.scroll();
   }
 
-  onKeyPress(e) {
+  onKeyDown(e) {
     this.setState({ isTyping: true });
-    e.preventDefault();
+    if (e.preventDefault) {
+      e.preventDefault();
+    }
     const { show, value } = this.state;
     if (!show) {
       return;
@@ -193,6 +193,7 @@ class ReactCustomFlagSelect extends Component {
       this.setState({ keycodeList: newkeyCodeList });
     }
     this.scroll(direction);
+    return this.currentFocus;
   }
 
   setTimeoutTyping() {
@@ -380,6 +381,7 @@ class ReactCustomFlagSelect extends Component {
         onFocus={this.onFocus}
         onBlur={this.onBlur}
         ref={ref => (this.wrapper = ref)}
+        onKeyDown={this.onKeyDown}
       >
         <div className={containerClass} style={customStyleContainer}>
           <input id={id} name={name} type="hidden" value={value} className={inputClass} onChange={() => {}} ref={ref => (this.input = ref)} />
