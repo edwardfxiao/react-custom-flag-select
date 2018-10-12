@@ -158,7 +158,6 @@ class ReactCustomFlagSelect extends Component {
         }
         this.addActive();
       } else if (keyCode == keyCodeEnter) {
-        e.preventDefault();
         if (this.currentFocus > -1) {
           if (x) x[this.currentFocus].click();
         }
