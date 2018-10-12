@@ -31,8 +31,13 @@
     "server_dev": "node_modules/.bin/webpack-dev-server --config ./webpack/development.config.js",
     "server_prod": "node_modules/.bin/webpack-dev-server --config ./webpack/production.config.js"
   },
+  "peerDependencies": {
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
+  },
   "dependencies": {
-    "classnames": "^2.2.5"
+    "classnames": "^2.2.5",
+    "prop-types": "^15.5.6"
   },
   "devDependencies": {
     "add-asset-html-webpack-plugin": "^1.0.2",
@@ -67,7 +72,6 @@
     "postcss-import": "^10.0.0",
     "postcss-loader": "^2.0.6",
     "prismjs": "^1.6.0",
-    "prop-types": "^15.5.6",
     "raf": "^3.4.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
