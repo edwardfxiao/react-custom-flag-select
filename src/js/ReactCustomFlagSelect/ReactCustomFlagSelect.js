@@ -209,6 +209,9 @@ class ReactCustomFlagSelect extends Component {
   scroll(direction) {
     const containerHeight = this.itemsWrapper.offsetHeight;
     const containerScrollTop = this.itemsWrapper.scrollTop;
+    if (!this.optionItems[this.currentFocus]) {
+      return;
+    }
     const itemHeight = this.optionItems[this.currentFocus].offsetHeight;
     if (direction) {
       if (direction == 'down') {
