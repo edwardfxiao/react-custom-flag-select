@@ -212,4 +212,137 @@ describe('ReactCustomFlagSelect component', () => {
     instance.onFocus();
     expect(value).toEqual('focused');
   });
+
+  it('[Type "C" and hit "Enter"]: Should call addActive', () => {
+    const value = '';
+    const wrapper = mount(<ReactCustomFlagSelect value={value} optionList={OPTION_LIST} />);
+    const instance = wrapper.instance();
+    instance.addActive = jest.fn();
+    instance.toggleShow(true);
+    instance.onKeyDown({ keyCode: 67 });
+    instance.onKeyDown({ keyCode: 13 });
+    expect(instance.addActive).toHaveBeenCalled();
+  });
+
+  it('[Type "C"]: Should call setTimeoutTyping', () => {
+    const value = '';
+    const wrapper = mount(<ReactCustomFlagSelect value={value} optionList={OPTION_LIST} />);
+    const instance = wrapper.instance();
+    instance.setTimeoutTyping = jest.fn();
+    instance.toggleShow(true);
+    instance.onKeyDown({ keyCode: 67 });
+    expect(instance.setTimeoutTyping).toHaveBeenCalled();
+  });
+
+  it('[Type "C"]: Should call setTimeoutTyping when typingTimeout is undefined', () => {
+    const value = '';
+    const wrapper = mount(<ReactCustomFlagSelect value={value} optionList={OPTION_LIST} />);
+    const instance = wrapper.instance();
+    instance.setTimeoutTyping = jest.fn();
+    instance.toggleShow(true);
+    wrapper.typingTimeout = undefined;
+    instance.onKeyDown({ keyCode: 67 });
+    instance.onKeyDown({ keyCode: 68 });
+    expect(instance.setTimeoutTyping).toHaveBeenCalled();
+  });
+
+  it('[Type "C" and then type "A"]: keycodeList should be [67, 65]', () => {
+    const value = '';
+    const wrapper = mount(<ReactCustomFlagSelect value={value} optionList={OPTION_LIST} />);
+    const instance = wrapper.instance();
+    instance.setTimeoutTyping = jest.fn();
+    instance.toggleShow(true);
+    wrapper.typingTimeout = undefined;
+    instance.onKeyDown({ keyCode: 67 });
+    instance.onKeyDown({ keyCode: 65 });
+    expect(wrapper.state().keycodeList).toEqual([67, 65]);
+  });
+
+  it('[onMouseOver]: Should call addActive', () => {
+    const value = '';
+    const wrapper = mount(<ReactCustomFlagSelect value={value} optionList={OPTION_LIST} onChange={() => {}} />);
+    wrapper.setState({ isTyping: true });
+    const instance = wrapper.instance();
+    instance.addActive = jest.fn();
+    const $input = wrapper.find('#select__wrapper');
+    $input.simulate('click');
+    wrapper
+      .find('.select__options-item')
+      .at(SELECTED_INDEX)
+      .simulate('mouseOver');
+    expect(instance.addActive).toHaveBeenCalled();
+  });
+
+  it('[onMouseOut]: Should call removeActive', () => {
+    const value = '';
+    const wrapper = mount(<ReactCustomFlagSelect value={value} optionList={OPTION_LIST} onChange={() => {}} />);
+    wrapper.setState({ isTyping: true });
+    const instance = wrapper.instance();
+    instance.removeActive = jest.fn();
+    const $input = wrapper.find('#select__wrapper');
+    $input.simulate('click');
+    wrapper
+      .find('.select__options-item')
+      .at(SELECTED_INDEX)
+      .simulate('mouseOut');
+    expect(instance.removeActive).toHaveBeenCalled();
+  });
+
+  it('[onMouseMove]: isTyping should be false', () => {
+    const value = '';
+    const wrapper = mount(<ReactCustomFlagSelect value={value} optionList={OPTION_LIST} onChange={() => {}} />);
+    wrapper.setState({ isTyping: true });
+    const $input = wrapper.find('#select__wrapper');
+    $input.simulate('click');
+    wrapper
+      .find('.select__options-item')
+      .at(SELECTED_INDEX)
+      .simulate('mouseMove');
+    expect(wrapper.state().isTyping).toEqual(false);
+  });
+  it('[selectOptionListItemHtml]: Should render selectOptionListItemHtml', () => {
+    const selectOptionListItemHtml = OPTION_LIST.map((i, k) => {
+      return (
+        <div className="foo" key={k}>
+          {i.name}
+        </div>
+      );
+    });
+    const wrapper = mount(<ReactCustomFlagSelect value="" optionList={OPTION_LIST} onChange={() => {}} selectOptionListItemHtml={selectOptionListItemHtml} />);
+    const $input = wrapper.find('#select__wrapper');
+    $input.simulate('click');
+    expect(wrapper.find('.foo').length).toEqual(3);
+  });
+
+  it('[pageClick]: Should call onBlur', () => {
+    const value = '';
+    const validationOption = { check: false };
+    const wrapper = mount(<ReactCustomFlagSelect value={value} optionList={OPTION_LIST} onChange={() => {}} validationOption={validationOption} />);
+    const instance = wrapper.instance();
+    instance.onFocus();
+    instance.onBlur = jest.fn();
+    instance.pageClick({ target: null });
+    expect(instance.onBlur).toHaveBeenCalled();
+  });
+
+  it('[STYLES]: Should have STYLES', () => {
+    ReactCustomFlagSelect.__Rewire__('STYLES', {
+      select__input: 'select__input_hash'
+    });
+    const value = '';
+    const validationOption = { check: false };
+    const wrapper = mount(<ReactCustomFlagSelect value={value} optionList={OPTION_LIST} onChange={() => {}} validationOption={validationOption} />);
+    expect(wrapper.find('.select__input_hash').length).toEqual(1);
+  });
+});
+
+describe('ReactCustomFlagSelect component componentWillReceiveProps', () => {
+  it('[value]: err should be false if this.props.value != nextProps.value', () => {
+    const value = 'us';
+    const wrapper = mount(<ReactCustomFlagSelect optionList={OPTION_LIST} value="" />);
+    wrapper.setProps({ value });
+    expect(wrapper.state().value).toEqual(value);
+    expect(wrapper.state().err).toEqual(false);
+    expect(wrapper.state().successMsg).toEqual(undefined);
+  });
 });
