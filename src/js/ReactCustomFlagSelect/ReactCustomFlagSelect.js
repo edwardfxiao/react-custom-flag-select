@@ -300,7 +300,7 @@ class ReactCustomFlagSelect extends Component {
 
     const inputClass = cx(STYLES['select__input'], disabled && STYLES['disabled']);
 
-    const selectClass = cx(classNameSelect, STYLES['ellipsis'], STYLES['select__dropdown-menu'], disabled && STYLES['disabled']);
+    const selectClass = cx(classNameSelect, STYLES['ellipsis'], disabled && STYLES['disabled']);
 
     const selectOptionListContainerClass = cx(classNameOptionListContainer, STYLES['select__options-container'], show && STYLES['show'], disabled && STYLES['disabled']);
 
