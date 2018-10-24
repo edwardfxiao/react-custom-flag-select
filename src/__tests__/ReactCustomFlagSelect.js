@@ -335,14 +335,3 @@ describe('ReactCustomFlagSelect component', () => {
     expect(wrapper.find('.select__input_hash').length).toEqual(1);
   });
 });
-
-describe('ReactCustomFlagSelect component componentWillReceiveProps', () => {
-  it('[value]: err should be false if this.props.value != nextProps.value', () => {
-    const value = 'us';
-    const wrapper = mount(<ReactCustomFlagSelect optionList={OPTION_LIST} value="" />);
-    wrapper.setProps({ value });
-    expect(wrapper.state().value).toEqual(value);
-    expect(wrapper.state().err).toEqual(false);
-    expect(wrapper.state().successMsg).toEqual(undefined);
-  });
-});
