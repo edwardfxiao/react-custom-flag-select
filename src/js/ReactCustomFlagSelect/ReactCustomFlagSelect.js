@@ -64,14 +64,13 @@ class ReactCustomFlagSelect extends Component {
     this.wrapper.removeEventListener('keydown', this.onKeyDown);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (String(this.props.value) != String(nextProps.value)) {
-      this.setState({
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState.value !== nextProps.value) {
+      return {
         value: nextProps.value,
-        err: false,
-        successMsg: undefined
-      });
+      };
     }
+    return null;
   }
 
   onChange(value, e) {
