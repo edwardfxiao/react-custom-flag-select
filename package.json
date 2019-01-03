@@ -44,7 +44,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
-    "prop-types": "^15.5.6",
+    "prop-types": "^15.5.6"
   },
   "devDependencies": {
     "add-asset-html-webpack-plugin": "^1.0.2",
