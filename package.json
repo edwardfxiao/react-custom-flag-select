@@ -1,6 +1,6 @@
 {
   "name": "react-custom-flag-select",
-  "version": "1.0.3",
+  "version": "1.0.9",
   "description": "a react custom flag select component",
   "main": "index.js",
   "repository": {
@@ -16,7 +16,7 @@
     "telephone code"
   ],
   "author": "Edward Xiao",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/edwardfhsiao/react-custom-flag-select/issues"
   },
@@ -39,12 +39,12 @@
     "server_prod": "node_modules/.bin/webpack-dev-server --config ./webpack/production.config.js"
   },
   "peerDependencies": {
-    "react": "^16.6.0",
-    "react-dom": "^16.6.0"
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
   },
   "dependencies": {
     "classnames": "^2.2.5",
-    "prop-types": "^15.5.6"
+    "prop-types": "^15.5.6",
   },
   "devDependencies": {
     "add-asset-html-webpack-plugin": "^1.0.2",
@@ -81,9 +81,9 @@
     "postcss-loader": "^2.0.6",
     "prismjs": "^1.6.0",
     "raf": "^3.4.0",
-    "react": "^16.6.0",
-    "react-dom": "^16.6.0",
-    "react-inputs-validation": "^1.2.1",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-inputs-validation": "^2.1.4",
     "react-markdown": "^2.5.0",
     "sass-loader": "^6.0.2",
     "style-loader": "^0.13.2",
