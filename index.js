@@ -1,2 +1,2 @@
-var ReactCustomFlagSelect = require('./lib/components/ReactCustomFlagSelect.js');
+var ReactCustomFlagSelect = require('./lib/components/index.js');
 module.exports = ReactCustomFlagSelect;

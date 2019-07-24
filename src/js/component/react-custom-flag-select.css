@@ -9,6 +9,10 @@
   outline: 0;
 }
 
+.select__wrapper.disabled {
+  cursor: not-allowed;
+}
+
 .select__wrapper {
   cursor: pointer;
   outline: none;
@@ -31,18 +35,6 @@
   padding: 2%;
   position: relative;
   border: 1px solid #d3d3d3;
-}
-
-.select__container.error {
-  border-color: #ff5a57;
-}
-
-.select__container.success {
-  border-color: #2fca6f;
-}
-
-.select__container.disabled {
-  background: #f8f8f8;
 }
 
 .select__options-item {

@@ -1,13 +1,26 @@
+const env = require('yargs').argv.env; // use --env with webpack 2
 const webpack = require('webpack');
 const path = require('path');
 const PATH = require('./build_path');
-const WebpackAssetsManifest = require('webpack-assets-manifest');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+let libraryName = 'react-custom-flag-select';
+
+let plugins = [],
+  outputFile;
+
+if (env === 'build') {
+  plugins.push(new MiniCssExtractPlugin({ filename: libraryName + '.min.css' }));
+  outputFile = libraryName + '.min.js';
+} else {
+  plugins.push(new MiniCssExtractPlugin({ filename: libraryName + '.css' }));
+  outputFile = libraryName + '.js';
+}
+
 var config = (module.exports = {
+  mode: 'production',
   context: PATH.ROOT_PATH,
-  entry: {
-    index: PATH.ROOT_PATH + 'example/index.js',
-  },
+  entry: PATH.ROOT_PATH + 'src/js/component/index.umd.js',
   module: {
     rules: [
       {
@@ -42,7 +55,7 @@ var config = (module.exports = {
       {
         test: /\.jsx?$/,
         include: [PATH.ROOT_PATH],
-        exclude: [PATH.NODE_MODULES_PATH, path.join(__dirname, '../', './example')],
+        exclude: [PATH.NODE_MODULES_PATH],
         enforce: 'pre',
         enforce: 'post',
         loader: 'eslint-loader',
@@ -87,7 +100,7 @@ var config = (module.exports = {
       },
       {
         test: /\.css$/,
-        include: [PATH.SOURCE_PATH, path.join(__dirname, '../', './lib')],
+        include: [PATH.SOURCE_PATH],
         exclude: [PATH.NODE_MODULES_PATH],
         enforce: 'pre',
         enforce: 'post',
@@ -95,14 +108,6 @@ var config = (module.exports = {
           MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
-            // options: {
-            //   modules: {
-            //     mode: 'local',
-            //     context: path.resolve(__dirname, 'src'),
-            //     localIdentName: '[name]__[local]___[hash:base64:5]',
-            //   },
-            //   importLoaders: 1,
-            // },
           },
           {
             loader: 'postcss-loader',
@@ -129,24 +134,11 @@ var config = (module.exports = {
     extensions: ['.ts', '.tsx', '.js', '.json', '.jsx', '.css'],
   },
   devtool: 'source-map',
-  devServer: {
-    contentBase: path.join(__dirname, 'dist'),
-    compress: true,
-    disableHostCheck: true,
-    historyApiFallback: true,
-    host: '0.0.0.0',
-    port: 9000,
+  output: {
+    path: PATH.ROOT_PATH + '/lib',
+    filename: outputFile,
+    library: libraryName,
+    libraryTarget: 'umd',
   },
-  plugins: [
-    new webpack.ContextReplacementPlugin(/\.\/locale$/, 'empty-module', false, /js$/),
-    new webpack.ProvidePlugin({
-      React: 'React',
-      react: 'React',
-      'window.react': 'React',
-      'window.React': 'React',
-    }),
-    new WebpackAssetsManifest({
-      fileName: 'manifest-rev.json',
-    }),
-  ],
+  plugins,
 });

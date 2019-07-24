@@ -1,6 +1,7 @@
 import 'core-js/es6/map';
 import 'core-js/es6/set';
 import 'raf/polyfill';
+import 'babel-polyfill';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
@@ -11,7 +12,7 @@ import STYLES from '../src/css/example.css';
 import { Textbox } from 'react-inputs-validation';
 import validator from 'validator';
 import 'react-inputs-validation/lib/react-inputs-validation.min.css';
-import ReactCustomFlagSelect from '../src/js/ReactCustomFlagSelect/ReactCustomFlagSelect.js';
+import ReactCustomFlagSelect from '../src/js/component/index.js';
 
 const markdownExample = `
 \`\`\`javascript
@@ -77,7 +78,6 @@ class Index extends Component {
                   customStyleSelect={{ width: '60px' }}
                   customStyleOptionListItem={{}} //
                   customStyleOptionListContainer={{ maxHeight: '100px', overflow: 'auto', width: '120px', marginTop: '22%', left: '46px' }} //
-                  customStyleDropdownIcon={{}} //
                   onChange={areaCode => {
                     this.setState({ areaCode: areaCode }, () => {
                       this.handlePhoneChange(phone);
@@ -150,6 +150,8 @@ CodeBlock.propTypes = {
 
 const FLAG_SELECTOR_OPTION_LIST = [
   { id: '1', name: 'US', displayText: 'US(1)', locale: 'en-US', flag: require('../src/image/flags/us.svg') },
+  { id: '2', name: 'ab', displayText: 'ab(1)', locale: 'en-US', flag: require('../src/image/flags/us.svg') },
+  { id: '3', name: 'wood', displayText: 'wood(1)', locale: 'en-US', flag: require('../src/image/flags/us.svg') },
   { id: '86', name: '中国', displayText: '中国(86)', locale: 'zh-CN', flag: require('../src/image/flags/cn.svg') }
 ];
 
@@ -223,7 +225,6 @@ class Index extends Component {
                   customStyleSelect={{ width: '60px' }} //Optional.[Object].Default: {}.
                   customStyleOptionListItem={{}} //Optional.[Object].Default: {}.
                   customStyleOptionListContainer={{ maxHeight: '100px', overflow: 'auto', width: '120px', marginTop: '22%', left: '46px' }} //Optional.[Object].Default: {}.
-                  customStyleDropdownIcon={{}} //Optional.[Object].Default: {}.
                   onChange={areaCode => {
                     this.setState({ areaCode: areaCode }, () => {
                       this.handlePhoneChange(phone);
@@ -263,7 +264,7 @@ class Index extends Component {
                 validationOption={{
                   check: true,
                   required: true,
-                  customFunc: phone => {
+                  customFunc: (phone) => {
                     if (validator.isMobilePhone(`${areaCode}${phone}`, currentItem.locale)) {
                       return true;
                     } else {
