@@ -10,7 +10,7 @@ A react custom flag (country code) select.
 # Codesandbox Examples
 * <a href="https://codesandbox.io/s/jvw9nvyzv">Live demo playground</a>
 
-###  :tada: For version >= 3.0.0, please update react and react-dom to at least ```16.8.6```, since it is rewrited with hooks.
+###  :tada: For version >= 2.0.0, please update react and react-dom to at least ```16.8.6```, since it is rewrited with hooks.
 ```js
   "peerDependencies": {
     "react": "^16.8.6",
