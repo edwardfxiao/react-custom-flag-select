@@ -108,13 +108,6 @@ var config = (module.exports = {
           MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
-            options: {
-              modules: {
-                context: path.resolve(__dirname, 'src'),
-                localIdentName: '[name]__[local]___[hash:base64:5]',
-              },
-              importLoaders: 1,
-            },
           },
           {
             loader: 'postcss-loader',

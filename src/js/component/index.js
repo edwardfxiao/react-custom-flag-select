@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useCallback, useRef, memo } from 'react';
 import { cx, getRandomId } from './utils.js';
-import './react-custom-flag-select.css';
-import STYLES from './react-custom-flag-select.css.json';
+// import './react-custom-flag-select.css';
+// import STYLES from './react-custom-flag-select.css.json';
+import STYLES from './react-custom-flag-select.css';
 const TYPE = 'select';
 let globalVariableIsFocusing = false;
 let globalVariableIsCorrected = false;
