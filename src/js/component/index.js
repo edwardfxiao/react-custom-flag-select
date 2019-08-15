@@ -30,10 +30,11 @@ export const getIndex = (list, value) => {
   }
   return key;
 };
+const DEFAULT_ID = getRandomId()
 const Index = memo(
   ({
     tabIndex = null,
-    id = getRandomId(),
+    id = DEFAULT_ID,
     name = '',
     value = '',
     disabled = false,
@@ -102,6 +103,9 @@ const Index = memo(
       window.addEventListener('touchstart', pageClick);
       if (tabIndex) {
         $wrapper.current.setAttribute('tabindex', String(tabIndex));
+      }
+      if (id) {
+        $wrapper.current.setAttribute('id', String(id));
       }
       return () => {
         window.removeEventListener('mousedown', pageClick);
@@ -386,7 +390,6 @@ const Option = memo(
     }, []);
     return (
       <div
-        id={id}
         ref={refItem}
         onMouseOver={handleOnMouseOver}
         onMouseMove={handleOnMouseMove}
