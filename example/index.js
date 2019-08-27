@@ -59,7 +59,7 @@ class Index extends Component {
           ...
 
             <div style={{ position: 'relative' }}>
-              <div style={{ position: 'absolute', left: '15px', top: '10px', zIndex: '1' }}>
+              <div style={{ position: 'absolute', left: '0', top: '10px', zIndex: '1' }}>
                 <ReactCustomFlagSelect
                   tabIndex={'1'} //
                   id={'areaCode'} //
