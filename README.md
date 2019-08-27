@@ -77,7 +77,7 @@ import "react-custom-flag-select/lib/react-custom-flag-select.min.css";
 
 const find = (arr, obj) => {
   const res = [];
-  arr.filter(o => {
+  arr.forEach(o => {
     let match = false;
     Object.keys(obj).map(i => {
       if (obj[i] == o[i]) {
