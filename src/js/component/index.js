@@ -40,6 +40,7 @@ const Index = memo(
     name = '',
     value = '',
     disabled = false,
+    animate = false,
     optionList = [],
     classNameWrapper = '',
     classNameContainer = '',
@@ -305,7 +306,7 @@ const Index = memo(
     const containerClass = cx(classNameContainer, STYLES[`${TYPE}__container`], show && STYLES['show']);
     const inputClass = cx(STYLES[`${TYPE}__input`]);
     const selectClass = cx(classNameSelect, STYLES['ellipsis']);
-    const selectOptionListContainerClass = cx(classNameOptionListContainer, STYLES[`${TYPE}__options-container`], show && STYLES['show']);
+    const selectOptionListContainerClass = cx(classNameOptionListContainer, STYLES[`${TYPE}__options-container`], show && STYLES['show'], animate && STYLES[`${TYPE}__options-container-animate`]);
     const selectOptionListItemClass = cx(!isTyping && STYLES[`${TYPE}__options-item-show-cursor`], classNameOptionListItem, STYLES[`${TYPE}__options-item`]);
     const dropdownIconClass = cx(classNameDropdownIconOptionListItem, STYLES[`${TYPE}__dropdown-icon`]);
     let optionListHtml;
