@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useCallback, useRef, memo } from 'react';
 import { cx, getRandomId } from './utils.js';
-// import './react-custom-flag-select.css';
-// import STYLES from './react-custom-flag-select.css.json';
-import STYLES from './react-custom-flag-select.css';
+// DEVELOPMENT
+import './react-custom-flag-select.css';
+import STYLES from './react-custom-flag-select.css.json';
+// BUILD PRODUCTION
+// import STYLES from './react-custom-flag-select.css';
 const TYPE = 'select';
 let globalVariableIsFocusing = false;
 let globalVariableIsCorrected = false;
@@ -30,7 +32,7 @@ export const getIndex = (list, value) => {
   }
   return key;
 };
-const DEFAULT_ID = getRandomId()
+const DEFAULT_ID = getRandomId();
 const Index = memo(
   ({
     tabIndex = null,
@@ -333,7 +335,7 @@ const Index = memo(
     let flagHtml;
     if (item.flag) {
       flagHtml = (
-        <div className={STYLES['select__dropdown-flag']} style={{ width: '30%' }}>
+        <div className={STYLES['select__dropdown-flag']}>
           <img src={item.flag} style={{ width: '100%', height: '100%', verticalAlign: 'middle' }} />
         </div>
       );
@@ -342,8 +344,9 @@ const Index = memo(
       selectorHtml = (
         <div className={STYLES['select__dropdown']}>
           {flagHtml}&nbsp;
-          <div className={`${STYLES['select__dropdown-name']} ${STYLES['ellipsis']}`}>{item.id}&nbsp;</div>
-          <div className={dropdownIconClass} />
+          <div className={`${STYLES['select__dropdown-name']} ${STYLES['ellipsis']}`}>
+            <div>{item.id}</div>&nbsp;<div className={dropdownIconClass}>&nbsp;</div>
+          </div>
         </div>
       );
     }
@@ -363,7 +366,7 @@ const Index = memo(
         <div className={containerClass} style={customStyleContainer}>
           <input id={id} name={name} type="hidden" value={value} className={inputClass} onChange={() => {}} />
           <div className={selectClass} style={customStyleSelect}>
-            {selectorHtml}
+            <div className={STYLES[`${TYPE}__selector`]}>{selectorHtml}</div>
           </div>
           <div ref={$itemsWrapper} className={selectOptionListContainerClass} style={customStyleOptionListContainer}>
             {optionListHtml}
@@ -389,23 +392,17 @@ const Option = memo(
       onMouseOut();
     }, []);
     return (
-      <div
-        ref={refItem}
-        onMouseOver={handleOnMouseOver}
-        onMouseMove={handleOnMouseMove}
-        onMouseOut={handleOnMouseOut}
-        className={className}
-        style={customStyleOptionListItem}
-        onClick={handleOnClick}
-      >
+      <div ref={refItem} onMouseOver={handleOnMouseOver} onMouseMove={handleOnMouseMove} onMouseOut={handleOnMouseOut} className={className} style={customStyleOptionListItem} onClick={handleOnClick}>
         {item.flag ? (
-          <div style={{ width: '30%' }}>
+          <div className={STYLES[`${TYPE}__dropdown-flag`]}>
             <img src={item.flag} style={{ width: '100%', height: '100%', verticalAlign: 'middle' }} />
           </div>
         ) : (
           ''
         )}
-        <div>{item.displayText ? item.displayText : item.name}</div>
+        <div className={`${STYLES['select__dropdown-name']} ${STYLES['ellipsis']}`}>
+          <div>{item.displayText ? item.displayText : item.name}</div>
+        </div>
       </div>
     );
   },

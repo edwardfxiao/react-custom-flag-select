@@ -74,10 +74,10 @@ class Index extends Component {
                   classNameOptionListContainer={''} //
                   classNameDropdownIconOptionListItem={''} //
                   customStyleWrapper={{}} //
-                  customStyleContainer={{ border: 'none', fontSize: '12px' }} //
-                  customStyleSelect={{ width: '60px' }}
-                  customStyleOptionListItem={{}} //
-                  customStyleOptionListContainer={{ maxHeight: '100px', overflow: 'auto', width: '120px', marginTop: '22%', left: '46px' }} //
+                  customStyleContainer={{ border: 'none', fontSize: '12px' }} //Optional.[Object].Default: {}.
+                  customStyleSelect={{ width: '100px' }} //Optional.[Object].Default: {}.
+                  customStyleOptionListItem={{}} //Optional.[Object].Default: {}.
+                  customStyleOptionListContainer={{ maxHeight: '100px', overflow: 'auto', width: '120px', marginTop: '11px' }} //Optional.[Object].Default: {}.
                   onChange={areaCode => {
                     this.setState({ areaCode: areaCode }, () => {
                       this.handlePhoneChange(phone);
@@ -205,7 +205,7 @@ class Index extends Component {
         <div style={{ padding: '20px', border: '1px solid #e5e5e5' }}>
           <form onSubmit={this.submit}>
             <div style={{ position: 'relative' }}>
-              <div style={{ position: 'absolute', left: '15px', top: '10px', zIndex: '1' }}>
+              <div style={{ position: 'absolute', left: '0', top: '10px', zIndex: '1' }}>
                 <ReactCustomFlagSelect
                   tabIndex={'1'} //Optional.[String or Number].Default: -1.
                   id={'areaCode'} //Optional.[String].Default: "". Input ID.
@@ -222,9 +222,9 @@ class Index extends Component {
                   classNameDropdownIconOptionListItem={''} //Optional.[String].Default: "".
                   customStyleWrapper={{}} //Optional.[Object].Default: {}.
                   customStyleContainer={{ border: 'none', fontSize: '12px' }} //Optional.[Object].Default: {}.
-                  customStyleSelect={{ width: '60px' }} //Optional.[Object].Default: {}.
+                  customStyleSelect={{ width: '100px' }} //Optional.[Object].Default: {}.
                   customStyleOptionListItem={{}} //Optional.[Object].Default: {}.
-                  customStyleOptionListContainer={{ maxHeight: '100px', overflow: 'auto', width: '120px', marginTop: '22%', left: '46px' }} //Optional.[Object].Default: {}.
+                  customStyleOptionListContainer={{ maxHeight: '100px', overflow: 'auto', width: '120px', marginTop: '11px' }} //Optional.[Object].Default: {}.
                   onChange={areaCode => {
                     this.setState({ areaCode: areaCode }, () => {
                       this.handlePhoneChange(phone);
@@ -244,7 +244,7 @@ class Index extends Component {
                   paddingTop: '0',
                   paddingBottom: '0',
                   height: '45px',
-                  paddingLeft: '90px',
+                  paddingLeft: '100px',
                   paddingRight: '20px'
                 }}
                 value={phone}
