@@ -272,7 +272,7 @@ const Index = memo(
           const newkeyCodeList = [...keycodeList, keyCode];
           const str = String.fromCharCode(...newkeyCodeList).toLowerCase();
           let index = -1;
-          optionList.filter((i, k) => {
+          optionList.forEach((i, k) => {
             const { name } = i;
             if (name.toLowerCase().startsWith(str)) {
               if (index === -1) {
