@@ -1,14 +1,22 @@
 # react-custom-flag-select
-[![npm version](https://badge.fury.io/js/react-custom-flag-select.svg)](https://badge.fury.io/js/react-custom-flag-select) [![Build Status](https://travis-ci.org/edwardfhsiao/react-custom-flag-select.svg?branch=master)](https://travis-ci.org/edwardfhsiao/react-custom-flag-select) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com) [![react-custom-flag-select](http://img.shields.io/npm/dm/react-custom-flag-select.svg)](https://www.npmjs.com/package/react-custom-flag-select) ![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/react-custom-flag-select.svg) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/edwardfhsiao/react-custom-flag-select/master/LICENSE)
+[![npm version](https://badge.fury.io/js/react-custom-flag-select.svg)](https://badge.fury.io/js/react-custom-flag-select) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com) [![react-custom-flag-select](http://img.shields.io/npm/dm/react-custom-flag-select.svg)](https://www.npmjs.com/package/react-custom-flag-select) ![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/react-custom-flag-select.svg) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/edwardfhsiao/react-custom-flag-select/master/LICENSE)
 
 A react custom flag (country code) select.
-# <img src="https://edwardxiao.com/react-custom-flag-select.jpg" />
+# <img src="https://raw.githubusercontent.com/edwardfhsiao/react-custom-flag-select/master/react-custom-flag-select.jpg" />
 
 # Online Demo
-<a href="https://edwardfhsiao.github.io/react-custom-flag-select/">Online demo example</a>
+<a href="https://edwardfhsiao.github.io/react-custom-flag-select/">Live demo</a>
 
 # Codesandbox Examples
-* <a href="https://codesandbox.io/s/jvw9nvyzv">Playground</a>
+* <a href="https://codesandbox.io/s/jvw9nvyzv">Live demo playground</a>
+
+###  :tada: For version >= 2.0.0, please update react and react-dom to at least ```16.8.6```, since it is rewrited with hooks.
+```js
+  "peerDependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  }
+```
 
 # Thanks
 #### This project is inspired by <a href="https://github.com/ekwonye-richard/react-flags-select">ekwonye-richard/react-flags-select</a>
@@ -44,6 +52,7 @@ Tested on IE9+ and Chrome and Safari(10.0.3)
 |type                              |  Opt  |  Str   |                                             |  "text"    |
 |value                             |  Opt  |  Str   |                                             |  ""        |
 |disabled                          |  Opt  |  Bool  |                                             |  false     |
+|animate                           |  Opt  |  Bool  |                                             |  false     |
 |**optionList**                    |**Req**|**Array**|**[{id: "1", name: "United States", displayText: "US(1)", flag: "us.svg"}, {id: "86", name: "中国", displayText: "中国(86)", flag: "cn.svg"}]**              |**[]**          |
 |classNameSelect                   |  Opt  |  Str   |                                             |  ""        |
 |classNameWrapper                  |  Opt  |  Str   |                                             |  ""        |
@@ -96,6 +105,7 @@ const currentItem = find(FLAG_SELECTOR_OPTION_LIST, { id: areaCode })[0];
    name={'areaCode'} //Optional.[String].Default: "". Input name.
    value={currentItem.id} //Optional.[String].Default: "".
    disabled={false} //Optional.[Bool].Default: false.
+   animate={true} //Optional.[Bool].Default: false.
    optionList={FLAG_SELECTOR_OPTION_LIST} //Required.[Array of Object(s)].Default: [].
    // selectOptionListItemHtml={<div>us</div>} //Optional.[Html].Default: none. The custom select options item html that will display in dropdown list. Use it if you think the default html is ugly.
    // selectHtml={<div>us</div>} //Optional.[Html].Default: none. The custom html that will display when user choose. Use it if you think the default html is ugly.
@@ -106,10 +116,9 @@ const currentItem = find(FLAG_SELECTOR_OPTION_LIST, { id: areaCode })[0];
    classNameDropdownIconOptionListItem={''} //Optional.[String].Default: "".
    customStyleWrapper={{}} //Optional.[Object].Default: {}.
    customStyleContainer={{ border: 'none', fontSize: '12px' }} //Optional.[Object].Default: {}.
-   customStyleSelect={{ width: '60px' }} //Optional.[Object].Default: {}.
+   customStyleSelect={{ width: '100px' }} //Optional.[Object].Default: {}.
    customStyleOptionListItem={{}} //Optional.[Object].Default: {}.
-   customStyleOptionListContainer={{ maxHeight: '100px', overflow: 'auto', width: '120px', marginTop: '22%', left: '46px' }} //Optional.[Object].Default: {}.
-   customStyleDropdownIcon={{}} //Optional.[Object].Default: {}.
+   customStyleOptionListContainer={{ maxHeight: '100px', overflow: 'auto', width: '120px', marginTop: '11px' }} //Optional.[Object].Default: {}.
    onChange={areaCode => {
      this.setState({ areaCode: areaCode }, () => {
        this.handlePhoneChange(phone);

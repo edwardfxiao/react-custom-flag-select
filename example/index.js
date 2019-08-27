@@ -1,6 +1,7 @@
 import 'core-js/es6/map';
 import 'core-js/es6/set';
 import 'raf/polyfill';
+import 'babel-polyfill';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
@@ -11,7 +12,7 @@ import STYLES from '../src/css/example.css';
 import { Textbox } from 'react-inputs-validation';
 import validator from 'validator';
 import 'react-inputs-validation/lib/react-inputs-validation.min.css';
-import ReactCustomFlagSelect from '../src/js/ReactCustomFlagSelect/ReactCustomFlagSelect.js';
+import ReactCustomFlagSelect from '../src/js/component/index.js';
 
 const markdownExample = `
 \`\`\`javascript
@@ -58,13 +59,14 @@ class Index extends Component {
           ...
 
             <div style={{ position: 'relative' }}>
-              <div style={{ position: 'absolute', left: '15px', top: '10px', zIndex: '1' }}>
+              <div style={{ position: 'absolute', left: '0', top: '10px', zIndex: '1' }}>
                 <ReactCustomFlagSelect
                   tabIndex={'1'} //
                   id={'areaCode'} //
                   name={'areaCode'} //
                   value={currentItem.id} //
                   disabled={false} //
+                  animate={true} //Optional.[Bool].Default: false.
                   optionList={FLAG_SELECTOR_OPTION_LIST} //
                   // selectOptionListItemHtml={<div>us</div>}//
                   classNameWrapper={''} //
@@ -73,11 +75,10 @@ class Index extends Component {
                   classNameOptionListContainer={''} //
                   classNameDropdownIconOptionListItem={''} //
                   customStyleWrapper={{}} //
-                  customStyleContainer={{ border: 'none', fontSize: '12px' }} //
-                  customStyleSelect={{ width: '60px' }}
-                  customStyleOptionListItem={{}} //
-                  customStyleOptionListContainer={{ maxHeight: '100px', overflow: 'auto', width: '120px', marginTop: '22%', left: '46px' }} //
-                  customStyleDropdownIcon={{}} //
+                  customStyleContainer={{ border: 'none', fontSize: '12px' }} //Optional.[Object].Default: {}.
+                  customStyleSelect={{ width: '100px' }} //Optional.[Object].Default: {}.
+                  customStyleOptionListItem={{}} //Optional.[Object].Default: {}.
+                  customStyleOptionListContainer={{ maxHeight: '100px', overflow: 'auto', width: '120px', marginTop: '11px' }} //Optional.[Object].Default: {}.
                   onChange={areaCode => {
                     this.setState({ areaCode: areaCode }, () => {
                       this.handlePhoneChange(phone);
@@ -150,6 +151,8 @@ CodeBlock.propTypes = {
 
 const FLAG_SELECTOR_OPTION_LIST = [
   { id: '1', name: 'US', displayText: 'US(1)', locale: 'en-US', flag: require('../src/image/flags/us.svg') },
+  { id: '2', name: 'ab', displayText: 'ab(1)', locale: 'en-US', flag: require('../src/image/flags/us.svg') },
+  { id: '3', name: 'wood', displayText: 'wood(1)', locale: 'en-US', flag: require('../src/image/flags/us.svg') },
   { id: '86', name: '中国', displayText: '中国(86)', locale: 'zh-CN', flag: require('../src/image/flags/cn.svg') }
 ];
 
@@ -203,13 +206,14 @@ class Index extends Component {
         <div style={{ padding: '20px', border: '1px solid #e5e5e5' }}>
           <form onSubmit={this.submit}>
             <div style={{ position: 'relative' }}>
-              <div style={{ position: 'absolute', left: '15px', top: '10px', zIndex: '1' }}>
+              <div style={{ position: 'absolute', left: '0', top: '10px', zIndex: '1' }}>
                 <ReactCustomFlagSelect
                   tabIndex={'1'} //Optional.[String or Number].Default: -1.
                   id={'areaCode'} //Optional.[String].Default: "". Input ID.
                   name={'areaCode'} //Optional.[String].Default: "". Input name.
                   value={currentItem.id} //Optional.[String].Default: "".
                   disabled={false} //Optional.[Bool].Default: false.
+                  animate={true} //Optional.[Bool].Default: false.
                   optionList={FLAG_SELECTOR_OPTION_LIST} //Required.[Array of Object(s)].Default: [].
                   // selectOptionListItemHtml={<div>us</div>} //Optional.[Html].Default: none. The custom select options item html that will display in dropdown list. Use it if you think the default html is ugly.
                   // selectHtml={<div>us</div>} //Optional.[Html].Default: none. The custom html that will display when user choose. Use it if you think the default html is ugly.
@@ -220,10 +224,9 @@ class Index extends Component {
                   classNameDropdownIconOptionListItem={''} //Optional.[String].Default: "".
                   customStyleWrapper={{}} //Optional.[Object].Default: {}.
                   customStyleContainer={{ border: 'none', fontSize: '12px' }} //Optional.[Object].Default: {}.
-                  customStyleSelect={{ width: '60px' }} //Optional.[Object].Default: {}.
+                  customStyleSelect={{ width: '100px' }} //Optional.[Object].Default: {}.
                   customStyleOptionListItem={{}} //Optional.[Object].Default: {}.
-                  customStyleOptionListContainer={{ maxHeight: '100px', overflow: 'auto', width: '120px', marginTop: '22%', left: '46px' }} //Optional.[Object].Default: {}.
-                  customStyleDropdownIcon={{}} //Optional.[Object].Default: {}.
+                  customStyleOptionListContainer={{ maxHeight: '100px', overflow: 'auto', width: '120px', marginTop: '11px' }} //Optional.[Object].Default: {}.
                   onChange={areaCode => {
                     this.setState({ areaCode: areaCode }, () => {
                       this.handlePhoneChange(phone);
@@ -243,7 +246,7 @@ class Index extends Component {
                   paddingTop: '0',
                   paddingBottom: '0',
                   height: '45px',
-                  paddingLeft: '90px',
+                  paddingLeft: '100px',
                   paddingRight: '20px'
                 }}
                 value={phone}
@@ -263,7 +266,7 @@ class Index extends Component {
                 validationOption={{
                   check: true,
                   required: true,
-                  customFunc: phone => {
+                  customFunc: (phone) => {
                     if (validator.isMobilePhone(`${areaCode}${phone}`, currentItem.locale)) {
                       return true;
                     } else {
