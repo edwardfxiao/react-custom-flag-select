@@ -30,7 +30,7 @@ const DEFAULT_AREA_CODE = FLAG_SELECTOR_OPTION_LIST[0].id;
 
 const find = (arr, obj) => {
   const res = [];
-  arr.filter(o => {
+  arr.forEach(o => {
     let match = false;
     Object.keys(obj).map(i => {
       if (obj[i] == o[i]) {
@@ -151,8 +151,6 @@ CodeBlock.propTypes = {
 
 const FLAG_SELECTOR_OPTION_LIST = [
   { id: '1', name: 'US', displayText: 'US(1)', locale: 'en-US', flag: require('../src/image/flags/us.svg') },
-  { id: '2', name: 'ab', displayText: 'ab(1)', locale: 'en-US', flag: require('../src/image/flags/us.svg') },
-  { id: '3', name: 'wood', displayText: 'wood(1)', locale: 'en-US', flag: require('../src/image/flags/us.svg') },
   { id: '86', name: '中国', displayText: '中国(86)', locale: 'zh-CN', flag: require('../src/image/flags/cn.svg') }
 ];
 
@@ -160,7 +158,7 @@ const DEFAULT_AREA_CODE = FLAG_SELECTOR_OPTION_LIST[0].id;
 
 const find = (arr, obj) => {
   const res = [];
-  arr.filter(o => {
+  arr.forEach(o => {
     let match = false;
     Object.keys(obj).map(i => {
       if (obj[i] == o[i]) {
