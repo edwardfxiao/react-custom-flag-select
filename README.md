@@ -46,7 +46,7 @@ Tested on IE9+ and Chrome and Safari(10.0.3)
 
 |Props                             |       |Type    |Description                                  |Default     |
 |---                               |---    |---     |---                                          |  ---       |
-|tabIndex                          |**Req**|  Str   |**If its not provided, the keydown may not working**|  none  |
+|tabIndex                          |**Req**|**Str | Num**|**If its not provided, the keydown may not working**|**none**|
 |id                                |  Opt  |  Str   |                                             |  none      |
 |name                              |  Opt  |  Str   |                                             |  ""        |
 |type                              |  Opt  |  Str   |                                             |  "text"    |
