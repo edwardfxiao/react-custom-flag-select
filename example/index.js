@@ -90,8 +90,11 @@ class Index extends Component {
                 />
               </div>
               <Textbox
-                tabIndex="1"
-                id="phone"
+                attributesInput={{
+                  id: "phone",
+                  placeholder: "Please enter your phone number",
+                  type: "text"
+                }}
                 customStyleWrapper={{ height: '100%' }}
                 customStyleContainer={{ height: '100%' }}
                 customStyleInput={{
@@ -109,8 +112,6 @@ class Index extends Component {
                     validate: false
                   })
                 }
-                type="text"
-                placeholder="Please enter your phone number"
                 onChange={res => {
                   this.handlePhoneChange(res);
                 }}
@@ -239,8 +240,11 @@ class Index extends Component {
                 />
               </div>
               <Textbox
-                tabIndex="1"
-                id="phone"
+                attributesInput={{
+                  id: "phone",
+                  placeholder: "Please enter your phone number",
+                  type: "text"
+                }}
                 customStyleWrapper={{ height: '100%' }}
                 customStyleContainer={{ height: '100%' }}
                 customStyleInput={{
@@ -258,8 +262,6 @@ class Index extends Component {
                     validate: false
                   })
                 }
-                type="text"
-                placeholder="Please enter your phone number"
                 onChange={res => {
                   this.handlePhoneChange(res);
                 }}
