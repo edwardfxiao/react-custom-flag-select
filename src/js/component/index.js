@@ -1,15 +1,16 @@
 import React, { useEffect, useState, useCallback, useRef, memo } from 'react';
 import { cx, getRandomId } from './utils.js';
 // DEVELOPMENT
-import './react-custom-flag-select.css';
-import STYLES from './react-custom-flag-select.css.json';
+// import './react-custom-flag-select.css';
+// import STYLES from './react-custom-flag-select.css.json';
 // BUILD PRODUCTION
-// import STYLES from './react-custom-flag-select.css';
+import STYLES from './react-custom-flag-select.css';
 const TYPE = 'select';
 let globalVariableIsFocusing = false;
 let globalVariableIsCorrected = false;
 let globalVariableCurrentFocus = null;
 let globalVariableTypingTimeout = null;
+
 export const getItem = (list, value) => {
   let res = null;
   if (list.length) {
@@ -262,6 +263,7 @@ const Index = memo(
             if (globalVariableCurrentFocus > -1) {
               if ($itemsRef[globalVariableCurrentFocus]) {
                 $itemsRef[globalVariableCurrentFocus].current.click();
+                setShow(!show);
               } else {
                 return;
               }
@@ -301,6 +303,12 @@ const Index = memo(
         };
       },
       [show, value, keycodeList],
+    );
+    useEffect(
+      () => {
+        setInternalValue(String(value));
+      },
+      [value],
     );
     const wrapperClass = cx(classNameWrapper, STYLES[`${TYPE}__wrapper`], disabled && STYLES['disabled']);
     const containerClass = cx(classNameContainer, STYLES[`${TYPE}__container`], show && STYLES['show']);
@@ -352,22 +360,22 @@ const Index = memo(
       );
     }
     return (
-      <div
-        ref={$wrapper}
-        id={STYLES[`${TYPE}__wrapper`]}
-        className={wrapperClass}
-        style={customStyleWrapper}
-        onClick={e => {
-          handleOnClick(e);
-          !disabled ? setShow(!show) : ``;
-        }}
-        onFocus={handleOnFocus}
-        onBlur={handleOnBlur}
-      >
+      <div ref={$wrapper} id={STYLES[`${TYPE}__wrapper`]} className={wrapperClass} style={customStyleWrapper}>
         <div className={containerClass} style={customStyleContainer}>
           <input id={id} name={name} type="hidden" value={value} className={inputClass} onChange={() => {}} />
           <div className={selectClass} style={customStyleSelect}>
-            <div className={STYLES[`${TYPE}__selector`]}>{selectorHtml}</div>
+            <button
+              type="button"
+              className={STYLES[`${TYPE}__button`]}
+              onClick={e => {
+                handleOnClick(e);
+                !disabled ? setShow(!show) : ``;
+              }}
+              onFocus={handleOnFocus}
+              onBlur={handleOnBlur}
+            >
+              <div className={STYLES[`${TYPE}__selector`]}>{selectorHtml}</div>
+            </button>
           </div>
           <div ref={$itemsWrapper} className={selectOptionListContainerClass} style={customStyleOptionListContainer}>
             {optionListHtml}
