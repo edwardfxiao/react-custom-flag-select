@@ -91,13 +91,17 @@ const Index = memo(
         onClick(e);
       }
     }, []);
-    const handleOnChange = useCallback((val, e) => {
-      if (disabled || $wrapper === null) {
-        return;
-      }
-      setInternalValue(val);
-      onChange && onChange(val, e);
-    }, []);
+    const handleOnChange = useCallback(
+      (val, e) => {
+        if (disabled || $wrapper === null) {
+          return;
+        }
+        setShow(!show);
+        setInternalValue(val);
+        onChange && onChange(val, e);
+      },
+      [show],
+    );
     /* istanbul ignore next because of https://github.com/airbnb/enzyme/issues/441 && https://github.com/airbnb/enzyme/blob/master/docs/future.md */
     useEffect(() => {
       if ($wrapper === null) {
@@ -185,9 +189,12 @@ const Index = memo(
         $itemsWrapper.current.scrollTop = globalVariableCurrentFocus * itemHeight;
       }
     }, []);
-    const handleOnItemClick = useCallback((v, e) => {
-      handleOnChange(v, e);
-    }, []);
+    const handleOnItemClick = useCallback(
+      (v, e) => {
+        handleOnChange(v, e);
+      },
+      [show],
+    );
     const handleOnItemMouseOver = useCallback(index => {
       globalVariableCurrentFocus = index;
       addActive();
@@ -263,7 +270,6 @@ const Index = memo(
             if (globalVariableCurrentFocus > -1) {
               if ($itemsRef[globalVariableCurrentFocus]) {
                 $itemsRef[globalVariableCurrentFocus].current.click();
-                setShow(!show);
               } else {
                 return;
               }
@@ -333,6 +339,7 @@ const Index = memo(
             item={i}
             customStyleOptionListItem={customStyleOptionListItem}
             onClick={handleOnItemClick}
+            show={show}
             onMouseOver={handleOnItemMouseOver}
             onMouseMove={handleOnItemMouseMove}
             onMouseOut={handleOnItemMouseOut}
@@ -387,10 +394,13 @@ const Index = memo(
 );
 
 const Option = memo(
-  ({ index = -1, refItem = null, id = '', className = '', item, customStyleOptionListItem = {}, onClick = () => {}, onMouseOver = () => {}, onMouseMove = () => {}, onMouseOut = () => {} }) => {
-    const handleOnClick = useCallback(e => {
-      onClick(item.id, e);
-    }, []);
+  ({ index = -1, refItem = null, id = '', className = '', item, customStyleOptionListItem = {}, onClick = () => {}, onMouseOver = () => {}, onMouseMove = () => {}, onMouseOut = () => {}, show }) => {
+    const handleOnClick = useCallback(
+      e => {
+        onClick(item.id, e);
+      },
+      [show],
+    );
     const handleOnMouseOver = useCallback(() => {
       onMouseOver(index);
     }, []);
