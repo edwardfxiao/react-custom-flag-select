@@ -8,11 +8,14 @@ import ReactDOM from 'react-dom';
 import Markdown from 'react-markdown';
 import Prism from 'prismjs';
 import 'prismjs/themes/prism-tomorrow.css';
-import STYLES from '../src/css/example.css';
 import { Textbox } from 'react-inputs-validation';
 import validator from 'validator';
 import 'react-inputs-validation/lib/react-inputs-validation.min.css';
 import ReactCustomFlagSelect from '../src/js/component/index.js';
+
+import '../src/css/example.css';
+import STYLES from '../src/css/example.css.json';
+
 
 const markdownExample = `
 \`\`\`javascript
@@ -59,7 +62,7 @@ class Index extends Component {
           ...
 
             <div style={{ position: 'relative' }}>
-              <div style={{ position: 'absolute', left: '0', top: '10px', zIndex: '1' }}>
+              <div style={{ position: 'absolute', left: '0', top: '10px' }}>
                 <ReactCustomFlagSelect
                   tabIndex={'1'} //
                   id={'areaCode'} //
@@ -204,7 +207,7 @@ class Index extends Component {
         <div style={{ padding: '20px', border: '1px solid #e5e5e5' }}>
           <form onSubmit={this.submit}>
             <div style={{ position: 'relative' }}>
-              <div style={{ position: 'absolute', left: '0', top: '10px', zIndex: '1' }}>
+              <div style={{ position: 'absolute', left: '0', top: '10px' }}>
                 <ReactCustomFlagSelect
                   tabIndex={'1'} //Optional.[String or Number].Default: -1.
                   id={'areaCode'} //Optional.[String].Default: "". Input ID.
