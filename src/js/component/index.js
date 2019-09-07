@@ -1,15 +1,23 @@
 import React, { useEffect, useState, useCallback, useRef, memo } from 'react';
 import { cx, getRandomId } from './utils.js';
 // DEVELOPMENT
-import './react-custom-flag-select.css';
-import STYLES from './react-custom-flag-select.css.json';
+// import './react-custom-flag-select.css';
+// import STYLES from './react-custom-flag-select.css.json';
 // BUILD PRODUCTION
-// import STYLES from './react-custom-flag-select.css';
+import STYLES from './react-custom-flag-select.css';
 const TYPE = 'select';
 let globalVariableIsFocusing = false;
 let globalVariableIsCorrected = false;
 let globalVariableCurrentFocus = null;
 let globalVariableTypingTimeout = null;
+export const usePrevious = value => {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+};
+
 export const getItem = (list, value) => {
   let res = null;
   if (list.length) {
@@ -62,6 +70,7 @@ const Index = memo(
   }) => {
     const [show, setShow] = useState(false);
     const [internalValue, setInternalValue] = useState(String(value));
+    const prevInternalValue = usePrevious(internalValue);
     const [keycodeList, setKeycodeList] = useState([]);
     const [isTyping, setIsTyping] = useState(false);
     const $wrapper = useRef(null);
@@ -302,6 +311,20 @@ const Index = memo(
       },
       [show, value, keycodeList],
     );
+    useEffect(
+      () => {
+        setInternalValue(String(value));
+      },
+      [value],
+    );
+    useEffect(
+      () => {
+        if (typeof prevInternalValue !== 'undefined' && prevInternalValue !== internalValue) {
+          setShow(!show);
+        }
+      },
+      [prevInternalValue, internalValue],
+    );
     const wrapperClass = cx(classNameWrapper, STYLES[`${TYPE}__wrapper`], disabled && STYLES['disabled']);
     const containerClass = cx(classNameContainer, STYLES[`${TYPE}__container`], show && STYLES['show']);
     const inputClass = cx(STYLES[`${TYPE}__input`]);
@@ -352,22 +375,22 @@ const Index = memo(
       );
     }
     return (
-      <div
-        ref={$wrapper}
-        id={STYLES[`${TYPE}__wrapper`]}
-        className={wrapperClass}
-        style={customStyleWrapper}
-        onClick={e => {
-          handleOnClick(e);
-          !disabled ? setShow(!show) : ``;
-        }}
-        onFocus={handleOnFocus}
-        onBlur={handleOnBlur}
-      >
+      <div ref={$wrapper} id={STYLES[`${TYPE}__wrapper`]} className={wrapperClass} style={customStyleWrapper}>
         <div className={containerClass} style={customStyleContainer}>
           <input id={id} name={name} type="hidden" value={value} className={inputClass} onChange={() => {}} />
           <div className={selectClass} style={customStyleSelect}>
-            <div className={STYLES[`${TYPE}__selector`]}>{selectorHtml}</div>
+            <button
+              type="button"
+              className={STYLES[`${TYPE}__button`]}
+              onClick={e => {
+                handleOnClick(e);
+                !disabled ? setShow(!show) : ``;
+              }}
+              onFocus={handleOnFocus}
+              onBlur={handleOnBlur}
+            >
+              <div className={STYLES[`${TYPE}__selector`]}>{selectorHtml}</div>
+            </button>
           </div>
           <div ref={$itemsWrapper} className={selectOptionListContainerClass} style={customStyleOptionListContainer}>
             {optionListHtml}
