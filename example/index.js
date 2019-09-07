@@ -13,8 +13,8 @@ import validator from 'validator';
 import 'react-inputs-validation/lib/react-inputs-validation.min.css';
 import ReactCustomFlagSelect from '../src/js/component/index.js';
 
-import '../src/css/example.css';
-import STYLES from '../src/css/example.css.json';
+import STYLES from '../src/css/example.css';
+// import STYLES from '../src/css/example.css.json';
 
 
 const markdownExample = `
