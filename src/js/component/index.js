@@ -10,13 +10,6 @@ let globalVariableIsFocusing = false;
 let globalVariableIsCorrected = false;
 let globalVariableCurrentFocus = null;
 let globalVariableTypingTimeout = null;
-export const usePrevious = value => {
-  const ref = useRef();
-  useEffect(() => {
-    ref.current = value;
-  });
-  return ref.current;
-};
 
 export const getItem = (list, value) => {
   let res = null;
@@ -70,7 +63,6 @@ const Index = memo(
   }) => {
     const [show, setShow] = useState(false);
     const [internalValue, setInternalValue] = useState(String(value));
-    const prevInternalValue = usePrevious(internalValue);
     const [keycodeList, setKeycodeList] = useState([]);
     const [isTyping, setIsTyping] = useState(false);
     const $wrapper = useRef(null);
@@ -271,6 +263,7 @@ const Index = memo(
             if (globalVariableCurrentFocus > -1) {
               if ($itemsRef[globalVariableCurrentFocus]) {
                 $itemsRef[globalVariableCurrentFocus].current.click();
+                setShow(!show);
               } else {
                 return;
               }
@@ -316,14 +309,6 @@ const Index = memo(
         setInternalValue(String(value));
       },
       [value],
-    );
-    useEffect(
-      () => {
-        if (typeof prevInternalValue !== 'undefined' && prevInternalValue !== internalValue) {
-          setShow(!show);
-        }
-      },
-      [prevInternalValue, internalValue],
     );
     const wrapperClass = cx(classNameWrapper, STYLES[`${TYPE}__wrapper`], disabled && STYLES['disabled']);
     const containerClass = cx(classNameContainer, STYLES[`${TYPE}__container`], show && STYLES['show']);
