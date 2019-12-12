@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useCallback, useRef, memo } from 'react';
 import { cx, getRandomId } from './utils.js';
 // DEVELOPMENT
-import './react-custom-flag-select.css';
-import STYLES from './react-custom-flag-select.css.json';
+// import './react-custom-flag-select.css';
+// import STYLES from './react-custom-flag-select.css.json';
 // BUILD PRODUCTION
-// import STYLES from './react-custom-flag-select.css';
+import STYLES from './react-custom-flag-select.css';
 const TYPE = 'select';
 let globalVariableIsFocusing = false;
 let globalVariableIsCorrected = false;
@@ -41,6 +41,7 @@ const Index = memo(
     name = '',
     value = '',
     disabled = false,
+    showArrow = true,
     animate = false,
     optionList = [],
     classNameWrapper = '',
@@ -133,13 +134,10 @@ const Index = memo(
       setShow(false);
     }, []);
     /* istanbul ignore next because of https://github.com/airbnb/enzyme/issues/441 && https://github.com/airbnb/enzyme/blob/master/docs/future.md */
-    const resetCurrentFocus = useCallback(
-      () => {
-        globalVariableCurrentFocus = getIndex(optionList, internalValue);
-        scroll();
-      },
-      [internalValue],
-    );
+    const resetCurrentFocus = useCallback(() => {
+      globalVariableCurrentFocus = getIndex(optionList, internalValue);
+      scroll();
+    }, [internalValue]);
     /* istanbul ignore next because of https://github.com/airbnb/enzyme/issues/441 && https://github.com/airbnb/enzyme/blob/master/docs/future.md */
     const setTimeoutTyping = useCallback(() => {
       if (globalVariableTypingTimeout) {
@@ -299,30 +297,24 @@ const Index = memo(
       },
       [show, value, keycodeList],
     );
-    useEffect(
-      () => {
-        if (show && $wrapper) {
-          $wrapper.current.addEventListener('keydown', onKeyDown);
-        }
-        return () => {
-          $wrapper.current.removeEventListener('keydown', onKeyDown);
-        };
-      },
-      [show, value, keycodeList],
-    );
-    useEffect(
-      () => {
-        setInternalValue(String(value));
-      },
-      [value],
-    );
+    useEffect(() => {
+      if (show && $wrapper) {
+        $wrapper.current.addEventListener('keydown', onKeyDown);
+      }
+      return () => {
+        $wrapper.current.removeEventListener('keydown', onKeyDown);
+      };
+    }, [show, value, keycodeList]);
+    useEffect(() => {
+      setInternalValue(String(value));
+    }, [value]);
     const wrapperClass = cx(classNameWrapper, STYLES[`${TYPE}__wrapper`], disabled && STYLES['disabled']);
     const containerClass = cx(classNameContainer, STYLES[`${TYPE}__container`], show && STYLES['show']);
     const inputClass = cx(STYLES[`${TYPE}__input`]);
     const selectClass = cx(classNameSelect, STYLES['ellipsis']);
     const selectOptionListContainerClass = cx(classNameOptionListContainer, STYLES[`${TYPE}__options-container`], show && STYLES['show'], animate && STYLES[`${TYPE}__options-container-animate`]);
     const selectOptionListItemClass = cx(!isTyping && STYLES[`${TYPE}__options-item-show-cursor`], classNameOptionListItem, STYLES[`${TYPE}__options-item`]);
-    const dropdownIconClass = cx(classNameDropdownIconOptionListItem, STYLES[`${TYPE}__dropdown-icon`]);
+    const dropdownIconClass = cx(classNameDropdownIconOptionListItem, STYLES[`${TYPE}__dropdown-icon`], showArrow && STYLES['showArrow']);
     let optionListHtml;
     const item = getItem(optionList, String(value));
     if (optionList.length) {

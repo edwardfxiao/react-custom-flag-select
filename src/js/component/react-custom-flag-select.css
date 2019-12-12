@@ -24,7 +24,8 @@
   outline: none;
 }*/
 
-.select__wrapper.disabled {
+.select__wrapper.disabled,
+.select__wrapper.disabled div {
   cursor: not-allowed;
 }
 
@@ -161,7 +162,7 @@
   vertical-align: middle\9;
 }
 
-.select__dropdown-icon:before {
+.select__dropdown-icon.showArrow:before {
   content: '';
   position: absolute;
   top: 50%;

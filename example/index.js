@@ -69,6 +69,7 @@ class Index extends Component {
                   name={'areaCode'} //
                   value={currentItem.id} //
                   disabled={false} //
+                  showArrow={true} //
                   animate={true} //Optional.[Bool].Default: false.
                   optionList={FLAG_SELECTOR_OPTION_LIST} //
                   // selectOptionListItemHtml={<div>us</div>}//
@@ -214,6 +215,7 @@ class Index extends Component {
                   name={'areaCode'} //Optional.[String].Default: "". Input name.
                   value={currentItem.id} //Optional.[String].Default: "".
                   disabled={false} //Optional.[Bool].Default: false.
+                  showArrow={false} //Optional.[Bool].Default: true.
                   animate={true} //Optional.[Bool].Default: false.
                   optionList={FLAG_SELECTOR_OPTION_LIST} //Required.[Array of Object(s)].Default: [].
                   // selectOptionListItemHtml={<div>us</div>} //Optional.[Html].Default: none. The custom select options item html that will display in dropdown list. Use it if you think the default html is ugly.
