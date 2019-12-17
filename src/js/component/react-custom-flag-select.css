@@ -128,6 +128,7 @@
 }
 
 .select__dropdown-icon {
+  position: relative;
   width: 2%\9;
   display: inline-block\9;
   vertical-align: middle\9;
