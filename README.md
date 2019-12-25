@@ -52,6 +52,9 @@ Tested on IE9+ and Chrome and Safari(10.0.3)
 |type                              |  Opt  |  Str   |                                             |  "text"    |
 |value                             |  Opt  |  Str   |                                             |  ""        |
 |disabled                          |  Opt  |  Bool  |                                             |  false     |
+|showSearch                        |  Opt  |  Bool  |Show a search box in order to find option quickly. | false |
+|keyword                           |  Opt  |  Str   |Show a keyword for search box.               |  ''        |
+|showArrow                         |  Opt  |  Bool  |                                             |  true      |
 |animate                           |  Opt  |  Bool  |                                             |  false     |
 |**optionList**                    |**Req**|**Array**|**[{id: "1", name: "United States", displayText: "US(1)", flag: "us.svg"}, {id: "86", name: "中国", displayText: "中国(86)", flag: "cn.svg"}]**              |**[]**          |
 |classNameSelect                   |  Opt  |  Str   |                                             |  ""        |
@@ -105,6 +108,7 @@ const currentItem = find(FLAG_SELECTOR_OPTION_LIST, { id: areaCode })[0];
    name={'areaCode'} //Optional.[String].Default: "". Input name.
    value={currentItem.id} //Optional.[String].Default: "".
    disabled={false} //Optional.[Bool].Default: false.
+   showArrow={true} //Optional.[Bool].Default: true.
    animate={true} //Optional.[Bool].Default: false.
    optionList={FLAG_SELECTOR_OPTION_LIST} //Required.[Array of Object(s)].Default: [].
    // selectOptionListItemHtml={<div>us</div>} //Optional.[Html].Default: none. The custom select options item html that will display in dropdown list. Use it if you think the default html is ugly.

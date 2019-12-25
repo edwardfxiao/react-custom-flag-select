@@ -1,16 +1,20 @@
-import React, { useEffect, useState, useCallback, useRef, memo } from 'react';
+import React, { useEffect, useState, useCallback, useRef, useMemo, memo } from 'react';
 import { cx, getRandomId } from './utils.js';
 // DEVELOPMENT
-import './react-custom-flag-select.css';
-import STYLES from './react-custom-flag-select.css.json';
+// import './react-custom-flag-select.css';
+// import STYLES from './react-custom-flag-select.css.json';
 // BUILD PRODUCTION
-// import STYLES from './react-custom-flag-select.css';
+import STYLES from './react-custom-flag-select.css';
 const TYPE = 'select';
+const keyCodeEsc = 27;
+const keyCodeDown = 40;
+const keyCodeUp = 38;
+const keyCodeEnter = 13;
+const selectKeyList = [keyCodeEsc, keyCodeDown, keyCodeUp, keyCodeEnter];
 let globalVariableIsFocusing = false;
 let globalVariableIsCorrected = false;
 let globalVariableCurrentFocus = null;
 let globalVariableTypingTimeout = null;
-
 export const getItem = (list, value) => {
   let res = null;
   if (list.length) {
@@ -41,6 +45,9 @@ const Index = memo(
     name = '',
     value = '',
     disabled = false,
+    showSearch = false,
+    keyword = '',
+    showArrow = true,
     animate = false,
     optionList = [],
     classNameWrapper = '',
@@ -64,15 +71,57 @@ const Index = memo(
     const [show, setShow] = useState(false);
     const [internalValue, setInternalValue] = useState(String(value));
     const [keycodeList, setKeycodeList] = useState([]);
+    const stateKeyword = useState(keyword);
     const [isTyping, setIsTyping] = useState(false);
     const $wrapper = useRef(null);
     const $itemsWrapper = useRef(null);
+    const $searchInputWrapper = useRef(null);
+    const $searchInput = useRef(null);
     const $itemsRef = [];
     if (optionList.length) {
       for (let i = 0; i < optionList.length; i += 1) {
         $itemsRef.push(useRef(null));
       }
     }
+    const filteredOptionList = useMemo(() => {
+      let res = optionList;
+      if (res.length) {
+        if (stateKeyword[0]) {
+          res = optionList.filter(i => i.name.toLowerCase().includes(stateKeyword[0].toLowerCase()));
+        }
+      }
+      return res;
+    }, [stateKeyword[0], optionList]);
+    const handleOnSearch = useCallback(e => {
+      stateKeyword[1](e.target.value);
+    }, []);
+    const handleOnSearchKeyDown = useCallback(
+      e => {
+        const { keyCode } = e;
+        const direction = getDirection(keyCode);
+        if (selectKeyList.indexOf(keyCode) !== -1) {
+          e.preventDefault();
+          handleOnKeyDown(keyCode);
+        }
+        scroll(direction);
+      },
+      [filteredOptionList],
+    );
+    useEffect(() => {
+      if (show && showSearch) {
+        globalVariableCurrentFocus = 0;
+        scroll('up');
+        addActive();
+      }
+    }, [stateKeyword[0]]);
+    useEffect(() => {
+      if (show) {
+        if (showSearch) {
+          $searchInput.current.focus();
+        }
+      }
+      resetCurrentFocus();
+    }, [show]);
     const handleOnBlur = useCallback(
       e => {
         if (onBlur) {
@@ -133,13 +182,10 @@ const Index = memo(
       setShow(false);
     }, []);
     /* istanbul ignore next because of https://github.com/airbnb/enzyme/issues/441 && https://github.com/airbnb/enzyme/blob/master/docs/future.md */
-    const resetCurrentFocus = useCallback(
-      () => {
-        globalVariableCurrentFocus = getIndex(optionList, internalValue);
-        scroll();
-      },
-      [internalValue],
-    );
+    const resetCurrentFocus = useCallback(() => {
+      globalVariableCurrentFocus = getIndex(optionList, internalValue);
+      scroll();
+    }, [internalValue]);
     /* istanbul ignore next because of https://github.com/airbnb/enzyme/issues/441 && https://github.com/airbnb/enzyme/blob/master/docs/future.md */
     const setTimeoutTyping = useCallback(() => {
       if (globalVariableTypingTimeout) {
@@ -150,19 +196,15 @@ const Index = memo(
       }, 250);
     }, []);
     /* istanbul ignore next because of https://github.com/airbnb/enzyme/issues/441 && https://github.com/airbnb/enzyme/blob/master/docs/future.md */
-    const scroll = useCallback((direction = undefined) => {
-      if ($itemsWrapper === null) {
-        return;
-      }
+  const scroll = useCallback((direction = undefined) => {
+    if ($itemsWrapper && $itemsWrapper.current && $itemsWrapper.current.children) {
+      const $children = $itemsWrapper.current.children;
       const containerHeight = $itemsWrapper.current.offsetHeight;
       const containerScrollTop = $itemsWrapper.current.scrollTop;
-      if (!globalVariableCurrentFocus || !$itemsRef[globalVariableCurrentFocus]) {
+      if (!$children[globalVariableCurrentFocus]) {
         return;
       }
-      if ($itemsRef[globalVariableCurrentFocus] === null) {
-        return;
-      }
-      const itemHeight = $itemsRef[globalVariableCurrentFocus].current.offsetHeight;
+      const itemHeight = $children[globalVariableCurrentFocus].offsetHeight;
       if (direction) {
         if (direction === 'down') {
           const bound = containerScrollTop + containerHeight;
@@ -188,10 +230,12 @@ const Index = memo(
         globalVariableIsCorrected = false;
         $itemsWrapper.current.scrollTop = globalVariableCurrentFocus * itemHeight;
       }
-    }, []);
+    }
+  }, []);
     const handleOnItemClick = useCallback(
       (v, e) => {
         handleOnChange(v, e);
+        stateKeyword[1]('');
       },
       [show],
     );
@@ -212,7 +256,7 @@ const Index = memo(
       if (globalVariableCurrentFocus >= $itemsRef.length) globalVariableCurrentFocus = 0;
       if (globalVariableCurrentFocus < 0) globalVariableCurrentFocus = $itemsRef.length - 1;
       /* istanbul ignore next because it won't happen */
-      if (!$itemsRef[globalVariableCurrentFocus]) {
+      if (!$itemsRef[globalVariableCurrentFocus].current) {
         return;
       }
       $itemsRef[globalVariableCurrentFocus].current.className += ` ${STYLES[`${TYPE}__hover-active`]}`;
@@ -227,10 +271,56 @@ const Index = memo(
         }
       }
     }, []);
-
+    const getDirection = useCallback(keyCode => {
+      switch (keyCode) {
+        case keyCodeUp:
+          return 'up';
+        case keyCodeDown:
+          return 'down';
+        default:
+          return undefined;
+      }
+    }, []);
+    const handleOnKeyDown = useCallback(
+      keyCode => {
+        if (keyCode === keyCodeEsc) {
+          setShow(false);
+          resetCurrentFocus();
+          return;
+        }
+        if (keyCode === keyCodeDown) {
+          globalVariableCurrentFocus += 1;
+          if (globalVariableCurrentFocus > filteredOptionList.length - 1) {
+            globalVariableCurrentFocus = filteredOptionList.length - 1;
+          }
+          addActive();
+        } else if (keyCode === keyCodeUp) {
+          globalVariableCurrentFocus -= 1;
+          if (globalVariableCurrentFocus < 0) {
+            globalVariableCurrentFocus = 0;
+          }
+          addActive();
+        } else if (keyCode === keyCodeEnter) {
+          if (globalVariableCurrentFocus > -1) {
+            if ($itemsWrapper && $itemsWrapper.current && $itemsWrapper.current.children) {
+              const $children = $itemsWrapper.current.children;
+              if ($children[globalVariableCurrentFocus]) {
+                $children[globalVariableCurrentFocus].click();
+              } else {
+                return;
+              }
+            }
+          }
+        }
+      },
+      [filteredOptionList],
+    );
     /* istanbul ignore next because of https://github.com/airbnb/enzyme/issues/441 && https://github.com/airbnb/enzyme/blob/master/docs/future.md */
     const onKeyDown = useCallback(
       e => {
+        if (showSearch) {
+          return;
+        }
         setIsTyping(true);
         if (e.preventDefault) {
           e.preventDefault();
@@ -238,49 +328,17 @@ const Index = memo(
         if (!show) {
           return;
         }
-        globalVariableCurrentFocus = globalVariableCurrentFocus === null ? getIndex(optionList, String(value)) : globalVariableCurrentFocus;
-        let direction = undefined;
+        globalVariableCurrentFocus = globalVariableCurrentFocus === null ? getIndex(filteredOptionList, String(value)) : globalVariableCurrentFocus;
         const { keyCode } = e;
-        const keyCodeEsc = 27;
-        const keyCodeDown = 40;
-        const keyCodeUp = 38;
-        const keyCodeEnter = 13;
-        const selectKeyList = [keyCodeEsc, keyCodeDown, keyCodeUp, keyCodeEnter];
+        const direction = getDirection(keyCode);
         if (selectKeyList.indexOf(keyCode) !== -1) {
-          if (keyCode === keyCodeEsc) {
-            setShow(false);
-            resetCurrentFocus();
-            return;
-          }
-          if (keyCode === keyCodeDown) {
-            direction = 'down';
-            globalVariableCurrentFocus += 1;
-            if (globalVariableCurrentFocus > optionList.length - 1) {
-              globalVariableCurrentFocus = optionList.length - 1;
-            }
-            addActive();
-          } else if (keyCode === keyCodeUp) {
-            direction = 'up';
-            globalVariableCurrentFocus -= 1;
-            if (globalVariableCurrentFocus < 0) {
-              globalVariableCurrentFocus = 0;
-            }
-            addActive();
-          } else if (keyCode === keyCodeEnter) {
-            if (globalVariableCurrentFocus > -1) {
-              if ($itemsRef[globalVariableCurrentFocus]) {
-                $itemsRef[globalVariableCurrentFocus].current.click();
-              } else {
-                return;
-              }
-            }
-          }
+          handleOnKeyDown(keyCode);
         } else {
           setTimeoutTyping();
           const newkeyCodeList = [...keycodeList, keyCode];
           const str = String.fromCharCode(...newkeyCodeList).toLowerCase();
           let index = -1;
-          optionList.forEach((i, k) => {
+          filteredOptionList.forEach((i, k) => {
             const { name } = i;
             if (name.toLowerCase().startsWith(str)) {
               if (index === -1) {
@@ -299,37 +357,31 @@ const Index = memo(
       },
       [show, value, keycodeList],
     );
-    useEffect(
-      () => {
-        if (show && $wrapper) {
-          $wrapper.current.addEventListener('keydown', onKeyDown);
-        }
-        return () => {
-          $wrapper.current.removeEventListener('keydown', onKeyDown);
-        };
-      },
-      [show, value, keycodeList],
-    );
-    useEffect(
-      () => {
-        setInternalValue(String(value));
-      },
-      [value],
-    );
+    useEffect(() => {
+      if (show && $wrapper) {
+        $wrapper.current.addEventListener('keydown', onKeyDown);
+      }
+      return () => {
+        $wrapper.current.removeEventListener('keydown', onKeyDown);
+      };
+    }, [show, value, keycodeList]);
+    useEffect(() => {
+      setInternalValue(String(value));
+    }, [value]);
     const wrapperClass = cx(classNameWrapper, STYLES[`${TYPE}__wrapper`], disabled && STYLES['disabled']);
     const containerClass = cx(classNameContainer, STYLES[`${TYPE}__container`], show && STYLES['show']);
     const inputClass = cx(STYLES[`${TYPE}__input`]);
     const selectClass = cx(classNameSelect, STYLES['ellipsis']);
     const selectOptionListContainerClass = cx(classNameOptionListContainer, STYLES[`${TYPE}__options-container`], show && STYLES['show'], animate && STYLES[`${TYPE}__options-container-animate`]);
     const selectOptionListItemClass = cx(!isTyping && STYLES[`${TYPE}__options-item-show-cursor`], classNameOptionListItem, STYLES[`${TYPE}__options-item`]);
-    const dropdownIconClass = cx(classNameDropdownIconOptionListItem, STYLES[`${TYPE}__dropdown-icon`]);
+    const dropdownIconClass = cx(classNameDropdownIconOptionListItem, STYLES[`${TYPE}__dropdown-icon`], showArrow && STYLES['showArrow']);
     let optionListHtml;
     const item = getItem(optionList, String(value));
-    if (optionList.length) {
+    if (filteredOptionList.length) {
       if (selectOptionListItemHtml) {
         optionListHtml = selectOptionListItemHtml;
       } else {
-        optionListHtml = optionList.map((i, k) => (
+        optionListHtml = filteredOptionList.map((i, k) => (
           <Option
             key={k}
             index={k}
@@ -376,7 +428,15 @@ const Index = memo(
               className={STYLES[`${TYPE}__button`]}
               onClick={e => {
                 handleOnClick(e);
-                !disabled ? setShow(!show) : ``;
+                if (!disabled) {
+                  if ($searchInputWrapper.current) {
+                    if ($searchInputWrapper.current.contains(e.target)) {
+                      setShow(true);
+                      return;
+                    }
+                  }
+                  setShow(!show);
+                }
               }}
               onFocus={handleOnFocus}
               onBlur={handleOnBlur}
@@ -384,8 +444,43 @@ const Index = memo(
               <div className={STYLES[`${TYPE}__selector`]}>{selectorHtml}</div>
             </button>
           </div>
-          <div ref={$itemsWrapper} className={selectOptionListContainerClass} style={customStyleOptionListContainer}>
-            {optionListHtml}
+          <div className={selectOptionListContainerClass}>
+            {showSearch && (
+              <div ref={$searchInputWrapper}>
+                <div className={STYLES[`${TYPE}__searchInputWrapper`]}>
+                  <svg className={STYLES[`${TYPE}__searchInputSearchIcon`]} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path
+                      fill="#cdcdcd"
+                      d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
+                    />
+                    <path d="M0 0h24v24H0z" fill="none" />
+                  </svg>
+                  <input className={STYLES[`${TYPE}__searchInput`]} ref={$searchInput} value={stateKeyword[0]} onChange={handleOnSearch} onKeyDown={handleOnSearchKeyDown} />
+                  {stateKeyword[0] && (
+                    <svg
+                      className={STYLES[`${TYPE}__searchInputRemoveIcon`]}
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="15"
+                      height="15"
+                      viewBox="0 0 24 24"
+                      onClick={() => {
+                        stateKeyword[1]('');
+                        $searchInput.current.focus();
+                      }}
+                    >
+                      <path
+                        fill="#cdcdcd"
+                        d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"
+                      />
+                      <path d="M0 0h24v24H0z" fill="none" />
+                    </svg>
+                  )}
+                </div>
+              </div>
+            )}
+            <div ref={$itemsWrapper} style={customStyleOptionListContainer}>
+              {optionListHtml}
+            </div>
           </div>
         </div>
       </div>
@@ -399,7 +494,7 @@ const Option = memo(
       e => {
         onClick(item.id, e);
       },
-      [show],
+      [show, item],
     );
     const handleOnMouseOver = useCallback(() => {
       onMouseOver(index);
