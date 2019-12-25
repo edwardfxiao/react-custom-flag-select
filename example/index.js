@@ -157,16 +157,6 @@ CodeBlock.propTypes = {
 const FLAG_SELECTOR_OPTION_LIST = [
   { id: '1', name: 'US', displayText: 'US(1)', locale: 'en-US', flag: require('../src/image/flags/us.svg') },
   { id: '86', name: '中国', displayText: '中国(86)', locale: 'zh-CN', flag: require('../src/image/flags/cn.svg') },
-  { id: 'austria', name: 'austria', displayText: 'austria', locale: 'zh-CN', flag: require('../src/image/flags/cn.svg') },
-  { id: 'canada', name: 'canada', displayText: 'canada', locale: 'zh-CN', flag: require('../src/image/flags/cn.svg') },
-  { id: 'xde', name: 'xde', displayText: 'xde', locale: 'zh-CN', flag: require('../src/image/flags/cn.svg') },
-  { id: 'vgyy', name: 'vgyy', displayText: 'vgyy', locale: 'zh-CN', flag: require('../src/image/flags/cn.svg') },
-  { id: 'vtybn', name: 'vtybn', displayText: 'vtybn', locale: 'zh-CN', flag: require('../src/image/flags/cn.svg') },
-  { id: 'btc', name: 'btc', displayText: 'btc', locale: 'zh-CN', flag: require('../src/image/flags/cn.svg') },
-  { id: 'eth', name: 'eth', displayText: 'eth', locale: 'zh-CN', flag: require('../src/image/flags/cn.svg') },
-  { id: 'juh', name: 'juh', displayText: 'juh', locale: 'zh-CN', flag: require('../src/image/flags/cn.svg') },
-  { id: 'bnhyt', name: 'bnhyt', displayText: 'bnhyt', locale: 'zh-CN', flag: require('../src/image/flags/cn.svg') },
-  { id: 'axsrt', name: 'axsrt', displayText: 'axsrt', locale: 'zh-CN', flag: require('../src/image/flags/cn.svg') },
 ];
 
 const DEFAULT_AREA_CODE = FLAG_SELECTOR_OPTION_LIST[0].id;
