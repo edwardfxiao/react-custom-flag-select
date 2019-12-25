@@ -16,7 +16,6 @@ import ReactCustomFlagSelect from '../src/js/component/index.js';
 import '../src/css/example.css';
 import STYLES from '../src/css/example.css.json';
 
-
 const markdownExample = `
 \`\`\`javascript
 import ReactCustomFlagSelect from 'react-custom-flag-select';
@@ -69,6 +68,8 @@ class Index extends Component {
                   name={'areaCode'} //
                   value={currentItem.id} //
                   disabled={false} //
+                  showSearch={true} // Optional.[Bool].Default: false. Show a search box in order to find option quickly.
+                  // keyword={''} // Optional.[String].Default: ''. Show a keyword for search box.
                   showArrow={true} //
                   animate={true} //Optional.[Bool].Default: false.
                   optionList={FLAG_SELECTOR_OPTION_LIST} //
@@ -150,12 +151,22 @@ const CodeBlock = ({ literal, language }) => {
 
 CodeBlock.propTypes = {
   literal: PropTypes.string,
-  language: PropTypes.string
+  language: PropTypes.string,
 };
 
 const FLAG_SELECTOR_OPTION_LIST = [
   { id: '1', name: 'US', displayText: 'US(1)', locale: 'en-US', flag: require('../src/image/flags/us.svg') },
-  { id: '86', name: '中国', displayText: '中国(86)', locale: 'zh-CN', flag: require('../src/image/flags/cn.svg') }
+  { id: '86', name: '中国', displayText: '中国(86)', locale: 'zh-CN', flag: require('../src/image/flags/cn.svg') },
+  { id: 'austria', name: 'austria', displayText: 'austria', locale: 'zh-CN', flag: require('../src/image/flags/cn.svg') },
+  { id: 'canada', name: 'canada', displayText: 'canada', locale: 'zh-CN', flag: require('../src/image/flags/cn.svg') },
+  { id: 'xde', name: 'xde', displayText: 'xde', locale: 'zh-CN', flag: require('../src/image/flags/cn.svg') },
+  { id: 'vgyy', name: 'vgyy', displayText: 'vgyy', locale: 'zh-CN', flag: require('../src/image/flags/cn.svg') },
+  { id: 'vtybn', name: 'vtybn', displayText: 'vtybn', locale: 'zh-CN', flag: require('../src/image/flags/cn.svg') },
+  { id: 'btc', name: 'btc', displayText: 'btc', locale: 'zh-CN', flag: require('../src/image/flags/cn.svg') },
+  { id: 'eth', name: 'eth', displayText: 'eth', locale: 'zh-CN', flag: require('../src/image/flags/cn.svg') },
+  { id: 'juh', name: 'juh', displayText: 'juh', locale: 'zh-CN', flag: require('../src/image/flags/cn.svg') },
+  { id: 'bnhyt', name: 'bnhyt', displayText: 'bnhyt', locale: 'zh-CN', flag: require('../src/image/flags/cn.svg') },
+  { id: 'axsrt', name: 'axsrt', displayText: 'axsrt', locale: 'zh-CN', flag: require('../src/image/flags/cn.svg') },
 ];
 
 const DEFAULT_AREA_CODE = FLAG_SELECTOR_OPTION_LIST[0].id;
@@ -215,7 +226,9 @@ class Index extends Component {
                   name={'areaCode'} //Optional.[String].Default: "". Input name.
                   value={currentItem.id} //Optional.[String].Default: "".
                   disabled={false} //Optional.[Bool].Default: false.
-                  showArrow={false} //Optional.[Bool].Default: true.
+                  showSearch={true} // Optional.[Bool].Default: false. Show a search box in order to find option quickly.
+                  // keyword={''} // Optional.[String].Default: ''. Show a keyword for search box.
+                  showArrow={true} //Optional.[Bool].Default: true.
                   animate={true} //Optional.[Bool].Default: false.
                   optionList={FLAG_SELECTOR_OPTION_LIST} //Required.[Array of Object(s)].Default: [].
                   // selectOptionListItemHtml={<div>us</div>} //Optional.[Html].Default: none. The custom select options item html that will display in dropdown list. Use it if you think the default html is ugly.
@@ -229,7 +242,7 @@ class Index extends Component {
                   customStyleContainer={{ border: 'none', fontSize: '12px' }} //Optional.[Object].Default: {}.
                   customStyleSelect={{ width: '100px' }} //Optional.[Object].Default: {}.
                   customStyleOptionListItem={{}} //Optional.[Object].Default: {}.
-                  customStyleOptionListContainer={{ maxHeight: '100px', overflow: 'auto', width: '120px', marginTop: '11px' }} //Optional.[Object].Default: {}.
+                  customStyleOptionListContainer={{ maxHeight: '100px', overflow: 'auto', width: '120px' }} //Optional.[Object].Default: {}.
                   onChange={areaCode => {
                     this.setState({ areaCode: areaCode }, () => {
                       this.handlePhoneChange(phone);
@@ -250,14 +263,14 @@ class Index extends Component {
                   paddingBottom: '0',
                   height: '45px',
                   paddingLeft: '100px',
-                  paddingRight: '20px'
+                  paddingRight: '20px',
                 }}
                 value={phone}
                 validate={validate}
                 validationCallback={res =>
                   this.setState({
                     hasPhoneError: res,
-                    validate: false
+                    validate: false,
                   })
                 }
                 type="text"
@@ -269,13 +282,13 @@ class Index extends Component {
                 validationOption={{
                   check: true,
                   required: true,
-                  customFunc: (phone) => {
+                  customFunc: phone => {
                     if (validator.isMobilePhone(`${areaCode}${phone}`, currentItem.locale)) {
                       return true;
                     } else {
                       return `Invalid phone format for ${currentItem.locale}`;
                     }
-                  }
+                  },
                 }}
               />
             </div>

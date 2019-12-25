@@ -52,6 +52,8 @@ Tested on IE9+ and Chrome and Safari(10.0.3)
 |type                              |  Opt  |  Str   |                                             |  "text"    |
 |value                             |  Opt  |  Str   |                                             |  ""        |
 |disabled                          |  Opt  |  Bool  |                                             |  false     |
+|showSearch                        |  Opt  |  Bool  |Show a search box in order to find option quickly. | false |
+|keyword                           |  Opt  |  Str   |Show a keyword for search box.               |  ''        |
 |showArrow                         |  Opt  |  Bool  |                                             |  true      |
 |animate                           |  Opt  |  Bool  |                                             |  false     |
 |**optionList**                    |**Req**|**Array**|**[{id: "1", name: "United States", displayText: "US(1)", flag: "us.svg"}, {id: "86", name: "中国", displayText: "中国(86)", flag: "cn.svg"}]**              |**[]**          |
