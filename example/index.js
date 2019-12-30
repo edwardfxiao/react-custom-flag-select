@@ -209,7 +209,7 @@ class Index extends Component {
         <div style={{ padding: '20px', border: '1px solid #e5e5e5' }}>
           <form onSubmit={this.submit}>
             <div style={{ position: 'relative' }}>
-              <div style={{ position: 'absolute', left: '0', top: '10px' }}>
+              <div style={{ position: 'absolute', height: '45px'}}>
                 <ReactCustomFlagSelect
                   tabIndex={'1'} //Optional.[String or Number].Default: -1.
                   id={'areaCode'} //Optional.[String].Default: "". Input ID.

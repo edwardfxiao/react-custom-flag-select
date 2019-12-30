@@ -381,7 +381,7 @@ const Index = memo(
     const wrapperClass = cx(classNameWrapper, STYLES[`${TYPE}__wrapper`], disabled && STYLES['disabled']);
     const containerClass = cx(classNameContainer, STYLES[`${TYPE}__container`], show && STYLES['show']);
     const inputClass = cx(STYLES[`${TYPE}__input`]);
-    const selectClass = cx(classNameSelect, STYLES['ellipsis']);
+    const selectClass = cx(classNameSelect, STYLES[`${TYPE}__buttonWrapper`], STYLES['ellipsis']);
     const selectOptionListContainerClass = cx(classNameOptionListContainer, STYLES[`${TYPE}__options-container`], show && STYLES['show'], animate && STYLES[`${TYPE}__options-container-animate`]);
     const selectOptionListItemClass = cx(!isTyping && STYLES[`${TYPE}__options-item-show-cursor`], classNameOptionListItem, STYLES[`${TYPE}__options-item`]);
     const dropdownIconClass = cx(classNameDropdownIconOptionListItem, STYLES[`${TYPE}__dropdown-icon`], showArrow && STYLES['showArrow']);
@@ -456,7 +456,7 @@ const Index = memo(
           </div>
           <div className={selectOptionListContainerClass}>
             {showSearch && (
-              <div ref={$searchInputWrapper}>
+              <div ref={$searchInputWrapper} style={{...customStyleOptionListContainer, overflow: 'hidden'}}>
                 <div className={STYLES[`${TYPE}__searchInputWrapper`]}>
                   <svg className={STYLES[`${TYPE}__searchInputSearchIcon`]} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
                     <path
