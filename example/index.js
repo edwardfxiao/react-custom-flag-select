@@ -289,11 +289,7 @@ class Index extends Component {
             <input type="submit" style={{ display: 'none' }} />
           </form>
         </div>
-        <div>
-          <div>
-            <Markdown source={markdownExample} renderers={{ CodeBlock }} />
-          </div>
-        </div>
+
       </div>
     );
   }
