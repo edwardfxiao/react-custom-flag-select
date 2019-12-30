@@ -102,6 +102,10 @@ const Index = memo(
         if (selectKeyList.indexOf(keyCode) !== -1) {
           e.preventDefault();
           handleOnKeyDown(keyCode);
+        } else if (keyCode === 32) {
+          // space
+          stateKeyword[1](`${stateKeyword[0]} `);
+          e.preventDefault();
         }
         scroll(direction);
       },
@@ -196,42 +200,46 @@ const Index = memo(
       }, 250);
     }, []);
     /* istanbul ignore next because of https://github.com/airbnb/enzyme/issues/441 && https://github.com/airbnb/enzyme/blob/master/docs/future.md */
-  const scroll = useCallback((direction = undefined) => {
-    if ($itemsWrapper && $itemsWrapper.current && $itemsWrapper.current.children) {
-      const $children = $itemsWrapper.current.children;
-      const containerHeight = $itemsWrapper.current.offsetHeight;
-      const containerScrollTop = $itemsWrapper.current.scrollTop;
-      if (!$children[globalVariableCurrentFocus]) {
-        return;
-      }
-      const itemHeight = $children[globalVariableCurrentFocus].offsetHeight;
-      if (direction) {
-        if (direction === 'down') {
-          const bound = containerScrollTop + containerHeight;
-          const heightItems = globalVariableCurrentFocus * itemHeight;
-          const heightContainer = bound - itemHeight;
-          if (heightItems >= heightContainer) {
-            const offset = Math.abs(heightItems - heightContainer - itemHeight);
-            if (offset >= 0 && !globalVariableIsCorrected) {
-              $itemsWrapper.current.scrollTop = containerScrollTop + itemHeight - offset;
-              globalVariableIsCorrected = true;
-            } else {
-              $itemsWrapper.current.scrollTop = containerScrollTop + itemHeight;
+    const scroll = useCallback((direction = undefined) => {
+      if ($itemsWrapper && $itemsWrapper.current && $itemsWrapper.current.children) {
+        const $children = $itemsWrapper.current.children;
+        const containerHeight = $itemsWrapper.current.offsetHeight;
+        const containerScrollTop = $itemsWrapper.current.scrollTop;
+        if (!$children[globalVariableCurrentFocus]) {
+          return;
+        }
+        const itemHeight = $children[globalVariableCurrentFocus].offsetHeight;
+        if (direction) {
+          if (direction === 'loop') {
+            $itemsWrapper.current.scrollTop = $children.length * itemHeight;
+            return;
+          }
+          if (direction === 'down') {
+            const bound = containerScrollTop + containerHeight;
+            const heightItems = globalVariableCurrentFocus * itemHeight;
+            const heightContainer = bound - itemHeight;
+            if (heightItems >= heightContainer) {
+              const offset = Math.abs(heightItems - heightContainer - itemHeight);
+              if (offset >= 0 && !globalVariableIsCorrected) {
+                $itemsWrapper.current.scrollTop = containerScrollTop + itemHeight - offset;
+                globalVariableIsCorrected = true;
+              } else {
+                $itemsWrapper.current.scrollTop = containerScrollTop + itemHeight;
+              }
             }
           }
-        }
-        if (direction === 'up') {
-          globalVariableIsCorrected = false;
-          if (globalVariableCurrentFocus * itemHeight <= containerScrollTop) {
-            $itemsWrapper.current.scrollTop = globalVariableCurrentFocus * itemHeight;
+          if (direction === 'up') {
+            globalVariableIsCorrected = false;
+            if (globalVariableCurrentFocus * itemHeight <= containerScrollTop) {
+              $itemsWrapper.current.scrollTop = globalVariableCurrentFocus * itemHeight;
+            }
           }
+        } else {
+          globalVariableIsCorrected = false;
+          $itemsWrapper.current.scrollTop = globalVariableCurrentFocus * itemHeight;
         }
-      } else {
-        globalVariableIsCorrected = false;
-        $itemsWrapper.current.scrollTop = globalVariableCurrentFocus * itemHeight;
       }
-    }
-  }, []);
+    }, []);
     const handleOnItemClick = useCallback(
       (v, e) => {
         handleOnChange(v, e);
@@ -291,13 +299,15 @@ const Index = memo(
         if (keyCode === keyCodeDown) {
           globalVariableCurrentFocus += 1;
           if (globalVariableCurrentFocus > filteredOptionList.length - 1) {
-            globalVariableCurrentFocus = filteredOptionList.length - 1;
+            globalVariableCurrentFocus = 0;
+            scroll('up');
           }
           addActive();
         } else if (keyCode === keyCodeUp) {
           globalVariableCurrentFocus -= 1;
           if (globalVariableCurrentFocus < 0) {
-            globalVariableCurrentFocus = 0;
+            globalVariableCurrentFocus = filteredOptionList.length - 1;
+            scroll('loop');
           }
           addActive();
         } else if (keyCode === keyCodeEnter) {
