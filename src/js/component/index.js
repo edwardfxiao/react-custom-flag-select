@@ -210,6 +210,10 @@ const Index = memo(
         }
         const itemHeight = $children[globalVariableCurrentFocus].offsetHeight;
         if (direction) {
+          if (direction === 'loop') {
+            $itemsWrapper.current.scrollTop = $children.length * itemHeight;
+            return;
+          }
           if (direction === 'down') {
             const bound = containerScrollTop + containerHeight;
             const heightItems = globalVariableCurrentFocus * itemHeight;
@@ -295,13 +299,15 @@ const Index = memo(
         if (keyCode === keyCodeDown) {
           globalVariableCurrentFocus += 1;
           if (globalVariableCurrentFocus > filteredOptionList.length - 1) {
-            globalVariableCurrentFocus = filteredOptionList.length - 1;
+            globalVariableCurrentFocus = 0;
+            scroll('up');
           }
           addActive();
         } else if (keyCode === keyCodeUp) {
           globalVariableCurrentFocus -= 1;
           if (globalVariableCurrentFocus < 0) {
-            globalVariableCurrentFocus = 0;
+            globalVariableCurrentFocus = filteredOptionList.length - 1;
+            scroll('loop');
           }
           addActive();
         } else if (keyCode === keyCodeEnter) {
