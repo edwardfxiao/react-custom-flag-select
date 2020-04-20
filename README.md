@@ -60,9 +60,11 @@ Tested on IE9+ and Chrome and Safari(10.0.3)
 |classNameSelect                   |  Opt  |  Str   |                                             |  ""        |
 |classNameWrapper                  |  Opt  |  Str   |                                             |  ""        |
 |classNameContainer                |  Opt  |  Str   |                                             |  ""        |
+|classNameButton                   |  Opt  |  Str   |                                             |  ""        |
 |classNameOptionListContainer      |  Opt  |  Str   |                                             |  ""        |
 |classNameOptionListItem           |  Opt  |  Str   |                                             |  ""        |
 |customStyleSelect                 |  Opt  |  Obj   |                                             |  {}        |
+|customStyleButton                 |  Opt  |  Obj   |                                             |  {}        |
 |customStyleWrapper                |  Opt  |  Obj   |                                             |  {}        |
 |customStyleContainer              |  Opt  |  Obj   |                                             |  {}        |
 |customStyleOptionListContainer    |  Opt  |  Obj   |                                             |  {}        |
@@ -82,7 +84,7 @@ const find = (arr, obj) => {
   const res = [];
   arr.forEach(o => {
     let match = false;
-    Object.keys(obj).map(i => {
+    Object.keys(obj).forEach(i => {
       if (obj[i] == o[i]) {
         match = true;
       }

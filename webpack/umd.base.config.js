@@ -1,5 +1,4 @@
 const env = require('yargs').argv.env; // use --env with webpack 2
-const webpack = require('webpack');
 const path = require('path');
 const PATH = require('./build_path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -17,46 +16,47 @@ if (env === 'build') {
   outputFile = libraryName + '.js';
 }
 
-var config = (module.exports = {
+module.exports = {
   mode: 'production',
-  context: PATH.ROOT_PATH,
   entry: PATH.ROOT_PATH + 'src/js/component/index.umd.js',
+  context: PATH.ROOT_PATH,
   module: {
     rules: [
       {
         test: /\.mp3?$/,
         include: [PATH.ROOT_PATH],
         exclude: [PATH.NODE_MODULES_PATH],
-        loader: 'file-loader',
-        options: {
-          name: 'audio/[name]-[hash].[ext]',
-        },
+        loader: 'file-loader?name=audio/[name]-[hash].[ext]',
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)\??.*$/,
         include: [PATH.ROOT_PATH],
         // exclude: [PATH.NODE_MODULES_PATH],
-        loader: 'url-loader',
-        options: {
-          limit: 1,
-          name: 'font/[name]-[hash].[ext]',
-        },
+        loader: 'url-loader?limit=1&name=font/[name]-[hash].[ext]',
       },
       {
         test: /\.(jpe?g|png|gif|svg)\??.*$/,
         include: [PATH.ROOT_PATH],
         // exclude: [PATH.NODE_MODULES_PATH],
-        loader: 'url-loader',
-        options: {
-          limit: 1,
-          name: 'img/[name]-[hash].[ext]',
-        },
+        loader: 'url-loader?limit=1&name=img/[name]-[hash].[ext]',
       },
+      {
+        test: /\.(ts|tsx)$/,
+        enforce: 'pre',
+        use: [
+          {
+            loader: 'tslint-loader',
+            options: {
+              // emitWarning: true
+            },
+          },
+        ],
+      },
+      { test: /\.(ts|tsx)$/, loader: 'awesome-typescript-loader' },
       {
         test: /\.jsx?$/,
         include: [PATH.ROOT_PATH],
         exclude: [PATH.NODE_MODULES_PATH],
-        enforce: 'pre',
         enforce: 'post',
         loader: 'eslint-loader',
         options: {
@@ -67,21 +67,19 @@ var config = (module.exports = {
         test: /\.jsx?$/,
         include: [PATH.ROOT_PATH],
         exclude: [PATH.NODE_MODULES_PATH],
-        enforce: 'pre',
-        enforce: 'post',
         loader: 'babel-loader',
       },
       {
         test: /\.css$/,
-        include: [PATH.NODE_MODULES_PATH],
-        enforce: 'pre',
         enforce: 'post',
         use: [
           MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
             options: {
-              importLoaders: 1,
+              modules: {
+                localIdentName: '[name]__[local]___[hash:base64:5]',
+              },
             },
           },
           {
@@ -91,35 +89,6 @@ var config = (module.exports = {
                 require('postcss-import')({
                   root: loader.resourcePath,
                 }),
-                require('autoprefixer')(),
-                require('cssnano')(),
-              ],
-            },
-          },
-        ],
-      },
-      {
-        test: /\.css$/,
-        include: [PATH.SOURCE_PATH],
-        exclude: [PATH.NODE_MODULES_PATH],
-        enforce: 'pre',
-        enforce: 'post',
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              plugins: loader => [
-                require('postcss-import')({
-                  root: loader.resourcePath,
-                }),
-                require('postcss-modules')({
-                  generateScopedName: '[name]__[local]___[hash:base64:5]',
-                }),
-                require('postcss-cssnext')(),
                 require('autoprefixer')(),
                 require('cssnano')({ safe: true }),
               ],
@@ -139,6 +108,7 @@ var config = (module.exports = {
     filename: outputFile,
     library: libraryName,
     libraryTarget: 'umd',
+    globalObject: 'this',
   },
   plugins,
-});
+};

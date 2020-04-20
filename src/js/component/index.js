@@ -53,12 +53,14 @@ const Index = memo(
     classNameWrapper = '',
     classNameContainer = '',
     classNameSelect = '',
+    classNameButton = '',
     classNameOptionListItem = '',
     classNameOptionListContainer = '',
     classNameDropdownIconOptionListItem = '',
     customStyleWrapper = {},
     customStyleContainer = {},
     customStyleSelect = {},
+    customStyleButton = {},
     customStyleOptionListItem = {},
     customStyleOptionListContainer = {},
     selectHtml = null,
@@ -435,7 +437,8 @@ const Index = memo(
           <div className={selectClass} style={customStyleSelect}>
             <button
               type="button"
-              className={STYLES[`${TYPE}__button`]}
+              className={cx(STYLES[`${TYPE}__button`], classNameButton)}
+              style={{ ...customStyleButton }}
               onClick={e => {
                 handleOnClick(e);
                 if (!disabled) {
@@ -456,7 +459,7 @@ const Index = memo(
           </div>
           <div className={selectOptionListContainerClass}>
             {showSearch && (
-              <div ref={$searchInputWrapper} style={{...customStyleOptionListContainer, overflow: 'hidden'}}>
+              <div ref={$searchInputWrapper} style={{ ...customStyleOptionListContainer, overflow: 'hidden' }}>
                 <div className={STYLES[`${TYPE}__searchInputWrapper`]}>
                   <svg className={STYLES[`${TYPE}__searchInputSearchIcon`]} xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
                     <path
