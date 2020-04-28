@@ -1,7 +1,7 @@
 # react-custom-flag-select
 [![npm version](https://badge.fury.io/js/react-custom-flag-select.svg)](https://badge.fury.io/js/react-custom-flag-select) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com) [![react-custom-flag-select](http://img.shields.io/npm/dm/react-custom-flag-select.svg)](https://www.npmjs.com/package/react-custom-flag-select) ![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/react-custom-flag-select.svg) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/edwardfhsiao/react-custom-flag-select/master/LICENSE)
 
-A react custom flag (country code) select.
+A react component for custom flag (country code) select.
 # <img src="https://raw.githubusercontent.com/edwardfhsiao/react-custom-flag-select/master/react-custom-flag-select.jpg" />
 
 # Online Demo
