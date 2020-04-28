@@ -1,7 +1,7 @@
 {
   "name": "react-custom-flag-select",
   "version": "2.5.0",
-  "description": "a react custom flag select component",
+  "description": "A react component for custom flag (country code) select.",
   "main": "index.js",
   "repository": {
     "type": "git",
