@@ -105,7 +105,7 @@ const { areaCode, phone, validate } = this.state;
 const currentItem = find(FLAG_SELECTOR_OPTION_LIST, { id: areaCode })[0];
 
  <ReactCustomFlagSelect
-   tabIndex={'1'} //Optional.[String or Number].Default: -1.
+   tabIndex={'1'} //Optional.[String or Number].Default: none.
    id={'areaCode'} //Optional.[String].Default: "". Input ID.
    name={'areaCode'} //Optional.[String].Default: "". Input name.
    value={currentItem.id} //Optional.[String].Default: "".
