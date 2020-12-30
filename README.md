@@ -49,7 +49,6 @@ Tested on IE9+ and Chrome and Safari(10.0.3)
 |attributesWrapper                 |**Req**|  Obj   |Modify wrapper general attributes. **If tabIndex not provided, the keydown may not working**  **{<br/>id: 'myWrapperId',<br/>tabIndex: '1'<br/>...<br/>}**. |  {}      |
 |attributesButton                   |  Opt  |  Obj   |Modify button general attributes.  **{<br/>id: 'myButtonId'<br/>...<br/>}** |  {}      |
 |attributesInput                   |  Opt  |  Obj   |Modify hidden input general attributes.  **{<br/>id: 'myInputId'<br/>name: 'myInputName'<br/>...<br/>}** |  {}      |
-|type                              |  Opt  |  Str   |                                             |  "text"    |
 |value                             |  Opt  |  Str   |                                             |  ""        |
 |disabled                          |  Opt  |  Bool  |                                             |  false     |
 |showSearch                        |  Opt  |  Bool  |Show a search box in order to find option quickly. | false |
