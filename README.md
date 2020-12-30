@@ -46,10 +46,9 @@ Tested on IE9+ and Chrome and Safari(10.0.3)
 
 |Props                             |       |Type    |Description                                  |Default     |
 |---                               |---    |---     |---                                          |  ---       |
-|tabIndex                          |**Req**|**Str &#124; Num**|**If its not provided, the keydown may not working**|**none**|
-|id                                |  Opt  |  Str   |                                             |  none      |
-|name                              |  Opt  |  Str   |                                             |  ""        |
-|type                              |  Opt  |  Str   |                                             |  "text"    |
+|attributesWrapper                 |**Req**|  Obj   |Modify wrapper general attributes. **If tabIndex not provided, the keydown may not working**  **{<br/>id: 'myWrapperId',<br/>tabIndex: '1'<br/>...<br/>}**. |  {}      |
+|attributesButton                   |  Opt  |  Obj   |Modify button general attributes.  **{<br/>id: 'myButtonId'<br/>...<br/>}** |  {}      |
+|attributesInput                   |  Opt  |  Obj   |Modify hidden input general attributes.  **{<br/>id: 'myInputId'<br/>name: 'myInputName'<br/>...<br/>}** |  {}      |
 |value                             |  Opt  |  Str   |                                             |  ""        |
 |disabled                          |  Opt  |  Bool  |                                             |  false     |
 |showSearch                        |  Opt  |  Bool  |Show a search box in order to find option quickly. | false |
@@ -105,9 +104,9 @@ const { areaCode, phone, validate } = this.state;
 const currentItem = find(FLAG_SELECTOR_OPTION_LIST, { id: areaCode })[0];
 
  <ReactCustomFlagSelect
-   tabIndex={'1'} //Optional.[String or Number].Default: -1.
-   id={'areaCode'} //Optional.[String].Default: "". Input ID.
-   name={'areaCode'} //Optional.[String].Default: "". Input name.
+   attributesWrapper={{ id: 'areaCodeWrapper', tabIndex: '1' }} //Optional.[Object].Modify wrapper general attributes.
+   attributesButton={{ id: 'areaCodeButton' }} //Optional.[Object].Modify button general attributes.
+   attributesInput={{ id: 'areaCode', name: 'areaCode' }} //Optional.[Object].Modify hidden input general attributes.
    value={currentItem.id} //Optional.[String].Default: "".
    disabled={false} //Optional.[Bool].Default: false.
    showArrow={true} //Optional.[Bool].Default: true.
