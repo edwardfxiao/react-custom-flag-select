@@ -1,4 +1,11 @@
 import React, { useEffect, useState, useCallback, useRef, useMemo, memo } from 'react';
+const usePrevious = value => {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+};
 import { cx, getRandomId } from './utils.js';
 // DEVELOPMENT
 // import './react-custom-flag-select.css';
@@ -37,12 +44,8 @@ export const getIndex = (list, value) => {
   }
   return key;
 };
-const DEFAULT_ID = getRandomId();
 const Index = memo(
   ({
-    tabIndex = null,
-    id = DEFAULT_ID,
-    name = '',
     value = '',
     disabled = false,
     showSearch = false,
@@ -57,6 +60,9 @@ const Index = memo(
     classNameOptionListItem = '',
     classNameOptionListContainer = '',
     classNameDropdownIconOptionListItem = '',
+    attributesWrapper = {},
+    attributesInput = {},
+    attributesButton = {},
     customStyleWrapper = {},
     customStyleContainer = {},
     customStyleSelect = {},
@@ -71,11 +77,13 @@ const Index = memo(
     onClick = null,
   }) => {
     const [show, setShow] = useState(false);
+    const prevShow = usePrevious(show);
     const [internalValue, setInternalValue] = useState(String(value));
     const [keycodeList, setKeycodeList] = useState([]);
     const stateKeyword = useState(keyword);
     const [isTyping, setIsTyping] = useState(false);
     const $wrapper = useRef(null);
+    const $button = useRef(null);
     const $itemsWrapper = useRef(null);
     const $searchInputWrapper = useRef(null);
     const $searchInput = useRef(null);
@@ -123,7 +131,17 @@ const Index = memo(
     useEffect(() => {
       if (show) {
         if (showSearch) {
-          $searchInput.current.focus();
+          if (animate) {
+            setTimeout(() => {
+              $searchInput.current.focus();
+            }, 100); // css transition .4s
+          } else {
+            $searchInput.current.focus();
+          }
+        }
+      } else {
+        if (prevShow === true && show === false) {
+          $button.current.focus();
         }
       }
       resetCurrentFocus();
@@ -164,12 +182,6 @@ const Index = memo(
       }
       window.addEventListener('mousedown', pageClick);
       window.addEventListener('touchstart', pageClick);
-      if (tabIndex) {
-        $wrapper.current.setAttribute('tabindex', String(tabIndex));
-      }
-      if (id) {
-        $wrapper.current.setAttribute('id', String(id));
-      }
       return () => {
         window.removeEventListener('mousedown', pageClick);
         window.removeEventListener('touchstart', pageClick);
@@ -431,12 +443,13 @@ const Index = memo(
       );
     }
     return (
-      <div ref={$wrapper} id={STYLES[`${TYPE}__wrapper`]} className={wrapperClass} style={customStyleWrapper}>
+      <div ref={$wrapper} className={wrapperClass} style={customStyleWrapper} {...attributesWrapper}>
         <div className={containerClass} style={customStyleContainer}>
-          <input id={id} name={name} type="hidden" value={value} className={inputClass} onChange={() => {}} />
+          <input type="hidden" value={value} className={inputClass} onChange={() => {}} {...attributesInput} />
           <div className={selectClass} style={customStyleSelect}>
             <button
               type="button"
+              ref={$button}
               className={cx(STYLES[`${TYPE}__button`], classNameButton)}
               style={{ ...customStyleButton }}
               onClick={e => {
@@ -453,6 +466,7 @@ const Index = memo(
               }}
               onFocus={handleOnFocus}
               onBlur={handleOnBlur}
+              {...attributesButton}
             >
               <div className={STYLES[`${TYPE}__selector`]}>{selectorHtml}</div>
             </button>

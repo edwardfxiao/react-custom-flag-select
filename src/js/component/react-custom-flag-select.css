@@ -138,12 +138,14 @@
   box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12), 0 0 10px 0 rgba(0, 0, 0, 0.08);
   transform: translateY(-10px);
   transition: all 0.4s;
+  visibility: hidden;
 }
 
 .select__options-container-animate.show {
   transform: translate(-50%, 0) scale(1, 1);
   opacity: 1;
   z-index: 3;
+  visibility: visible;
 }
 
 .select__options-container {
@@ -154,6 +156,7 @@
   z-index: -1;
   box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12), 0 0 10px 0 rgba(0, 0, 0, 0.08);
   transform: translateY(-10px);
+  visibility: hidden;
 }
 
 .select__options-container.show {
@@ -161,6 +164,7 @@
   opacity: 1;
   filter: alpha(opacity=100);
   z-index: 1000;
+  visibility: visible;
 }
 
 .select__dropdown {
