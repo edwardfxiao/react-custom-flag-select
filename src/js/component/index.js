@@ -383,10 +383,10 @@ const Index = memo(
     );
     useEffect(() => {
       if (show && $wrapper) {
-        $wrapper.current.addEventListener('keydown', onKeyDown);
+        $wrapper.current && $wrapper.current.addEventListener('keydown', onKeyDown);
       }
       return () => {
-        $wrapper.current.removeEventListener('keydown', onKeyDown);
+        $wrapper.current && $wrapper.current.removeEventListener('keydown', onKeyDown);
       };
     }, [show, value, keycodeList]);
     useEffect(() => {
