@@ -185,7 +185,7 @@ const Index = memo(
       return () => {
         window.removeEventListener('mousedown', pageClick);
         window.removeEventListener('touchstart', pageClick);
-        $wrapper.current.removeEventListener('keydown', onKeyDown);
+        $wrapper.current && $wrapper.current.removeEventListener('keydown', onKeyDown);
       };
     }, []);
     /* istanbul ignore next because of https://github.com/airbnb/enzyme/issues/441 && https://github.com/airbnb/enzyme/blob/master/docs/future.md */
