@@ -545,7 +545,7 @@ const Option = memo(
       <div ref={refItem} onMouseOver={handleOnMouseOver} onMouseMove={handleOnMouseMove} onMouseOut={handleOnMouseOut} className={className} style={customStyleOptionListItem} onClick={handleOnClick}>
         {item.flag ? (
           <div className={STYLES[`${TYPE}__dropdown-flag`]}>
-            <img src={item.flag} style={{ width: '100%', height: '100%', verticalAlign: 'middle' }} />
+            <img key={`${index}${item.flag}`} src={item.flag} style={{ width: '100%', height: '100%', verticalAlign: 'middle' }} />
           </div>
         ) : (
           ''
