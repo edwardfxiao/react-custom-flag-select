@@ -34,7 +34,7 @@ const find = (arr, obj) => {
   const res = [];
   arr.forEach(o => {
     let match = false;
-    Object.keys(obj).map(i => {
+    Object.keys(obj).forEach(i => {
       if (obj[i] == o[i]) {
         match = true;
       }
@@ -69,6 +69,7 @@ class Index extends Component {
                   value={currentItem.id} //
                   disabled={false} //
                   showSearch={true} // Optional.[Bool].Default: false. Show a search box in order to find option quickly.
+                  fields={['name', 'locale']} // Optional.[array].Default: ['name']. Fields for search filtering.
                   // keyword={''} // Optional.[String].Default: ''. Show a keyword for search box.
                   showArrow={true} //
                   animate={true} //Optional.[Bool].Default: false.
@@ -218,6 +219,7 @@ class Index extends Component {
                   value={currentItem.id} //Optional.[String].Default: "".
                   disabled={false} //Optional.[Bool].Default: false.
                   showSearch={true} // Optional.[Bool].Default: false. Show a search box in order to find option quickly.
+                  fields={['name', 'locale']} // Optional.[array].Default: ['name']. Fields for search filtering.
                   // keyword={''} // Optional.[String].Default: ''. Show a keyword for search box.
                   showArrow={true} //Optional.[Bool].Default: true.
                   animate={true} //Optional.[Bool].Default: false.

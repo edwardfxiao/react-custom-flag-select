@@ -52,6 +52,7 @@ Tested on IE9+ and Chrome and Safari(10.0.3)
 |value                             |  Opt  |  Str   |                                             |  ""        |
 |disabled                          |  Opt  |  Bool  |                                             |  false     |
 |showSearch                        |  Opt  |  Bool  |Show a search box in order to find option quickly. | false |
+|fields                            |  Opt  |  arr   |Fields for search filtering.                 | ['name'] |
 |keyword                           |  Opt  |  Str   |Show a keyword for search box.               |  ''        |
 |showArrow                         |  Opt  |  Bool  |                                             |  true      |
 |animate                           |  Opt  |  Bool  |                                             |  false     |
@@ -109,6 +110,9 @@ const currentItem = find(FLAG_SELECTOR_OPTION_LIST, { id: areaCode })[0];
    attributesInput={{ id: 'areaCode', name: 'areaCode' }} //Optional.[Object].Modify hidden input general attributes.
    value={currentItem.id} //Optional.[String].Default: "".
    disabled={false} //Optional.[Bool].Default: false.
+   showSearch={true} // Optional.[Bool].Default: false. Show a search box in order to find option quickly.
+   fields={['name', 'locale']} // Optional.[array].Default: ['name']. Fields for search filtering.
+   // keyword={''} // Optional.[String].Default: ''. Show a keyword for search box.
    showArrow={true} //Optional.[Bool].Default: true.
    animate={true} //Optional.[Bool].Default: false.
    optionList={FLAG_SELECTOR_OPTION_LIST} //Required.[Array of Object(s)].Default: [].

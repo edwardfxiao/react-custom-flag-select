@@ -49,6 +49,7 @@ const Index = memo(
     value = '',
     disabled = false,
     showSearch = false,
+    fields = ['name'],
     keyword = '',
     showArrow = true,
     animate = false,
@@ -97,11 +98,19 @@ const Index = memo(
       let res = optionList;
       if (res.length) {
         if (stateKeyword[0]) {
-          res = optionList.filter(i => i.name.toLowerCase().includes(stateKeyword[0].toLowerCase()));
+          res = optionList.filter(i => {
+            let res = false;
+            fields.forEach(key => {
+              if (i[key].toLowerCase().includes(stateKeyword[0].toLowerCase())) {
+                res = true;
+              }
+            });
+            return res;
+          });
         }
       }
       return res;
-    }, [stateKeyword[0], optionList]);
+    }, [stateKeyword[0], optionList, fields]);
     const handleOnSearch = useCallback(e => {
       stateKeyword[1](e.target.value);
     }, []);
