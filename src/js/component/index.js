@@ -431,6 +431,7 @@ const Index = memo(
             customStyleOptionListItem={customStyleOptionListItem}
             onClick={handleOnItemClick}
             show={show}
+            $itemEls={$itemEls}
             onMouseOver={handleOnItemMouseOver}
             onMouseMove={handleOnItemMouseMove}
             onMouseOut={handleOnItemMouseOut}
@@ -531,7 +532,7 @@ const Index = memo(
 );
 
 const Option = memo(
-  ({ index = -1, id = '', className = '', item, customStyleOptionListItem = {}, onClick = () => {}, onMouseOver = () => {}, onMouseMove = () => {}, onMouseOut = () => {}, show }) => {
+  ({ index = -1, id = '', className = '', item, $itemEls, customStyleOptionListItem = {}, onClick = () => {}, onMouseOver = () => {}, onMouseMove = () => {}, onMouseOut = () => {}, show }) => {
     const handleOnClick = useCallback(
       e => {
         onClick(item.id, e);
@@ -540,13 +541,13 @@ const Option = memo(
     );
     const handleOnMouseOver = useCallback(() => {
       onMouseOver(index);
-    }, [id]);
+    }, [$itemEls, id]);
     const handleOnMouseMove = useCallback(() => {
       onMouseMove();
-    }, [id]);
+    }, [$itemEls, id]);
     const handleOnMouseOut = useCallback(() => {
       onMouseOut();
-    }, [id]);
+    }, [$itemEls, id]);
     return (
       <div id={id} onMouseOver={handleOnMouseOver} onMouseMove={handleOnMouseMove} onMouseOut={handleOnMouseOut} className={className} style={customStyleOptionListItem} onClick={handleOnClick}>
         {item.flag ? (
