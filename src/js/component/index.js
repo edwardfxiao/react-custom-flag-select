@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useRef, useMemo, memo } from 'react';
+import React, { useEffect, useState, useCallback, createRef, useRef, useMemo, memo } from 'react';
 const usePrevious = value => {
   const ref = useRef();
   useEffect(() => {
@@ -88,12 +88,7 @@ const Index = memo(
     const $itemsWrapper = useRef(null);
     const $searchInputWrapper = useRef(null);
     const $searchInput = useRef(null);
-    const $itemsRef = [];
-    if (optionList.length) {
-      for (let i = 0; i < optionList.length; i += 1) {
-        $itemsRef.push(useRef(null));
-      }
-    }
+    const [$itemEls, setItemEls] = useState([]);
     const filteredOptionList = useMemo(() => {
       let res = optionList;
       if (res.length) {
@@ -111,6 +106,15 @@ const Index = memo(
       }
       return res;
     }, [stateKeyword[0], optionList, fields]);
+    useEffect(() => {
+      if (filteredOptionList.length) {
+        const itemEls = [];
+        for (let i = 0; i < filteredOptionList.length; i += 1) {
+          itemEls.push(`react-custom-flag-select__select_option-${filteredOptionList[i].id}`);
+        }
+        setItemEls(itemEls);
+      }
+    }, [filteredOptionList]);
     const handleOnSearch = useCallback(e => {
       stateKeyword[1](e.target.value);
     }, []);
@@ -128,7 +132,7 @@ const Index = memo(
         }
         scroll(direction);
       },
-      [filteredOptionList],
+      [filteredOptionList, $itemEls],
     );
     useEffect(() => {
       if (show && showSearch) {
@@ -210,9 +214,9 @@ const Index = memo(
     }, []);
     /* istanbul ignore next because of https://github.com/airbnb/enzyme/issues/441 && https://github.com/airbnb/enzyme/blob/master/docs/future.md */
     const resetCurrentFocus = useCallback(() => {
-      globalVariableCurrentFocus = getIndex(optionList, internalValue);
+      globalVariableCurrentFocus = getIndex(filteredOptionList, internalValue);
       scroll();
-    }, [internalValue]);
+    }, [filteredOptionList, internalValue]);
     /* istanbul ignore next because of https://github.com/airbnb/enzyme/issues/441 && https://github.com/airbnb/enzyme/blob/master/docs/future.md */
     const setTimeoutTyping = useCallback(() => {
       if (globalVariableTypingTimeout) {
@@ -270,38 +274,41 @@ const Index = memo(
       },
       [show],
     );
-    const handleOnItemMouseOver = useCallback(index => {
-      globalVariableCurrentFocus = index;
-      addActive();
-    }, []);
+    const handleOnItemMouseOver = useCallback(
+      index => {
+        globalVariableCurrentFocus = index;
+        addActive();
+      },
+      [$itemEls],
+    );
     const handleOnItemMouseMove = useCallback(() => {
       setIsTyping(false);
     }, []);
     const handleOnItemMouseOut = useCallback(() => {
       removeActive();
-    }, []);
+    }, [$itemEls]);
     const addActive = useCallback(() => {
-      if (!$itemsRef) return;
+      if (!$itemEls) return;
       removeActive();
       if (globalVariableCurrentFocus === null) return;
-      if (globalVariableCurrentFocus >= $itemsRef.length) globalVariableCurrentFocus = 0;
-      if (globalVariableCurrentFocus < 0) globalVariableCurrentFocus = $itemsRef.length - 1;
+      if (globalVariableCurrentFocus >= $itemEls.length) globalVariableCurrentFocus = 0;
+      if (globalVariableCurrentFocus < 0) globalVariableCurrentFocus = $itemEls.length - 1;
       /* istanbul ignore next because it won't happen */
-      if (!$itemsRef[globalVariableCurrentFocus].current) {
+      if (!document.getElementById($itemEls[globalVariableCurrentFocus])) {
         return;
       }
-      $itemsRef[globalVariableCurrentFocus].current.className += ` ${STYLES[`${TYPE}__hover-active`]}`;
-    }, []);
+      document.getElementById($itemEls[globalVariableCurrentFocus]).className += ` ${STYLES[`${TYPE}__hover-active`]}`;
+    }, [$itemEls]);
     const removeActive = useCallback(() => {
-      for (let i = 0; i < $itemsRef.length; i += 1) {
-        if (!$itemsRef[i]) {
+      for (let i = 0; i < $itemEls.length; i += 1) {
+        if (!$itemEls[i]) {
           break;
         }
-        if ($itemsRef[i] && $itemsRef[i].current) {
-          $itemsRef[i].current.className = $itemsRef[i].current.className.replace(STYLES[`${TYPE}__hover-active`], '');
+        if ($itemEls[i] && document.getElementById($itemEls[i])) {
+          document.getElementById($itemEls[i]).className = document.getElementById($itemEls[i]).className.replace(STYLES[`${TYPE}__hover-active`], '');
         }
       }
-    }, []);
+    }, [$itemEls]);
     const getDirection = useCallback(keyCode => {
       switch (keyCode) {
         case keyCodeUp:
@@ -346,7 +353,7 @@ const Index = memo(
           }
         }
       },
-      [filteredOptionList],
+      [filteredOptionList, $itemEls],
     );
     /* istanbul ignore next because of https://github.com/airbnb/enzyme/issues/441 && https://github.com/airbnb/enzyme/blob/master/docs/future.md */
     const onKeyDown = useCallback(
@@ -388,7 +395,7 @@ const Index = memo(
         scroll(direction);
         return globalVariableCurrentFocus;
       },
-      [show, value, keycodeList],
+      [show, value, keycodeList, filteredOptionList, $itemEls],
     );
     useEffect(() => {
       if (show && $wrapper) {
@@ -419,7 +426,6 @@ const Index = memo(
             key={k}
             index={k}
             id={`react-custom-flag-select__select_option-${i.id}`}
-            refItem={$itemsRef[k]}
             className={String(i.id) === String(value) ? `${selectOptionListItemClass} ${STYLES['active']}` : `${selectOptionListItemClass}`}
             item={i}
             customStyleOptionListItem={customStyleOptionListItem}
@@ -525,7 +531,7 @@ const Index = memo(
 );
 
 const Option = memo(
-  ({ index = -1, refItem = null, id = '', className = '', item, customStyleOptionListItem = {}, onClick = () => {}, onMouseOver = () => {}, onMouseMove = () => {}, onMouseOut = () => {}, show }) => {
+  ({ index = -1, id = '', className = '', item, customStyleOptionListItem = {}, onClick = () => {}, onMouseOver = () => {}, onMouseMove = () => {}, onMouseOut = () => {}, show }) => {
     const handleOnClick = useCallback(
       e => {
         onClick(item.id, e);
@@ -534,15 +540,15 @@ const Option = memo(
     );
     const handleOnMouseOver = useCallback(() => {
       onMouseOver(index);
-    }, []);
+    }, [id]);
     const handleOnMouseMove = useCallback(() => {
       onMouseMove();
-    }, []);
+    }, [id]);
     const handleOnMouseOut = useCallback(() => {
       onMouseOut();
-    }, []);
+    }, [id]);
     return (
-      <div ref={refItem} onMouseOver={handleOnMouseOver} onMouseMove={handleOnMouseMove} onMouseOut={handleOnMouseOut} className={className} style={customStyleOptionListItem} onClick={handleOnClick}>
+      <div id={id} onMouseOver={handleOnMouseOver} onMouseMove={handleOnMouseMove} onMouseOut={handleOnMouseOut} className={className} style={customStyleOptionListItem} onClick={handleOnClick}>
         {item.flag ? (
           <div className={STYLES[`${TYPE}__dropdown-flag`]}>
             <img key={`${index}${item.flag}`} src={item.flag} style={{ width: '100%', height: '100%', verticalAlign: 'middle' }} />
