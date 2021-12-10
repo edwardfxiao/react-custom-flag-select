@@ -39,16 +39,16 @@ var config = (module.exports = {
           name: 'img/[name]-[hash].[ext]',
         },
       },
-      {
-        test: /\.jsx?$/,
-        include: [PATH.ROOT_PATH],
-        exclude: [PATH.NODE_MODULES_PATH, path.join(__dirname, '../', './example')],
-        enforce: 'pre',
-        loader: 'eslint-loader',
-        options: {
-          emitWarning: true,
-        },
-      },
+      // {
+      //   test: /\.jsx?$/,
+      //   include: [PATH.ROOT_PATH],
+      //   exclude: [PATH.NODE_MODULES_PATH, path.join(__dirname, '../', './example')],
+      //   enforce: 'pre',
+      //   loader: 'eslint-loader',
+      //   options: {
+      //     emitWarning: true,
+      //   },
+      // },
       {
         test: /\.jsx?$/,
         include: [PATH.ROOT_PATH],

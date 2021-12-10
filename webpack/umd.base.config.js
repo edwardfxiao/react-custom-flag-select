@@ -53,16 +53,16 @@ module.exports = {
         ],
       },
       { test: /\.(ts|tsx)$/, loader: 'awesome-typescript-loader' },
-      {
-        test: /\.jsx?$/,
-        include: [PATH.ROOT_PATH],
-        exclude: [PATH.NODE_MODULES_PATH],
-        enforce: 'post',
-        loader: 'eslint-loader',
-        options: {
-          emitWarning: true,
-        },
-      },
+      // {
+      //   test: /\.jsx?$/,
+      //   include: [PATH.ROOT_PATH],
+      //   exclude: [PATH.NODE_MODULES_PATH],
+      //   enforce: 'post',
+      //   loader: 'eslint-loader',
+      //   options: {
+      //     emitWarning: true,
+      //   },
+      // },
       {
         test: /\.jsx?$/,
         include: [PATH.ROOT_PATH],

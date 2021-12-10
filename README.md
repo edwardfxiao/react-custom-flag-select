@@ -1,11 +1,11 @@
 # react-custom-flag-select
-[![npm version](https://badge.fury.io/js/react-custom-flag-select.svg)](https://badge.fury.io/js/react-custom-flag-select) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com) [![react-custom-flag-select](http://img.shields.io/npm/dm/react-custom-flag-select.svg)](https://www.npmjs.com/package/react-custom-flag-select) ![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/react-custom-flag-select.svg) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/edwardfhsiao/react-custom-flag-select/master/LICENSE)
+[![npm version](https://badge.fury.io/js/react-custom-flag-select.svg)](https://badge.fury.io/js/react-custom-flag-select) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com) [![react-custom-flag-select](http://img.shields.io/npm/dm/react-custom-flag-select.svg)](https://www.npmjs.com/package/react-custom-flag-select) ![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/react-custom-flag-select.svg) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/edwardfxiao/react-custom-flag-select/master/LICENSE)
 
 A react component for custom flag (country code) select.
-# <img src="https://raw.githubusercontent.com/edwardfhsiao/react-custom-flag-select/master/react-custom-flag-select.jpg" />
+# <img src="https://raw.githubusercontent.com/edwardfxiao/react-custom-flag-select/master/react-custom-flag-select.jpg" />
 
 # Online Demo
-<a href="https://edwardfhsiao.github.io/react-custom-flag-select/">Live demo</a>
+<a href="https://edwardfxiao.github.io/react-custom-flag-select/">Live demo</a>
 
 # Codesandbox Examples
 * <a href="https://codesandbox.io/s/jvw9nvyzv">Live demo playground</a>
@@ -25,7 +25,7 @@ A react component for custom flag (country code) select.
 # Why another flag select?
 **Area Code is Area Code, Phone Number is Phone Number, Flag is Flag. Easy for you to handle when they are separated.**
 
-This component supports fully customized html. It focuses on the data you provided and handles the **country code** or **area code** only. Not like <a href="https://github.com/mukeshsoni/react-telephone-input">react-telephone-input</a> validate whole value along with the phone number without separation from 'area code' and 'phone number', which sometimes could be really painful when you are trying to handle them in your own way. 
+This component supports fully customized html. It focuses on the data you provided and handles the **country code** or **area code** only. Not like <a href="https://github.com/mukeshsoni/react-telephone-input">react-telephone-input</a> validate whole value along with the phone number without separation from 'area code' and 'phone number', which sometimes could be really painful when you are trying to handle them in your own way.
 
 In case the **country code** or the **area code** or even the **flags** might be wrong inside a library, why don't provide them yourself?
 
