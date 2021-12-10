@@ -8,6 +8,6 @@ module.exports = {
 	},
 	externals: {
 		react: 'React',
-		'react-dom': 'react-dom',
+		'react-dom': 'ReactDOM',
 	},
 };

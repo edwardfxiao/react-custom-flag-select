@@ -1,4 +1,11 @@
-import React, { useEffect, useState, useCallback, useRef, useMemo, memo } from 'react';
+import React, { useEffect, useState, useCallback, createRef, useRef, useMemo, memo } from 'react';
+const usePrevious = value => {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+};
 import { cx, getRandomId } from './utils.js';
 // DEVELOPMENT
 import './react-custom-flag-select.css';
@@ -37,15 +44,12 @@ export const getIndex = (list, value) => {
   }
   return key;
 };
-const DEFAULT_ID = getRandomId();
 const Index = memo(
   ({
-    tabIndex = null,
-    id = DEFAULT_ID,
-    name = '',
     value = '',
     disabled = false,
     showSearch = false,
+    fields = ['name'],
     keyword = '',
     showArrow = true,
     animate = false,
@@ -57,6 +61,9 @@ const Index = memo(
     classNameOptionListItem = '',
     classNameOptionListContainer = '',
     classNameDropdownIconOptionListItem = '',
+    attributesWrapper = {},
+    attributesInput = {},
+    attributesButton = {},
     customStyleWrapper = {},
     customStyleContainer = {},
     customStyleSelect = {},
@@ -71,29 +78,43 @@ const Index = memo(
     onClick = null,
   }) => {
     const [show, setShow] = useState(false);
+    const prevShow = usePrevious(show);
     const [internalValue, setInternalValue] = useState(String(value));
     const [keycodeList, setKeycodeList] = useState([]);
     const stateKeyword = useState(keyword);
     const [isTyping, setIsTyping] = useState(false);
     const $wrapper = useRef(null);
+    const $button = useRef(null);
     const $itemsWrapper = useRef(null);
     const $searchInputWrapper = useRef(null);
     const $searchInput = useRef(null);
-    const $itemsRef = [];
-    if (optionList.length) {
-      for (let i = 0; i < optionList.length; i += 1) {
-        $itemsRef.push(useRef(null));
-      }
-    }
+    const [$itemEls, setItemEls] = useState([]);
     const filteredOptionList = useMemo(() => {
       let res = optionList;
       if (res.length) {
         if (stateKeyword[0]) {
-          res = optionList.filter(i => i.name.toLowerCase().includes(stateKeyword[0].toLowerCase()));
+          res = optionList.filter(i => {
+            let res = false;
+            fields.forEach(key => {
+              if (i[key].toLowerCase().includes(stateKeyword[0].toLowerCase())) {
+                res = true;
+              }
+            });
+            return res;
+          });
         }
       }
       return res;
-    }, [stateKeyword[0], optionList]);
+    }, [stateKeyword[0], optionList, fields]);
+    useEffect(() => {
+      if (filteredOptionList.length) {
+        const itemEls = [];
+        for (let i = 0; i < filteredOptionList.length; i += 1) {
+          itemEls.push(`react-custom-flag-select__select_option-${filteredOptionList[i].id}`);
+        }
+        setItemEls(itemEls);
+      }
+    }, [filteredOptionList]);
     const handleOnSearch = useCallback(e => {
       stateKeyword[1](e.target.value);
     }, []);
@@ -111,7 +132,7 @@ const Index = memo(
         }
         scroll(direction);
       },
-      [filteredOptionList],
+      [filteredOptionList, $itemEls],
     );
     useEffect(() => {
       if (show && showSearch) {
@@ -123,7 +144,17 @@ const Index = memo(
     useEffect(() => {
       if (show) {
         if (showSearch) {
-          $searchInput.current.focus();
+          if (animate) {
+            setTimeout(() => {
+              $searchInput.current.focus();
+            }, 100); // css transition .4s
+          } else {
+            $searchInput.current.focus();
+          }
+        }
+      } else {
+        if (prevShow === true && show === false) {
+          $button.current.focus();
         }
       }
       resetCurrentFocus();
@@ -164,16 +195,10 @@ const Index = memo(
       }
       window.addEventListener('mousedown', pageClick);
       window.addEventListener('touchstart', pageClick);
-      if (tabIndex) {
-        $wrapper.current.setAttribute('tabindex', String(tabIndex));
-      }
-      if (id) {
-        $wrapper.current.setAttribute('id', String(id));
-      }
       return () => {
         window.removeEventListener('mousedown', pageClick);
         window.removeEventListener('touchstart', pageClick);
-        $wrapper.current.removeEventListener('keydown', onKeyDown);
+        $wrapper.current && $wrapper.current.removeEventListener('keydown', onKeyDown);
       };
     }, []);
     /* istanbul ignore next because of https://github.com/airbnb/enzyme/issues/441 && https://github.com/airbnb/enzyme/blob/master/docs/future.md */
@@ -189,9 +214,9 @@ const Index = memo(
     }, []);
     /* istanbul ignore next because of https://github.com/airbnb/enzyme/issues/441 && https://github.com/airbnb/enzyme/blob/master/docs/future.md */
     const resetCurrentFocus = useCallback(() => {
-      globalVariableCurrentFocus = getIndex(optionList, internalValue);
+      globalVariableCurrentFocus = getIndex(filteredOptionList, internalValue);
       scroll();
-    }, [internalValue]);
+    }, [filteredOptionList, internalValue]);
     /* istanbul ignore next because of https://github.com/airbnb/enzyme/issues/441 && https://github.com/airbnb/enzyme/blob/master/docs/future.md */
     const setTimeoutTyping = useCallback(() => {
       if (globalVariableTypingTimeout) {
@@ -249,38 +274,41 @@ const Index = memo(
       },
       [show],
     );
-    const handleOnItemMouseOver = useCallback(index => {
-      globalVariableCurrentFocus = index;
-      addActive();
-    }, []);
+    const handleOnItemMouseOver = useCallback(
+      index => {
+        globalVariableCurrentFocus = index;
+        addActive();
+      },
+      [$itemEls],
+    );
     const handleOnItemMouseMove = useCallback(() => {
       setIsTyping(false);
     }, []);
     const handleOnItemMouseOut = useCallback(() => {
       removeActive();
-    }, []);
+    }, [$itemEls]);
     const addActive = useCallback(() => {
-      if (!$itemsRef) return;
+      if (!$itemEls) return;
       removeActive();
       if (globalVariableCurrentFocus === null) return;
-      if (globalVariableCurrentFocus >= $itemsRef.length) globalVariableCurrentFocus = 0;
-      if (globalVariableCurrentFocus < 0) globalVariableCurrentFocus = $itemsRef.length - 1;
+      if (globalVariableCurrentFocus >= $itemEls.length) globalVariableCurrentFocus = 0;
+      if (globalVariableCurrentFocus < 0) globalVariableCurrentFocus = $itemEls.length - 1;
       /* istanbul ignore next because it won't happen */
-      if (!$itemsRef[globalVariableCurrentFocus].current) {
+      if (!document.getElementById($itemEls[globalVariableCurrentFocus])) {
         return;
       }
-      $itemsRef[globalVariableCurrentFocus].current.className += ` ${STYLES[`${TYPE}__hover-active`]}`;
-    }, []);
+      document.getElementById($itemEls[globalVariableCurrentFocus]).className += ` ${STYLES[`${TYPE}__hover-active`]}`;
+    }, [$itemEls]);
     const removeActive = useCallback(() => {
-      for (let i = 0; i < $itemsRef.length; i += 1) {
-        if (!$itemsRef[i]) {
+      for (let i = 0; i < $itemEls.length; i += 1) {
+        if (!$itemEls[i]) {
           break;
         }
-        if ($itemsRef[i] && $itemsRef[i].current) {
-          $itemsRef[i].current.className = $itemsRef[i].current.className.replace(STYLES[`${TYPE}__hover-active`], '');
+        if ($itemEls[i] && document.getElementById($itemEls[i])) {
+          document.getElementById($itemEls[i]).className = document.getElementById($itemEls[i]).className.replace(STYLES[`${TYPE}__hover-active`], '');
         }
       }
-    }, []);
+    }, [$itemEls]);
     const getDirection = useCallback(keyCode => {
       switch (keyCode) {
         case keyCodeUp:
@@ -325,7 +353,7 @@ const Index = memo(
           }
         }
       },
-      [filteredOptionList],
+      [filteredOptionList, $itemEls],
     );
     /* istanbul ignore next because of https://github.com/airbnb/enzyme/issues/441 && https://github.com/airbnb/enzyme/blob/master/docs/future.md */
     const onKeyDown = useCallback(
@@ -367,14 +395,14 @@ const Index = memo(
         scroll(direction);
         return globalVariableCurrentFocus;
       },
-      [show, value, keycodeList],
+      [show, value, keycodeList, filteredOptionList, $itemEls],
     );
     useEffect(() => {
       if (show && $wrapper) {
-        $wrapper.current.addEventListener('keydown', onKeyDown);
+        $wrapper.current && $wrapper.current.addEventListener('keydown', onKeyDown);
       }
       return () => {
-        $wrapper.current.removeEventListener('keydown', onKeyDown);
+        $wrapper.current && $wrapper.current.removeEventListener('keydown', onKeyDown);
       };
     }, [show, value, keycodeList]);
     useEffect(() => {
@@ -398,12 +426,12 @@ const Index = memo(
             key={k}
             index={k}
             id={`react-custom-flag-select__select_option-${i.id}`}
-            refItem={$itemsRef[k]}
             className={String(i.id) === String(value) ? `${selectOptionListItemClass} ${STYLES['active']}` : `${selectOptionListItemClass}`}
             item={i}
             customStyleOptionListItem={customStyleOptionListItem}
             onClick={handleOnItemClick}
             show={show}
+            $itemEls={$itemEls}
             onMouseOver={handleOnItemMouseOver}
             onMouseMove={handleOnItemMouseMove}
             onMouseOut={handleOnItemMouseOut}
@@ -431,12 +459,13 @@ const Index = memo(
       );
     }
     return (
-      <div ref={$wrapper} id={STYLES[`${TYPE}__wrapper`]} className={wrapperClass} style={customStyleWrapper}>
+      <div ref={$wrapper} className={wrapperClass} style={customStyleWrapper} {...attributesWrapper}>
         <div className={containerClass} style={customStyleContainer}>
-          <input id={id} name={name} type="hidden" value={value} className={inputClass} onChange={() => {}} />
+          <input type="hidden" value={value} className={inputClass} onChange={() => {}} {...attributesInput} />
           <div className={selectClass} style={customStyleSelect}>
             <button
               type="button"
+              ref={$button}
               className={cx(STYLES[`${TYPE}__button`], classNameButton)}
               style={{ ...customStyleButton }}
               onClick={e => {
@@ -453,6 +482,7 @@ const Index = memo(
               }}
               onFocus={handleOnFocus}
               onBlur={handleOnBlur}
+              {...attributesButton}
             >
               <div className={STYLES[`${TYPE}__selector`]}>{selectorHtml}</div>
             </button>
@@ -502,7 +532,7 @@ const Index = memo(
 );
 
 const Option = memo(
-  ({ index = -1, refItem = null, id = '', className = '', item, customStyleOptionListItem = {}, onClick = () => {}, onMouseOver = () => {}, onMouseMove = () => {}, onMouseOut = () => {}, show }) => {
+  ({ index = -1, id = '', className = '', item, $itemEls, customStyleOptionListItem = {}, onClick = () => {}, onMouseOver = () => {}, onMouseMove = () => {}, onMouseOut = () => {}, show }) => {
     const handleOnClick = useCallback(
       e => {
         onClick(item.id, e);
@@ -511,18 +541,18 @@ const Option = memo(
     );
     const handleOnMouseOver = useCallback(() => {
       onMouseOver(index);
-    }, []);
+    }, [$itemEls, id]);
     const handleOnMouseMove = useCallback(() => {
       onMouseMove();
-    }, []);
+    }, [$itemEls, id]);
     const handleOnMouseOut = useCallback(() => {
       onMouseOut();
-    }, []);
+    }, [$itemEls, id]);
     return (
-      <div ref={refItem} onMouseOver={handleOnMouseOver} onMouseMove={handleOnMouseMove} onMouseOut={handleOnMouseOut} className={className} style={customStyleOptionListItem} onClick={handleOnClick}>
+      <div id={id} onMouseOver={handleOnMouseOver} onMouseMove={handleOnMouseMove} onMouseOut={handleOnMouseOut} className={className} style={customStyleOptionListItem} onClick={handleOnClick}>
         {item.flag ? (
           <div className={STYLES[`${TYPE}__dropdown-flag`]}>
-            <img src={item.flag} style={{ width: '100%', height: '100%', verticalAlign: 'middle' }} />
+            <img key={`${index}${item.flag}`} src={item.flag} style={{ width: '100%', height: '100%', verticalAlign: 'middle' }} />
           </div>
         ) : (
           ''

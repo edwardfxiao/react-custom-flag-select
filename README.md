@@ -1,11 +1,11 @@
 # react-custom-flag-select
-[![npm version](https://badge.fury.io/js/react-custom-flag-select.svg)](https://badge.fury.io/js/react-custom-flag-select) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com) [![react-custom-flag-select](http://img.shields.io/npm/dm/react-custom-flag-select.svg)](https://www.npmjs.com/package/react-custom-flag-select) ![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/react-custom-flag-select.svg) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/edwardfhsiao/react-custom-flag-select/master/LICENSE)
+[![npm version](https://badge.fury.io/js/react-custom-flag-select.svg)](https://badge.fury.io/js/react-custom-flag-select) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com) [![react-custom-flag-select](http://img.shields.io/npm/dm/react-custom-flag-select.svg)](https://www.npmjs.com/package/react-custom-flag-select) ![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/react-custom-flag-select.svg) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/edwardfxiao/react-custom-flag-select/master/LICENSE)
 
-A react custom flag (country code) select.
-# <img src="https://raw.githubusercontent.com/edwardfhsiao/react-custom-flag-select/master/react-custom-flag-select.jpg" />
+A react component for custom flag (country code) select.
+# <img src="https://raw.githubusercontent.com/edwardfxiao/react-custom-flag-select/master/react-custom-flag-select.jpg" />
 
 # Online Demo
-<a href="https://edwardfhsiao.github.io/react-custom-flag-select/">Live demo</a>
+<a href="https://edwardfxiao.github.io/react-custom-flag-select/">Live demo</a>
 
 # Codesandbox Examples
 * <a href="https://codesandbox.io/s/jvw9nvyzv">Live demo playground</a>
@@ -25,7 +25,7 @@ A react custom flag (country code) select.
 # Why another flag select?
 **Area Code is Area Code, Phone Number is Phone Number, Flag is Flag. Easy for you to handle when they are separated.**
 
-This component supports fully customized html. It focuses on the data you provided and handles the **country code** or **area code** only. Not like <a href="https://github.com/mukeshsoni/react-telephone-input">react-telephone-input</a> validate whole value along with the phone number without separation from 'area code' and 'phone number', which sometimes could be really painful when you are trying to handle them in your own way. 
+This component supports fully customized html. It focuses on the data you provided and handles the **country code** or **area code** only. Not like <a href="https://github.com/mukeshsoni/react-telephone-input">react-telephone-input</a> validate whole value along with the phone number without separation from 'area code' and 'phone number', which sometimes could be really painful when you are trying to handle them in your own way.
 
 In case the **country code** or the **area code** or even the **flags** might be wrong inside a library, why don't provide them yourself?
 
@@ -46,13 +46,13 @@ Tested on IE9+ and Chrome and Safari(10.0.3)
 
 |Props                             |       |Type    |Description                                  |Default     |
 |---                               |---    |---     |---                                          |  ---       |
-|tabIndex                          |**Req**|**Str &#124; Num**|**If its not provided, the keydown may not working**|**none**|
-|id                                |  Opt  |  Str   |                                             |  none      |
-|name                              |  Opt  |  Str   |                                             |  ""        |
-|type                              |  Opt  |  Str   |                                             |  "text"    |
+|attributesWrapper                 |**Req**|  Obj   |Modify wrapper general attributes. **If tabIndex not provided, the keydown may not working**  **{<br/>id: 'myWrapperId',<br/>tabIndex: '1'<br/>...<br/>}**. |  {}      |
+|attributesButton                   |  Opt  |  Obj   |Modify button general attributes.  **{<br/>id: 'myButtonId'<br/>...<br/>}** |  {}      |
+|attributesInput                   |  Opt  |  Obj   |Modify hidden input general attributes.  **{<br/>id: 'myInputId'<br/>name: 'myInputName'<br/>...<br/>}** |  {}      |
 |value                             |  Opt  |  Str   |                                             |  ""        |
 |disabled                          |  Opt  |  Bool  |                                             |  false     |
 |showSearch                        |  Opt  |  Bool  |Show a search box in order to find option quickly. | false |
+|fields                            |  Opt  |  arr   |Fields for search filtering.                 | ['name'] |
 |keyword                           |  Opt  |  Str   |Show a keyword for search box.               |  ''        |
 |showArrow                         |  Opt  |  Bool  |                                             |  true      |
 |animate                           |  Opt  |  Bool  |                                             |  false     |
@@ -105,11 +105,14 @@ const { areaCode, phone, validate } = this.state;
 const currentItem = find(FLAG_SELECTOR_OPTION_LIST, { id: areaCode })[0];
 
  <ReactCustomFlagSelect
-   tabIndex={'1'} //Optional.[String or Number].Default: -1.
-   id={'areaCode'} //Optional.[String].Default: "". Input ID.
-   name={'areaCode'} //Optional.[String].Default: "". Input name.
+   attributesWrapper={{ id: 'areaCodeWrapper', tabIndex: '1' }} //Optional.[Object].Modify wrapper general attributes.
+   attributesButton={{ id: 'areaCodeButton' }} //Optional.[Object].Modify button general attributes.
+   attributesInput={{ id: 'areaCode', name: 'areaCode' }} //Optional.[Object].Modify hidden input general attributes.
    value={currentItem.id} //Optional.[String].Default: "".
    disabled={false} //Optional.[Bool].Default: false.
+   showSearch={true} // Optional.[Bool].Default: false. Show a search box in order to find option quickly.
+   fields={['name', 'locale']} // Optional.[array].Default: ['name']. Fields for search filtering.
+   // keyword={''} // Optional.[String].Default: ''. Show a keyword for search box.
    showArrow={true} //Optional.[Bool].Default: true.
    animate={true} //Optional.[Bool].Default: false.
    optionList={FLAG_SELECTOR_OPTION_LIST} //Required.[Array of Object(s)].Default: [].

@@ -34,7 +34,7 @@ const find = (arr, obj) => {
   const res = [];
   arr.forEach(o => {
     let match = false;
-    Object.keys(obj).map(i => {
+    Object.keys(obj).forEach(i => {
       if (obj[i] == o[i]) {
         match = true;
       }
@@ -63,12 +63,13 @@ class Index extends Component {
             <div style={{ position: 'relative' }}>
               <div style={{ position: 'absolute', left: '0', top: '10px' }}>
                 <ReactCustomFlagSelect
-                  tabIndex={'1'} //
-                  id={'areaCode'} //
-                  name={'areaCode'} //
+                  attributesWrapper={{ id: 'areaCodeWrapper', tabIndex: '1' }} //Optional.[Object].Modify wrapper general attributes.
+                  attributesButton={{ id: 'areaCodeButton' }} //Optional.[Object].Modify button general attributes.
+                  attributesInput={{ id: 'areaCode', name: 'areaCode' }} //Optional.[Object].Modify hidden input general attributes.
                   value={currentItem.id} //
                   disabled={false} //
                   showSearch={true} // Optional.[Bool].Default: false. Show a search box in order to find option quickly.
+                  fields={['name', 'locale']} // Optional.[array].Default: ['name']. Fields for search filtering.
                   // keyword={''} // Optional.[String].Default: ''. Show a keyword for search box.
                   showArrow={true} //
                   animate={true} //Optional.[Bool].Default: false.
@@ -209,15 +210,17 @@ class Index extends Component {
       <div style={{ padding: '10px' }}>
         <div style={{ padding: '20px', border: '1px solid #e5e5e5' }}>
           <form onSubmit={this.submit}>
-            <div style={{ position: 'relative' }}>
-              <div style={{ position: 'absolute', height: '45px'}}>
+            <div style={{ position: 'relative', marginBottom: '30px' }}>
+              <div style={{ position: 'absolute', height: '45px' }}>
                 <ReactCustomFlagSelect
-                  tabIndex={'1'} //Optional.[String or Number].Default: -1.
-                  id={'areaCode'} //Optional.[String].Default: "". Input ID.
+                  attributesWrapper={{ id: 'areaCodeWrapper', tabIndex: '1' }} //Optional.[Object].Modify wrapper general attributes.
+                  attributesButton={{ id: 'areaCodeButton' }} //Optional.[Object].Modify button general attributes.
+                  attributesInput={{ id: 'areaCode', name: 'areaCode' }} //Optional.[Object].Modify hidden input general attributes.
                   name={'areaCode'} //Optional.[String].Default: "". Input name.
                   value={currentItem.id} //Optional.[String].Default: "".
                   disabled={false} //Optional.[Bool].Default: false.
                   showSearch={true} // Optional.[Bool].Default: false. Show a search box in order to find option quickly.
+                  fields={['name', 'locale']} // Optional.[array].Default: ['name']. Fields for search filtering.
                   // keyword={''} // Optional.[String].Default: ''. Show a keyword for search box.
                   showArrow={true} //Optional.[Bool].Default: true.
                   animate={true} //Optional.[Bool].Default: false.
@@ -291,7 +294,6 @@ class Index extends Component {
             <input type="submit" style={{ display: 'none' }} />
           </form>
         </div>
-
       </div>
     );
   }
