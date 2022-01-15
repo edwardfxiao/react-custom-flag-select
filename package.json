@@ -1,6 +1,6 @@
 {
   "name": "react-custom-flag-select",
-  "version": "2.7.2",
+  "version": "2.7.3",
   "description": "A react component for custom flag (country code) select.",
   "main": "index.js",
   "repository": {
@@ -38,8 +38,8 @@
     "compile": "npm run clean && npm run compile_webpack && npm run babel"
   },
   "peerDependencies": {
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react": ">= 16.8.6",
+    "react-dom": ">= 16.8.6"
   },
   "dependencies": {
     "classnames": "^2.2.5",
