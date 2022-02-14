@@ -1,7 +1,6 @@
-import 'core-js/es6/map';
-import 'core-js/es6/set';
 import 'raf/polyfill';
-import 'babel-polyfill';
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
@@ -11,10 +10,9 @@ import 'prismjs/themes/prism-tomorrow.css';
 import { Textbox } from 'react-inputs-validation';
 import validator from 'validator';
 import 'react-inputs-validation/lib/react-inputs-validation.min.css';
-import ReactCustomFlagSelect from '../src/js/component/index.js';
+import ReactCustomFlagSelect from '../src/js/component/index.ts';
 
-import '../src/css/example.css';
-import STYLES from '../src/css/example.css.json';
+import STYLES from '../src/css/example.css';
 
 const markdownExample = `
 \`\`\`javascript
