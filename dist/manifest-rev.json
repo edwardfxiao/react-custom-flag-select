@@ -1,4 +1,5 @@
 {
+  "../index.html": "../index.html",
   "../lib/ReactCustomFlagSelect.d.ts": "../lib/ReactCustomFlagSelect.d.ts",
   "../lib/index.d.ts": "../lib/index.d.ts",
   "../lib/index.global.d.ts": "../lib/index.global.d.ts",
@@ -7,7 +8,6 @@
   "b.js": "b-0e6ee6c27e76cebd971c.js",
   "cn.svg": "90df2b524a0e1d4fb31e.svg",
   "index.css": "css/index-40776154fd26e69cb565.css",
-  "index.html": "index.html",
   "index.js": "index-075dbd14b2894966c346.js",
   "us.svg": "48def1b253c00e53cbaa.svg"
 }
