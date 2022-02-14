@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { configure, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import ReactCustomFlagSelect from '../js/ReactCustomFlagSelect/ReactCustomFlagSelect.js';
+import ReactCustomFlagSelect from '../js/ReactCustomFlagSelect/ReactCustomFlagSelect.tsx';
 
 const SELECTED_INDEX = 2;
 

@@ -13,8 +13,8 @@ A react component for custom flag (country code) select.
 ###  :tada: For version >= 2.0.0, please update react and react-dom to at least ```16.8.6```, since it is rewrited with hooks.
 ```js
   "peerDependencies": {
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react": ">= 16.8.6",
+    "react-dom": ">= 16.8.6"
   }
 ```
 

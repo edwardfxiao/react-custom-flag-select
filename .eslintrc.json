@@ -1,7 +1,8 @@
 {
+  "parser": "@babel/eslint-parser",
   // Extend existing configuration
   // from ESlint and eslint-plugin-react defaults.
-  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "extends": ["airbnb"],
   // Enable ES6 support. If you want to use custom Babel
   // features, you will need to enable a custom parser
   // as described in a section below.
@@ -13,25 +14,25 @@
     }
   },
   "env": {
-    "jest": true,
     "es6": true,
     "browser": true,
     "node": true,
     "jquery": true
   },
   // Enable custom plugin known as eslint-plugin-react
-  "plugins": ["react", "react-hooks"],
+  "plugins": ["@typescript-eslint"],
   "rules": {
+    "import/no-unresolved": 0,
+    "react/jsx-filename-extension": {
+      "extensions": [".jsx", ".tsx"]
+    },
     // Disable `no-console` rule
     "no-console": 0,
     // Give a warning if identifiers contain underscores
-    "no-underscore-dangle": 1,
-    "no-debugger": 0,
-    "no-empty": [
-      "error",
-      {
-        "allowEmptyCatch": true
-      }
-    ]
+    "no-underscore-dangle": 0,
+    "no-empty-pattern": 0,
+    "react/prop-types": [0],
+    "react-hooks/rules-of-hooks": "error",
+    "react/display-name": [0, { "ignoreTranspilerName": true }]
   }
 }

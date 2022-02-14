@@ -1,7 +1,6 @@
-import 'core-js/es6/map';
-import 'core-js/es6/set';
 import 'raf/polyfill';
-import 'babel-polyfill';
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
@@ -11,10 +10,9 @@ import 'prismjs/themes/prism-tomorrow.css';
 import { Textbox } from 'react-inputs-validation';
 import validator from 'validator';
 import 'react-inputs-validation/lib/react-inputs-validation.min.css';
-import ReactCustomFlagSelect from '../src/js/component/index.js';
+import ReactCustomFlagSelect from '../src/js/component/index.ts';
 
 import STYLES from '../src/css/example.css';
-// import STYLES from '../src/css/example.css.json';
 
 const markdownExample = `
 \`\`\`javascript
@@ -93,11 +91,8 @@ class Index extends Component {
                 />
               </div>
               <Textbox
-                attributesInput={{
-                  id: "phone",
-                  placeholder: "Please enter your phone number",
-                  type: "text"
-                }}
+                tabIndex="1"
+                id="phone"
                 customStyleWrapper={{ height: '100%' }}
                 customStyleContainer={{ height: '100%' }}
                 customStyleInput={{
@@ -115,6 +110,8 @@ class Index extends Component {
                     validate: false
                   })
                 }
+                type="text"
+                placeholder="Please enter your phone number"
                 onChange={res => {
                   this.handlePhoneChange(res);
                 }}
@@ -248,11 +245,8 @@ class Index extends Component {
                 />
               </div>
               <Textbox
-                attributesInput={{
-                  id: "phone",
-                  placeholder: "Please enter your phone number",
-                  type: "text"
-                }}
+                tabIndex="1"
+                id="phone"
                 customStyleWrapper={{ height: '100%' }}
                 customStyleContainer={{ height: '100%' }}
                 customStyleInput={{
@@ -270,6 +264,8 @@ class Index extends Component {
                     validate: false,
                   })
                 }
+                type="text"
+                placeholder="Please enter your phone number"
                 onChange={res => {
                   this.handlePhoneChange(res);
                 }}
