@@ -62,7 +62,7 @@ config.plugins.push(
     template: PATH.HTML_PATH + '/layout.html',
     title: 'react-custom-flag-select',
     page: 'index',
-    filename: 'index.html',
+    filename: '../index.html',
     hash: false,
     chunksSortMode: function(chunk1, chunk2) {
       var orders = ['index'];
