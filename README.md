@@ -52,7 +52,7 @@ Tested on IE9+ and Chrome and Safari(10.0.3)
 |value                             |  Opt  |  Str   |                                             |  ""        |
 |disabled                          |  Opt  |  Bool  |                                             |  false     |
 |showSearch                        |  Opt  |  Bool  |Show a search box in order to find option quickly. | false |
-|fields                            |  Opt  |  arr   |Fields for search filtering.                 | ['name'] |
+|fields                            |  Opt  |  Array |Fields for search filtering.                 | ['name'] |
 |keyword                           |  Opt  |  Str   |Show a keyword for search box.               |  ''        |
 |showArrow                         |  Opt  |  Bool  |                                             |  true      |
 |animate                           |  Opt  |  Bool  |                                             |  false     |
