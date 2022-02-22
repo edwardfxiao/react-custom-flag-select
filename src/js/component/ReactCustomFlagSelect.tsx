@@ -185,6 +185,8 @@ const Index: React.FC<Props> = ({
   useEffect(() => {
     if (show) {
       if (showSearch) {
+        // reset active color
+        removeActive();
         if (animate) {
           setTimeout(() => {
             $searchInput.current.focus();
