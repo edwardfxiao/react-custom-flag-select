@@ -61,7 +61,7 @@ Tested on IE9+ and Chrome and Safari(10.0.3)
 |keyword                           |  Opt  |  Str   |Show a keyword for search box.               |  ''        |
 |showArrow                         |  Opt  |  Bool  |                                             |  true      |
 |animate                           |  Opt  |  Bool  |                                             |  false     |
-|**optionList**                    |**Req**|**Array**|**[{id: "1", name: "United States", displayText: "US(1)", flag: "us.svg"}, {id: "86", name: "中国", displayText: "中国(86)", flag: "cn.svg"}]**              |**[]**          |
+|**optionList**                    |**Req**|**Array**|**[{id: "1", name: "United States", displayText: "US(1)", englishName: "United States", flag: "us.svg"}, {id: "86", name: "中国", displayText: "中国(86)", englishName: "China", flag: "cn.svg"}]**              |**[]**          |
 |classNameSelect                   |  Opt  |  Str   |                                             |  ""        |
 |classNameWrapper                  |  Opt  |  Str   |                                             |  ""        |
 |classNameContainer                |  Opt  |  Str   |                                             |  ""        |
