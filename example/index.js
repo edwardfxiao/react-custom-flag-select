@@ -1,6 +1,6 @@
 import 'raf/polyfill';
-import "core-js/stable";
-import "regenerator-runtime/runtime";
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Textbox } from 'react-inputs-validation';
@@ -11,8 +11,8 @@ import ReactCustomFlagSelect from '../src/js/component/index.ts';
 import STYLES from '../src/css/example.css';
 
 const FLAG_SELECTOR_OPTION_LIST = [
-  { id: '1', name: 'US', displayText: 'US(1)', locale: 'en-US', flag: require('../src/image/flags/us.svg') },
-  { id: '86', name: '中国', displayText: '中国(86)', locale: 'zh-CN', flag: require('../src/image/flags/cn.svg') },
+  { id: '1', name: 'US', displayText: 'US(1)', englishName: 'United States', locale: 'en-US', flag: require('../src/image/flags/us.svg') },
+  { id: '86', name: '中国', displayText: '中国(86)', englishName: 'China', locale: 'zh-CN', flag: require('../src/image/flags/cn.svg') },
 ];
 
 const DEFAULT_AREA_CODE = FLAG_SELECTOR_OPTION_LIST[0].id;
@@ -74,7 +74,7 @@ class Index extends Component {
                   value={currentItem.id} //Optional.[String].Default: "".
                   disabled={false} //Optional.[Bool].Default: false.
                   showSearch={true} // Optional.[Bool].Default: false. Show a search box in order to find option quickly.
-                  fields={['name', 'locale', 'displayText']} // Optional.[array].Default: ['name']. Fields for search filtering.
+                  fields={['name', 'locale', 'displayText', 'englishName']} // Optional.[array].Default: ['name']. Fields for search filtering.
                   // keyword={''} // Optional.[String].Default: ''. Show a keyword for search box.
                   showArrow={true} //Optional.[Bool].Default: true.
                   animate={true} //Optional.[Bool].Default: false.
@@ -90,7 +90,7 @@ class Index extends Component {
                   customStyleContainer={{ border: 'none', fontSize: '12px' }} //Optional.[Object].Default: {}.
                   customStyleSelect={{ width: '100px' }} //Optional.[Object].Default: {}.
                   customStyleOptionListItem={{}} //Optional.[Object].Default: {}.
-                  customStyleOptionListContainer={{ maxHeight: '100px', overflow: 'auto', width: '120px' }} //Optional.[Object].Default: {}.
+                  customStyleOptionListContainer={{ maxHeight: '100px', overflow: 'auto', width: '100px' }} //Optional.[Object].Default: {}.
                   onChange={areaCode => {
                     this.setState({ areaCode: areaCode }, () => {
                       this.handlePhoneChange(phone);
@@ -102,8 +102,11 @@ class Index extends Component {
                 />
               </div>
               <Textbox
-                tabIndex="1"
-                id="phone"
+                attributesInput={{
+                  id: 'phone',
+                  placeholder: 'Place your phone here ^-^',
+                  type: 'text',
+                }}
                 customStyleWrapper={{ height: '100%' }}
                 customStyleContainer={{ height: '100%' }}
                 customStyleInput={{
@@ -121,8 +124,6 @@ class Index extends Component {
                     validate: false,
                   })
                 }
-                type="text"
-                placeholder="Please enter your phone number"
                 onChange={res => {
                   this.handlePhoneChange(res);
                 }}

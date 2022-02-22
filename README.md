@@ -1,8 +1,13 @@
 # react-custom-flag-select
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 [![npm version](https://badge.fury.io/js/react-custom-flag-select.svg)](https://badge.fury.io/js/react-custom-flag-select) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com) [![react-custom-flag-select](http://img.shields.io/npm/dm/react-custom-flag-select.svg)](https://www.npmjs.com/package/react-custom-flag-select) ![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/react-custom-flag-select.svg) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/edwardfxiao/react-custom-flag-select/master/LICENSE)
 
 A react component for custom flag (country code) select.
 # <img src="https://raw.githubusercontent.com/edwardfxiao/react-custom-flag-select/master/react-custom-flag-select.jpg" />
+
+# <img src="https://raw.githubusercontent.com/edwardfxiao/react-custom-flag-select/master/react-custom-flag-select.gif" />
 
 # Online Demo
 <a href="https://edwardfxiao.github.io/react-custom-flag-select/">Live demo</a>
@@ -52,11 +57,11 @@ Tested on IE9+ and Chrome and Safari(10.0.3)
 |value                             |  Opt  |  Str   |                                             |  ""        |
 |disabled                          |  Opt  |  Bool  |                                             |  false     |
 |showSearch                        |  Opt  |  Bool  |Show a search box in order to find option quickly. | false |
-|fields                            |  Opt  |  arr   |Fields for search filtering.                 | ['name'] |
+|fields                            |  Opt  |  Array |Fields for search filtering.                 | ['name'] |
 |keyword                           |  Opt  |  Str   |Show a keyword for search box.               |  ''        |
 |showArrow                         |  Opt  |  Bool  |                                             |  true      |
 |animate                           |  Opt  |  Bool  |                                             |  false     |
-|**optionList**                    |**Req**|**Array**|**[{id: "1", name: "United States", displayText: "US(1)", flag: "us.svg"}, {id: "86", name: "中国", displayText: "中国(86)", flag: "cn.svg"}]**              |**[]**          |
+|**optionList**                    |**Req**|**Array**|**[{id: "1", name: "United States", displayText: "US(1)", englishName: "United States", flag: "us.svg"}, {id: "86", name: "中国", displayText: "中国(86)", englishName: "China", flag: "cn.svg"}]**              |**[]**          |
 |classNameSelect                   |  Opt  |  Str   |                                             |  ""        |
 |classNameWrapper                  |  Opt  |  Str   |                                             |  ""        |
 |classNameContainer                |  Opt  |  Str   |                                             |  ""        |
@@ -97,8 +102,8 @@ const find = (arr, obj) => {
 };
 
 const FLAG_SELECTOR_OPTION_LIST = [
-  { id: '1', name: 'US', displayText: 'US(1)', locale: 'en-US', flag: require('../src/image/flags/us.svg') },
-  { id: '86', name: '中国', displayText: '中国(86)', locale: 'zh-CN', flag: require('../src/image/flags/cn.svg') }
+  { id: '1', name: 'US', displayText: 'US(1)', locale: 'en-US', englishName: 'United States', flag: require('../src/image/flags/us.svg') },
+  { id: '86', name: '中国', displayText: '中国(86)', locale: 'zh-CN', englishName: 'China', flag: require('../src/image/flags/cn.svg') }
 ];
 
 const { areaCode, phone, validate } = this.state;
@@ -111,7 +116,7 @@ const currentItem = find(FLAG_SELECTOR_OPTION_LIST, { id: areaCode })[0];
    value={currentItem.id} //Optional.[String].Default: "".
    disabled={false} //Optional.[Bool].Default: false.
    showSearch={true} // Optional.[Bool].Default: false. Show a search box in order to find option quickly.
-   fields={['name', 'locale']} // Optional.[array].Default: ['name']. Fields for search filtering.
+   fields={['name', 'locale', 'displayText', 'englishName']} // Optional.[array].Default: ['name']. Fields for search filtering.
    // keyword={''} // Optional.[String].Default: ''. Show a keyword for search box.
    showArrow={true} //Optional.[Bool].Default: true.
    animate={true} //Optional.[Bool].Default: false.
@@ -138,3 +143,23 @@ const currentItem = find(FLAG_SELECTOR_OPTION_LIST, { id: areaCode })[0];
    // onClick={(e) => {console.log(e)}} //Optional.[Func].Default: none.
  />
 ```
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/edwardfxiao"><img src="https://avatars.githubusercontent.com/u/11728228?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Edward Xiao</b></sub></a><br /><a href="https://github.com/edwardfxiao/react-custom-flag-select/commits?author=edwardfxiao" title="Code">💻</a> <a href="https://github.com/edwardfxiao/react-custom-flag-select/commits?author=edwardfxiao" title="Documentation">📖</a> <a href="#infra-edwardfxiao" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/edwardfxiao/react-custom-flag-select/commits?author=edwardfxiao" title="Tests">⚠️</a> <a href="https://github.com/edwardfxiao/react-custom-flag-select/pulls?q=is%3Apr+reviewed-by%3Aedwardfxiao" title="Reviewed Pull Requests">👀</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
