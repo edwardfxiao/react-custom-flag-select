@@ -1,3 +1,2 @@
-import ReactCustomFlagSelect from './ReactCustomFlagSelect';
-
-export default ReactCustomFlagSelect;
+export * from './ReactCustomFlagSelect';
+export { default } from './ReactCustomFlagSelect';
