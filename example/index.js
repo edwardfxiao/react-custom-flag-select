@@ -21,7 +21,7 @@ const find = (arr, obj) => {
   const res = [];
   arr.forEach(o => {
     let match = false;
-    Object.keys(obj).map(i => {
+    Object.keys(obj).forEach(i => {
       if (obj[i] == o[i]) {
         match = true;
       }
