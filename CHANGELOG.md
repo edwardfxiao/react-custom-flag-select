@@ -1,7 +1,14 @@
+# 3.0.7
+
+- Remove classname hash
+
+# 3.0.5
+
+- Better TypeScript support (export interface ReactCustomFlagSelectProps)
+
 # 3.0.4
 
 - Fix wrong active class in search box shows
-
 
 # 3.0.3
 

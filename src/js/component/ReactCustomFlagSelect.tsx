@@ -47,14 +47,14 @@ export const getIndex = (list: OptionListItem[], value: string) => {
 interface IObjectKeys {
   [key: string]: string;
 }
-interface OptionListItem extends IObjectKeys {
+export interface OptionListItem extends IObjectKeys {
   id: string;
   name: string;
   icon?: string;
   displayText?: string;
   flag: string;
 }
-interface Props {
+export interface ReactCustomFlagSelectProps {
   value?: string | number;
   disabled?: boolean;
   showSearch?: boolean;
@@ -86,7 +86,7 @@ interface Props {
   selectHtml?: React.ReactElement<any>;
   selectOptionListItemHtml?: React.ReactElement<any>;
 }
-const Index: React.FC<Props> = ({
+const ReactCustomFlagSelect: React.FC<ReactCustomFlagSelectProps> = ({
   value = '',
   disabled = false,
   showSearch = false,
@@ -619,4 +619,4 @@ export const Option: React.FC<OptionProps> = memo(
   },
 );
 
-export default Index;
+export default ReactCustomFlagSelect;
