@@ -1,3 +1,7 @@
+# 3.0.6
+
+- Remove classname hash
+
 # 3.0.5
 
 - Better TypeScript support (export interface ReactCustomFlagSelectProps)
