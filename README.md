@@ -44,13 +44,13 @@ npm install react-custom-flag-select --save
 ```html
 <head>
  ...
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/react-custom-flag-select/3.0.1/react-custom-flag-select.min.css" />
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/react-custom-flag-select/3.0.7/react-custom-flag-select.min.css" />
 </head>
 <body>
  <div id="root"></div>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.13.1/umd/react.production.min.js"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.13.1/umd/react-dom.production.min.js"></script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/react-custom-flag-select/3.0.1/react-custom-flag-select.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/react-custom-flag-select/3.0.7/react-custom-flag-select.min.js"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
  <script type="text/babel">
     const App = React.memo(() => {
