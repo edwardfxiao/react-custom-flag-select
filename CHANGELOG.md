@@ -1,3 +1,7 @@
+# 3.0.8
+
+- fix bug of cached disabled in handleOnItemClick
+
 # 3.0.7
 
 - Remove classname hash

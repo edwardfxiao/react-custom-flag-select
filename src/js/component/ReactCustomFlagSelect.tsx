@@ -229,7 +229,7 @@ const ReactCustomFlagSelect: React.FC<ReactCustomFlagSelectProps> = ({
       setInternalValue(val);
       onChange && onChange(val, e);
     },
-    [show],
+    [show, disabled],
   );
   /* istanbul ignore next because of https://github.com/airbnb/enzyme/issues/441 && https://github.com/airbnb/enzyme/blob/master/docs/future.md */
   useEffect(() => {
@@ -315,7 +315,7 @@ const ReactCustomFlagSelect: React.FC<ReactCustomFlagSelectProps> = ({
       handleOnChange(v, e);
       stateKeyword[1]('');
     },
-    [show],
+    [show, disabled],
   );
   const handleOnItemMouseOver = useCallback(
     index => {

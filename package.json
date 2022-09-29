@@ -1,6 +1,6 @@
 {
   "name": "react-custom-flag-select",
-  "version": "3.0.7",
+  "version": "3.0.8",
   "description": "A react component for custom flag (country code) select.",
   "main": "index.js",
   "types": "./lib/index.d.ts",
