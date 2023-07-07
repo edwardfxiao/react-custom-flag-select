@@ -2,7 +2,7 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
-[![npm version](https://badge.fury.io/js/react-custom-flag-select.svg)](https://badge.fury.io/js/react-custom-flag-select) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com) [![react-custom-flag-select](http://img.shields.io/npm/dm/react-custom-flag-select.svg)](https://www.npmjs.com/package/react-custom-flag-select) ![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/react-custom-flag-select.svg) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/edwardfxiao/react-custom-flag-select/master/LICENSE)
+[![npm version](https://badge.fury.io/js/react-custom-flag-select.svg)](https://badge.fury.io/js/react-custom-flag-select) ![Cdnjs](https://img.shields.io/cdnjs/v/react-custom-flag-select) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com) [![react-custom-flag-select](http://img.shields.io/npm/dm/react-custom-flag-select.svg)](https://www.npmjs.com/package/react-custom-flag-select) ![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/react-custom-flag-select.svg) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/edwardfxiao/react-custom-flag-select/master/LICENSE)
 
 A react component for custom flag (country code) select.
 # <img src="https://raw.githubusercontent.com/edwardfxiao/react-custom-flag-select/master/react-custom-flag-select.jpg" />
@@ -35,8 +35,32 @@ This component supports fully customized html. It focuses on the data you provid
 In case the **country code** or the **area code** or even the **flags** might be wrong inside a library, why don't provide them yourself?
 
 # Installation
+
+#### By NPM
 ```sh
 npm install react-custom-flag-select --save
+```
+#### By CDN (starting from v3.0.1)
+```html
+<head>
+ ...
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/react-custom-flag-select/3.0.7/react-custom-flag-select.min.css" />
+</head>
+<body>
+ <div id="root"></div>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.13.1/umd/react.production.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.13.1/umd/react-dom.production.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/react-custom-flag-select/3.0.7/react-custom-flag-select.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
+ <script type="text/babel">
+    const App = React.memo(() => {
+      return (<ReactCustomFlagSelect .../>)
+    });
+    ReactDOM.render(<App />, document.getElementById('root'));
+ </script>
+</body>
+
+
 ```
 # Donate
 <a href="https://www.paypal.me/XIAOMENGXIAO/0.99" target="_blank" alt="PayPal Donate">Thanks for donating me a donut!&nbsp;&nbsp;⁄(⁄ ⁄•⁄ω⁄•⁄ ⁄)⁄</a>

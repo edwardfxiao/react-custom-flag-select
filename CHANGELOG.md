@@ -1,3 +1,15 @@
+# 3.1.0
+
+- `title` and `ellipsis` for option item
+
+# 3.0.9
+
+- update readme
+
+# 3.0.8
+
+- fix bug of cached disabled in handleOnItemClick
+
 # 3.0.7
 
 - Remove classname hash
