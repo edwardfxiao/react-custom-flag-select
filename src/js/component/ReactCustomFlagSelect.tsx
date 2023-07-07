@@ -602,8 +602,18 @@ export const Option: React.FC<OptionProps> = memo(
     const handleOnMouseOut = useCallback(() => {
       onMouseOut();
     }, [$itemEls, id]);
+    const text = item.displayText ? item.displayText : item.name;
     return (
-      <div id={id} onMouseOver={handleOnMouseOver} onMouseMove={handleOnMouseMove} onMouseOut={handleOnMouseOut} className={className} style={customStyleOptionListItem} onClick={handleOnClick}>
+      <div
+        id={id}
+        title={text}
+        onMouseOver={handleOnMouseOver}
+        onMouseMove={handleOnMouseMove}
+        onMouseOut={handleOnMouseOut}
+        className={className}
+        style={customStyleOptionListItem}
+        onClick={handleOnClick}
+      >
         {item.flag ? (
           <div className={STYLES[`${TYPE}__dropdown-flag`]}>
             <img key={`${index}${item.flag}`} src={item.flag} style={{ width: '100%', height: '100%', verticalAlign: 'middle' }} />
@@ -612,7 +622,7 @@ export const Option: React.FC<OptionProps> = memo(
           ''
         )}
         <div className={`${STYLES['select__dropdown-name']} ${STYLES['ellipsis']}`}>
-          <div>{item.displayText ? item.displayText : item.name}</div>
+          <div className={`${STYLES['ellipsis']}`}>{text}</div>
         </div>
       </div>
     );

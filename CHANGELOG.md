@@ -1,3 +1,7 @@
+# 3.1.0
+
+- `title` and `ellipsis` for option item
+
 # 3.0.9
 
 - update readme
